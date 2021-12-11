@@ -53,12 +53,14 @@ class SplashPage extends GetView<SplashController> {
               IZIFile(
 
               ),
-              // IZIOtp(
-              //   lable: "Xác thực tài khoản",
-              //   content: "Mã xác thực sẽ được gửi đến số điện thoại của bạn",
-              //   codeLength: 4,
-              //   countDown: 100,
-              // ),
+              IZIOtp(
+                lable: "Xác thực tài khoản",
+                content: "Mã xác thực sẽ được gửi đến số điện thoại của bạn",
+                codeLength: 4,
+                countDown: 10,
+                isEnabled: true,
+                onTapSendSMS: (){},
+              ),
               IZIInput(
                 placeHolder: "100",
                 allowEdit: true,

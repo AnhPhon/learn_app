@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/shims/dart_ui_real.dart';
+import 'package:glass_kit/glass_kit.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_text.dart';
@@ -24,6 +25,7 @@ class IZIOtp extends StatefulWidget {
     this.onChanged,
     this.codeLength = 4,
     this.buttonLabel,
+    this.isEnabled = false,
   }) : super(key: key);
   final String? lable;
   final String? content;
@@ -36,6 +38,7 @@ class IZIOtp extends StatefulWidget {
   final int? countDown;
   final int codeLength;
   final String? buttonLabel;
+  final bool? isEnabled;
 
   @override
   _IZIOtpState createState() => _IZIOtpState();
@@ -85,7 +88,7 @@ class _IZIOtpState extends State<IZIOtp> {
     if (hasError == true) {
       return IZIAlert.error(message: "Mã xác thực phải ít nhất ${widget.codeLength} số");
     }
-    if (!IZIValidate.nullOrEmpty(widget.onTap)) {
+    if (!IZIValidate.nullOrEmpty(widget.onTap) && widget.isEnabled!) {
       widget.onTap!();
     }
   }
@@ -110,189 +113,188 @@ class _IZIOtpState extends State<IZIOtp> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: IZIDimensions.ONE_UNIT_SIZE * 15,
-            sigmaY: IZIDimensions.ONE_UNIT_SIZE * 15,
-          ),
-          child: Container(
-            width: IZIDimensions.ONE_UNIT_SIZE * 500,
-            height: IZIDimensions.ONE_UNIT_SIZE * 600,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(
-                  IZIDimensions.BORDER_RADIUS_7X,
-                ),
-                bottomRight: Radius.circular(
-                  IZIDimensions.BORDER_RADIUS_7X,
-                ),
+        child: GlassContainer.frostedGlass(
+          width: IZIDimensions.ONE_UNIT_SIZE * 500,
+          height: IZIDimensions.ONE_UNIT_SIZE * 600,
+            borderColor: Colors.transparent,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(
+                IZIDimensions.BORDER_RADIUS_7X,
               ),
-              color: Colors.grey.shade200.withOpacity(0.5),
-            ),
-            child: Column(
-              children: [
-                if (!IZIValidate.nullOrEmpty(widget.lable))
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: IZIDimensions.SPACE_SIZE_5X,
-                    ),
-                    child: IZIText(
-                      text: widget.lable!,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: IZIDimensions.FONT_SIZE_H4,
-                        color: widget.colorLable ?? ColorResources.CIRCLE_COLOR_BG3,
-                      ),
-                    ),
+              bottomRight: Radius.circular(
+                IZIDimensions.BORDER_RADIUS_7X,
+              ),
+          ),
+          frostedOpacity: 0.1,
+          child: Column(
+            children: [
+              if (!IZIValidate.nullOrEmpty(widget.lable))
+                Container(
+                  margin: EdgeInsets.only(
+                    top: IZIDimensions.SPACE_SIZE_5X,
                   ),
-                if (!IZIValidate.nullOrEmpty(widget.content))
-                  Container(
-                    margin: EdgeInsets.all(
-                      IZIDimensions.SPACE_SIZE_1X,
-                    ),
-                    child: IZIText(
-                      text: widget.content!,
-                      textAlign: TextAlign.center,
-                      maxLine: 4,
-                      style: TextStyle(
-                        color: ColorResources.BLACK,
-                        fontSize: IZIDimensions.FONT_SIZE_H6,
-                      ),
-                    ),
-                  ),
-                Center(
-                  child: Container(
-                    margin: EdgeInsets.symmetric(
-                      horizontal: IZIDimensions.SPACE_SIZE_3X,
-                      vertical: IZIDimensions.SPACE_SIZE_4X,
-                    ),
-                    child: PinCodeTextField(
-                      // validator: (val) {
-                      //   if (val!.length < 6) {
-                      //     return "";
-                      //   } else {
-                      //     return null;
-                      //   }
-                      // },
-                      appContext: context,
-                      length: widget.codeLength,
-                      obscureText: true,
-                      obscuringCharacter: '*',
-                      blinkWhenObscuring: true,
-                      animationType: AnimationType.fade,
-                      pinTheme: PinTheme(
-                        shape: PinCodeFieldShape.box,
-                        borderRadius: BorderRadius.circular(5),
-                        fieldHeight: IZIDimensions.ONE_UNIT_SIZE * (120 - (10.5 * widget.codeLength)),
-                        fieldWidth: IZIDimensions.ONE_UNIT_SIZE * (120 - (10.5 * widget.codeLength)),
-                        activeFillColor: Colors.white,
-                        selectedFillColor: ColorResources.WHITE,
-                        disabledColor: ColorResources.GREY,
-                        selectedColor: ColorResources.CIRCLE_COLOR_BG3,
-                        errorBorderColor: ColorResources.RED,
-                        activeColor: ColorResources.CIRCLE_COLOR_BG3,
-                        inactiveColor: ColorResources.WHITE,
-                        inactiveFillColor: ColorResources.WHITE,
-                      ),
-                      cursorColor: ColorResources.GREEN,
-                      animationDuration: const Duration(
-                        milliseconds: 300,
-                      ),
-                      enableActiveFill: true,
-                      errorAnimationController: errorController,
-                      controller: textEditingController,
-                      keyboardType: TextInputType.number,
-                      onCompleted: (v) {
-                        // controller.onBtnCompleteTap();
-                      },
-                      onChanged: (val) {
-                        if(!IZIValidate.nullOrEmpty(widget.onChanged)){
-                          widget.onChanged!(val);
-                        }
-                      },
-                      beforeTextPaste: (text) {
-                        return true;
-                      },
+                  child: IZIText(
+                    text: widget.lable!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: IZIDimensions.FONT_SIZE_H4,
+                      color: widget.colorLable ?? ColorResources.CIRCLE_COLOR_BG3,
                     ),
                   ),
                 ),
+              if (!IZIValidate.nullOrEmpty(widget.content))
                 Container(
+                  margin: EdgeInsets.all(
+                    IZIDimensions.SPACE_SIZE_1X,
+                  ),
+                  child: IZIText(
+                    text: widget.content!,
+                    textAlign: TextAlign.center,
+                    maxLine: 4,
+                    style: TextStyle(
+                      color: ColorResources.BLACK,
+                      fontSize: IZIDimensions.FONT_SIZE_H6,
+                    ),
+                  ),
+                ),
+              Center(
+                child: Container(
                   margin: EdgeInsets.symmetric(
                     horizontal: IZIDimensions.SPACE_SIZE_3X,
+                    vertical: IZIDimensions.SPACE_SIZE_4X,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: GestureDetector(
-                          onTap: () {
-                            if (!IZIValidate.nullOrEmpty(widget.onTapSendSMS) && !isCountDown) {
-                              widget.onTapSendSMS!();
-                              setState(() {
-                                count = widget.countDown ?? 90;
-                                isCountDown = true;
-                              });
-                            }
-                          },
-                          child: IZIText(
-                            text: widget.labelSendOtp ?? "Gửi xác thực đến sms",
-                            style: TextStyle(
-                              fontSize: IZIDimensions.FONT_SIZE_H6,
-                              color: !isCountDown && count <= 0 ? widget.colorLable ?? ColorResources.WHITE : ColorResources.GREY,
-                            ),
-                          ),
-                        ),
-                      ),
-                      if (isCountDown && count > 0)
-                        Flexible(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              const Text("Gửi lại sau: "),
-                              Container(
-                                margin: EdgeInsets.only(
-                                  left: IZIDimensions.SPACE_SIZE_1X,
-                                ),
-                                alignment: Alignment.center,
-                                child: IZIText(
-                                  text:"${(count ~/ 60) > 0 ? '${count ~/ 60}:' : ''}${count.toInt() % 60}s",
-                                  style: TextStyle(
-                                    fontSize: IZIDimensions.FONT_SIZE_H6,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                    ],
+                  child: PinCodeTextField(
+                    // validator: (val) {
+                    //   if (val!.length < 6) {
+                    //     return "";
+                    //   } else {
+                    //     return null;
+                    //   }
+                    // },
+                    appContext: context,
+                    length: widget.codeLength,
+                    obscureText: true,
+                    obscuringCharacter: '*',
+                    blinkWhenObscuring: true,
+                    animationType: AnimationType.fade,
+                    pinTheme: PinTheme(
+                      shape: PinCodeFieldShape.box,
+                      borderRadius: BorderRadius.circular(5),
+                      fieldHeight: IZIDimensions.ONE_UNIT_SIZE * (120 - (10.5 * widget.codeLength)),
+                      fieldWidth: IZIDimensions.ONE_UNIT_SIZE * (120 - (10.5 * widget.codeLength)),
+                      activeFillColor: Colors.white,
+                      selectedFillColor: ColorResources.WHITE,
+                      disabledColor: ColorResources.GREY,
+                      selectedColor: ColorResources.CIRCLE_COLOR_BG3,
+                      errorBorderColor: ColorResources.RED,
+                      activeColor: ColorResources.CIRCLE_COLOR_BG3,
+                      inactiveColor: ColorResources.WHITE,
+                      inactiveFillColor: ColorResources.WHITE,
+                    ),
+                    cursorColor: ColorResources.GREEN,
+                    animationDuration: const Duration(
+                      milliseconds: 300,
+                    ),
+                    enableActiveFill: true,
+                    errorAnimationController: errorController,
+                    controller: textEditingController,
+                    keyboardType: TextInputType.number,
+                    onCompleted: (v) {
+                      // controller.onBtnCompleteTap();
+                    },
+                    onChanged: (val) {
+                      if(!IZIValidate.nullOrEmpty(widget.onChanged)){
+                        widget.onChanged!(val);
+                      }
+                    },
+                    beforeTextPaste: (text) {
+                      return true;
+                    },
                   ),
                 ),
-                Expanded(
-                  child: Center(
-                    child: Container(
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: IZIDimensions.SPACE_SIZE_3X,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: GestureDetector(
+                        onTap: () {
+                          if (!IZIValidate.nullOrEmpty(widget.onTapSendSMS) && !isCountDown) {
+                            widget.onTapSendSMS!();
+                            setState(() {
+                              count = widget.countDown ?? 90;
+                              isCountDown = true;
+                              countDown();
+                            });
+                          }
+                        },
+                        child: IZIText(
+                          text: widget.labelSendOtp ?? "Gửi xác thực đến sms",
+                          style: TextStyle(
+                            fontSize: IZIDimensions.FONT_SIZE_H6,
+                            color: !isCountDown && count <= 0 ? widget.colorLable ?? ColorResources.WHITE : ColorResources.GREY,
+                          ),
+                        ),
+                      ),
+                    ),
+                    if (isCountDown && count > 0)
+                      Flexible(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Text("Gửi lại sau: "),
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: IZIDimensions.SPACE_SIZE_1X,
+                              ),
+                              alignment: Alignment.center,
+                              child: IZIText(
+                                text:"${(count ~/ 60) > 0 ? '${count ~/ 60}:' : ''}${count.toInt() % 60}s",
+                                style: TextStyle(
+                                  fontSize: IZIDimensions.FONT_SIZE_H6,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Center(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(
+                      vertical: IZIDimensions.ONE_UNIT_SIZE * 20,
+                    ),
+                    child: IZIButton(
                       margin: EdgeInsets.symmetric(
+                        horizontal: IZIDimensions.SPACE_SIZE_2X,
+                      ),
+                      colorBG: ColorResources.WHITE,
+                      color: ColorResources.CIRCLE_COLOR_BG3,
+                      colorBGDisabled: ColorResources.GREY,
+                      colorDisible: ColorResources.BLACK,
+                      isEnabled: widget.isEnabled,
+                      label: widget.buttonLabel ?? "Tiếp tục",
+                      borderRadius: IZIDimensions.BLUR_RADIUS_2X,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: IZIDimensions.ONE_UNIT_SIZE * 50,
                         vertical: IZIDimensions.ONE_UNIT_SIZE * 20,
                       ),
-                      child: IZIButton(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: IZIDimensions.SPACE_SIZE_2X,
-                        ),
-                        label: widget.buttonLabel ?? "Hoàn thành",
-                        borderRadius: IZIDimensions.BLUR_RADIUS_2X,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: IZIDimensions.ONE_UNIT_SIZE * 50,
-                          vertical: IZIDimensions.ONE_UNIT_SIZE * 20,
-                        ),
-                        onTap: (){
-                          onTap();
-                        },
-                      ),
+                      onTap: (){
+                        onTap();
+                      },
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

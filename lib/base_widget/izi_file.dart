@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
 import 'dart:io' as Io;
 import 'package:image/image.dart';
+import 'dart:ui' as ui;
 
 enum IZIFileType {
   IMAGE,
@@ -63,30 +66,41 @@ class _IZIFileState extends State<IZIFile> {
     }
   }
 
-  // Future<File> resizeImage(File file, {int? height, int? width, int? compressQuality = 100}) async {
-  //   File? image = await ImageCropper.cropImage(
-  //     sourcePath: file.path,
-  //     aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-  //     compressQuality: compressQuality ?? 100,
-  //     maxWidth: width ?? 700,
-  //     maxHeight: height ?? 700,
-  //     compressFormat: ImageCompressFormat.png,
-  //   );
-  // }
+
+  static Future<File> _resizeImage(String filePath,{int? height = 1024, int? width = 1024, int? quality = 100}) async {
+    final file = File(filePath);
+
+    final bytes = await file.readAsBytes();
+    print("Picture original size: ${bytes.length}");
+
+    final image = decodeImage(bytes);
+    final resized = copyResize(image!, width: width, height: height);
+    final resizedBytes = encodeJpg(resized, quality: quality!);
+    print("Picture resized size: ${resizedBytes.length}");
+
+    return file.writeAsBytes(resizedBytes);
+  }
 
   ///
   /// Pick images
   ///
   Future pickImages() async {
     try {
-      final result = await ImagePicker().pickImage(source: widget.imageSource!,);
+      final result = await ImagePicker().pickImage(
+        source: widget.imageSource!,
+      );
       if (result == null) return;
       if (await File(result.path).length() > 1024) {
-         // Resize image
-      } 
-      setState(() {
+        await _resizeImage(result.path, height: 250, width: 250).then((value) {
+          setState(() {
+            file = value;
+          });
+        });
+      } else {
+        setState(() {
           file = File(result.path);
-      });
+        });
+      }
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
     }
