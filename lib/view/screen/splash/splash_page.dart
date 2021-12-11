@@ -13,6 +13,7 @@ import 'package:template/base_widget/background/background_otp.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_card.dart';
 import 'package:template/base_widget/izi_dialog.dart';
+import 'package:template/base_widget/izi_file.dart';
 import 'package:template/base_widget/izi_image.dart';
 import 'package:template/base_widget/izi_input.dart';
 import 'package:template/base_widget/izi_list_view.dart';
@@ -32,7 +33,7 @@ class SplashPage extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
     return IZIScreen(
-      background: const BackgroundHome(),
+      background: const BackgroundOtp(),
       appBar: const IZIAppBar(
         title: "Splash Page",
       ),
@@ -41,10 +42,23 @@ class SplashPage extends GetView<SplashController> {
         builder: (SplashController controller) {
           return Column(
             children: [
-              IZIOtp(
-                lable: "Xác thực tài khoản",
-                content: "Mã xác thực sẽ được gửi đến số điện thoại của bạn",
+              IZIFile.file(
+                height: 70,
+                width: 500,
+                onFile:(val){
+                  print("abc");
+                  print("Url file ${val}");
+                }
               ),
+              IZIFile(
+
+              ),
+              // IZIOtp(
+              //   lable: "Xác thực tài khoản",
+              //   content: "Mã xác thực sẽ được gửi đến số điện thoại của bạn",
+              //   codeLength: 4,
+              //   countDown: 100,
+              // ),
               IZIInput(
                 placeHolder: "100",
                 allowEdit: true,

@@ -1,25 +1,111 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_html/shims/dart_ui_real.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_text.dart';
+import 'package:template/helper/izi_alert.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
 
-class IZIOtp extends StatelessWidget {
+class IZIOtp extends StatefulWidget {
   const IZIOtp({
     Key? key,
     this.lable,
     this.content,
+    this.validate,
     this.onTap,
     this.onTapSendSMS,
     this.colorLable,
+    this.countDown = 90,
+    this.labelSendOtp,
+    this.onChanged,
+    this.codeLength = 4,
+    this.buttonLabel,
   }) : super(key: key);
   final String? lable;
   final String? content;
+  final bool Function()? validate;
   final Function? onTap;
   final Function? onTapSendSMS;
+  final String Function(String?)? onChanged;
+  final String? labelSendOtp;
   final Color? colorLable;
+  final int? countDown;
+  final int codeLength;
+  final String? buttonLabel;
+
+  @override
+  _IZIOtpState createState() => _IZIOtpState();
+}
+
+class _IZIOtpState extends State<IZIOtp> {
+  StreamController<ErrorAnimationType>? errorController;
+  bool hasError = false;
+  bool isCountDown = true;
+  Timer? _timer;
+  int count = 90;
+  TextEditingController? textEditingController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    errorController = StreamController<ErrorAnimationType>();
+    textEditingController = TextEditingController();
+    count = widget.countDown!;
+    countDown();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    errorController?.close();
+    textEditingController?.dispose();
+    _timer?.cancel();
+  }
+
+  bool validateOTP() {
+    if (textEditingController!.text.length != widget.codeLength) {
+      errorController!.add(ErrorAnimationType.shake);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void onTap() {
+    if (!IZIValidate.nullOrEmpty(widget.validate)) {
+      hasError = widget.validate!();
+    } else {
+      hasError = validateOTP();
+    }
+    if (hasError == true) {
+      return IZIAlert.error(message: "Mã xác thực phải ít nhất ${widget.codeLength} số");
+    }
+    if (!IZIValidate.nullOrEmpty(widget.onTap)) {
+      widget.onTap!();
+    }
+  }
+
+  void countDown() {
+    _timer = Timer.periodic(
+      const Duration(seconds: 1),
+      (Timer timer) => setState(
+        () {
+          if (count < 1) {
+            timer.cancel();
+            isCountDown = false;
+          } else {
+            count = count - 1;
+          }
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,7 +117,7 @@ class IZIOtp extends StatelessWidget {
           ),
           child: Container(
             width: IZIDimensions.ONE_UNIT_SIZE * 500,
-            height: IZIDimensions.ONE_UNIT_SIZE * 700,
+            height: IZIDimensions.ONE_UNIT_SIZE * 600,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(
@@ -45,38 +131,166 @@ class IZIOtp extends StatelessWidget {
             ),
             child: Column(
               children: [
-                if (!IZIValidate.nullOrEmpty(lable))
+                if (!IZIValidate.nullOrEmpty(widget.lable))
                   Container(
                     margin: EdgeInsets.only(
                       top: IZIDimensions.SPACE_SIZE_5X,
                     ),
                     child: IZIText(
-                      text: lable!,
+                      text: widget.lable!,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: IZIDimensions.FONT_SIZE_H4,
-                        color: colorLable ?? ColorResources.CIRCLE_COLOR_BG3,
+                        color: widget.colorLable ?? ColorResources.CIRCLE_COLOR_BG3,
                       ),
                     ),
                   ),
-                if (!IZIValidate.nullOrEmpty(content))
+                if (!IZIValidate.nullOrEmpty(widget.content))
                   Container(
                     margin: EdgeInsets.all(
                       IZIDimensions.SPACE_SIZE_1X,
                     ),
                     child: IZIText(
-                        text: content!,
-                        textAlign: TextAlign.center,
-                        maxLine: 4,
-                        style: TextStyle(
-                          color: ColorResources.BLACK,
-                          fontSize: IZIDimensions.FONT_SIZE_H6,
-                        )),
+                      text: widget.content!,
+                      textAlign: TextAlign.center,
+                      maxLine: 4,
+                      style: TextStyle(
+                        color: ColorResources.BLACK,
+                        fontSize: IZIDimensions.FONT_SIZE_H6,
+                      ),
+                    ),
                   ),
-                IZIButton(
-                  onTap: () {},
-                )
+                Center(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(
+                      horizontal: IZIDimensions.SPACE_SIZE_3X,
+                      vertical: IZIDimensions.SPACE_SIZE_4X,
+                    ),
+                    child: PinCodeTextField(
+                      // validator: (val) {
+                      //   if (val!.length < 6) {
+                      //     return "";
+                      //   } else {
+                      //     return null;
+                      //   }
+                      // },
+                      appContext: context,
+                      length: widget.codeLength,
+                      obscureText: true,
+                      obscuringCharacter: '*',
+                      blinkWhenObscuring: true,
+                      animationType: AnimationType.fade,
+                      pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.box,
+                        borderRadius: BorderRadius.circular(5),
+                        fieldHeight: IZIDimensions.ONE_UNIT_SIZE * (120 - (10.5 * widget.codeLength)),
+                        fieldWidth: IZIDimensions.ONE_UNIT_SIZE * (120 - (10.5 * widget.codeLength)),
+                        activeFillColor: Colors.white,
+                        selectedFillColor: ColorResources.WHITE,
+                        disabledColor: ColorResources.GREY,
+                        selectedColor: ColorResources.CIRCLE_COLOR_BG3,
+                        errorBorderColor: ColorResources.RED,
+                        activeColor: ColorResources.CIRCLE_COLOR_BG3,
+                        inactiveColor: ColorResources.WHITE,
+                        inactiveFillColor: ColorResources.WHITE,
+                      ),
+                      cursorColor: ColorResources.GREEN,
+                      animationDuration: const Duration(
+                        milliseconds: 300,
+                      ),
+                      enableActiveFill: true,
+                      errorAnimationController: errorController,
+                      controller: textEditingController,
+                      keyboardType: TextInputType.number,
+                      onCompleted: (v) {
+                        // controller.onBtnCompleteTap();
+                      },
+                      onChanged: (val) {
+                        if(!IZIValidate.nullOrEmpty(widget.onChanged)){
+                          widget.onChanged!(val);
+                        }
+                      },
+                      beforeTextPaste: (text) {
+                        return true;
+                      },
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: IZIDimensions.SPACE_SIZE_3X,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: GestureDetector(
+                          onTap: () {
+                            if (!IZIValidate.nullOrEmpty(widget.onTapSendSMS) && !isCountDown) {
+                              widget.onTapSendSMS!();
+                              setState(() {
+                                count = widget.countDown ?? 90;
+                                isCountDown = true;
+                              });
+                            }
+                          },
+                          child: IZIText(
+                            text: widget.labelSendOtp ?? "Gửi xác thực đến sms",
+                            style: TextStyle(
+                              fontSize: IZIDimensions.FONT_SIZE_H6,
+                              color: !isCountDown && count <= 0 ? widget.colorLable ?? ColorResources.WHITE : ColorResources.GREY,
+                            ),
+                          ),
+                        ),
+                      ),
+                      if (isCountDown && count > 0)
+                        Flexible(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              const Text("Gửi lại sau: "),
+                              Container(
+                                margin: EdgeInsets.only(
+                                  left: IZIDimensions.SPACE_SIZE_1X,
+                                ),
+                                alignment: Alignment.center,
+                                child: IZIText(
+                                  text:"${(count ~/ 60) > 0 ? '${count ~/ 60}:' : ''}${count.toInt() % 60}s",
+                                  style: TextStyle(
+                                    fontSize: IZIDimensions.FONT_SIZE_H6,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: Container(
+                      margin: EdgeInsets.symmetric(
+                        vertical: IZIDimensions.ONE_UNIT_SIZE * 20,
+                      ),
+                      child: IZIButton(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: IZIDimensions.SPACE_SIZE_2X,
+                        ),
+                        label: widget.buttonLabel ?? "Hoàn thành",
+                        borderRadius: IZIDimensions.BLUR_RADIUS_2X,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: IZIDimensions.ONE_UNIT_SIZE * 50,
+                          vertical: IZIDimensions.ONE_UNIT_SIZE * 20,
+                        ),
+                        onTap: (){
+                          onTap();
+                        },
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
