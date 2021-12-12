@@ -1,16 +1,16 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:glass_kit/glass_kit.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_image.dart';
-import 'package:template/base_widget/izi_input.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
+import 'package:template/helper/izi_other.dart';
 import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/images_path.dart';
 import 'package:ticket_material/ticket_material.dart';
+import 'package:glass/glass.dart';
 
 enum IZICardType {
   CARD,
@@ -79,6 +79,7 @@ class IZICard extends StatelessWidget {
     this.onChanged2CardTransfer,
     this.title,
     this.actions,
+    this.child,
   }) : super(key: key);
 
   final String? row1Left;
@@ -104,6 +105,7 @@ class IZICard extends StatelessWidget {
   final dynamic groupValue;
   final String? title;
   final List<Widget>? actions;
+  final Widget? child;
   final Function(dynamic val)? onChanged;
   final Function(String val)? onChanged1CardTransfer;
   final Function(String val)? onChanged2CardTransfer;
@@ -138,53 +140,61 @@ class IZICard extends StatelessWidget {
     );
   }
 
-  Widget getButtonOrder(IZIStatusOrder status) {
-    if (status == IZIStatusOrder.XAC_NHAN) {
+  Widget getButtonOrder(IZIStatusOrder statusOrder) {
+    if (statusOrder == IZIStatusOrder.XAC_NHAN) {
       return IZIButton(
         colorBG: ColorResources.ORDER_XAC_NHAN,
         isEnabled: isEnabled,
-        margin: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 13),
         onTap: () {
           onTap!();
         },
         label: "Xác nhận",
-        padding: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 7),
+        color: ColorResources.LABEL_ORDER_XAC_NHAN,
+        margin: EdgeInsets.all(IZIDimensions.SPACE_SIZE_1X),
+        borderRadius: IZIDimensions.ONE_UNIT_SIZE * 5,
+        padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_1X),
       );
     }
-    if (status == IZIStatusOrder.DA_GIAO) {
-      return IZIButton(
-        colorBG: ColorResources.ORDER_HUY_DON,
-        isEnabled: isEnabled,
-        margin: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 13),
-        onTap: () {
-          onTap!();
-        },
-        label: "Hủy đơn",
-        padding: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 7),
-      );
-    }
-    if (status == IZIStatusOrder.HUY_DON) {
+    if (statusOrder == IZIStatusOrder.DA_GIAO) {
       return IZIButton(
         colorBG: ColorResources.ORDER_DA_GIAO,
         isEnabled: isEnabled,
-        margin: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 13),
         onTap: () {
           onTap!();
         },
         label: "Đã giao",
-        padding: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 7),
+        color: ColorResources.LABEL_ORDER_DA_GIAO,
+        margin: EdgeInsets.all(IZIDimensions.SPACE_SIZE_1X),
+        borderRadius: IZIDimensions.ONE_UNIT_SIZE * 5,
+        padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_1X),
       );
     }
-    if (status == IZIStatusOrder.DANG_GIAO) {
+    if (statusOrder == IZIStatusOrder.HUY_DON) {
+      return IZIButton(
+        colorBG: ColorResources.ORDER_HUY_DON,
+        isEnabled: isEnabled,
+        onTap: () {
+          onTap!();
+        },
+        label: "Hủy đơn",
+        color: ColorResources.LABEL_ORDER_HUY_DON,
+        margin: EdgeInsets.all(IZIDimensions.SPACE_SIZE_1X),
+        borderRadius: IZIDimensions.ONE_UNIT_SIZE * 5,
+        padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_1X),
+      );
+    }
+    if (statusOrder == IZIStatusOrder.DANG_GIAO) {
       return IZIButton(
         colorBG: ColorResources.ORDER_DANG_GIAO,
         isEnabled: isEnabled,
-        margin: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 13),
         onTap: () {
           onTap!();
         },
         label: "Đang giao",
-        padding: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 7),
+        color: ColorResources.LABEL_ORDER_DANG_GIAO,
+        margin: EdgeInsets.all(IZIDimensions.SPACE_SIZE_1X),
+        borderRadius: IZIDimensions.ONE_UNIT_SIZE * 5,
+        padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_1X),
       );
     }
     return Container();
@@ -245,13 +255,7 @@ class IZICard extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: colorBG ?? ColorResources.WHITE,
-          boxShadow: [
-            BoxShadow(
-              color: ColorResources.BLACK.withAlpha(40),
-              blurRadius: 10,
-              offset: const Offset(0, 2),
-            ),
-          ],
+          boxShadow: IZIOther().boxShadow,
           // border: Border.all(
           //   width: 2,
           //   color: colorBorder ?? ColorResources.GREY,
@@ -337,6 +341,152 @@ class IZICard extends StatelessWidget {
           ],
         ),
       );
+    } else if (type == IZICardType.CARD_ORDER) {
+      return Container(
+        margin: marginCard ?? const EdgeInsets.all(0),
+        width: double.infinity,
+        padding: paddingCard ??
+            EdgeInsets.all(
+              IZIDimensions.SPACE_SIZE_2X,
+            ),
+        decoration: BoxDecoration(
+          color: colorBG ?? ColorResources.WHITE,
+          boxShadow: IZIOther().boxShadow,
+          borderRadius: BorderRadius.circular(
+            radiusCard ?? IZIDimensions.BLUR_RADIUS_2X,
+          ),
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                    IZIDimensions.BLUR_RADIUS_2X,
+                  ),
+                  child: IZIImage(
+                    urlImage.toString(),
+                    height: IZIDimensions.ONE_UNIT_SIZE * 80,
+                    width: IZIDimensions.ONE_UNIT_SIZE * 80,
+                  ),
+                ),
+                Container(
+                  width: IZIDimensions.ONE_UNIT_SIZE * 10,
+                ),
+                Expanded(
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(
+                            bottom: IZIDimensions.SPACE_SIZE_1X,
+                          ),
+                          child: Row(
+                            children: [
+                              if (!IZIValidate.nullOrEmpty(row1Left))
+                                Expanded(
+                                  child: IZIText(
+                                    text: row1Left.toString(),
+                                    maxLine: 1,
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: IZIDimensions.FONT_SIZE_H6,
+                                    ),
+                                  ),
+                                ),
+                              if (!IZIValidate.nullOrEmpty(row1Right))
+                                Expanded(
+                                  child: IZIText(
+                                    text: row1Right.toString(),
+                                    maxLine: 1,
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: IZIDimensions.FONT_SIZE_H6,
+                                      color: ColorResources.BLACK.withOpacity(.8),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            if (!IZIValidate.nullOrEmpty(row2Left))
+                              Expanded(
+                                child: Container(
+                                  child: IZIText(
+                                    text: "${row2Left.toString()} sản phẩm",
+                                    maxLine: 1,
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                      fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            Container(
+                              margin: EdgeInsets.symmetric(
+                                horizontal: IZIDimensions.SPACE_SIZE_2X,
+                              ),
+                              width: IZIDimensions.ONE_UNIT_SIZE * 3,
+                              height: IZIDimensions.ONE_UNIT_SIZE * 30,
+                              color: ColorResources.BLACK.withOpacity(
+                                .5,
+                              ),
+                            ),
+                            if (!IZIValidate.nullOrEmpty(row2Right))
+                              Expanded(
+                                child: Container(
+                                  child: IZIText(
+                                    text: "${row2Right.toString()} đ",
+                                    maxLine: 1,
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                      fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
+                                      color: ColorResources.BLACK.withOpacity(.8),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: IZIDimensions.SPACE_SIZE_2X),
+              width: double.infinity,
+              height: IZIDimensions.ONE_UNIT_SIZE * 2,
+              color: ColorResources.BLACK.withOpacity(.1),
+            ),
+            Row(
+              children: [
+                if (!IZIValidate.nullOrEmpty(row3Left))
+                  Expanded(
+                    flex: 2,
+                    child: IZIText(
+                      text: row3Left.toString(),
+                      maxLine: 1,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
+                      ),
+                    ),
+                  ),
+                Expanded(
+                  child: getButtonOrder(statusOrder!),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
     } else if (type == IZICardType.CARD_CIRCLE) {
       return Container(
         height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 140,
@@ -379,28 +529,7 @@ class IZICard extends StatelessWidget {
           borderRadius: BorderRadius.circular(
             radiusCard ?? IZIDimensions.BLUR_RADIUS_3X,
           ),
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(0, 2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(0, -2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(-2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-          ],
+          boxShadow: IZIOther().boxShadow,
         ),
         margin: marginCard ?? const EdgeInsets.all(0),
         child: Column(
@@ -552,28 +681,7 @@ class IZICard extends StatelessWidget {
           borderRadius: BorderRadius.circular(
             radiusCard ?? IZIDimensions.BLUR_RADIUS_3X,
           ),
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(0, 2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(0, -2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(-2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-          ],
+          boxShadow: IZIOther().boxShadow,
         ),
         margin: marginCard ?? const EdgeInsets.all(0),
         child: Column(
@@ -724,28 +832,7 @@ class IZICard extends StatelessWidget {
     } else if (type == IZICardType.CARD_VORCHER) {
       return Container(
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(0, 2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(20),
-            ),
-            BoxShadow(
-              offset: const Offset(0, -2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(20),
-            ),
-            BoxShadow(
-              offset: const Offset(2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(20),
-            ),
-            BoxShadow(
-              offset: const Offset(-2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(20),
-            ),
-          ],
+          boxShadow: IZIOther().boxShadow,
         ),
         margin: marginCard ?? const EdgeInsets.all(0),
         width: double.infinity,
@@ -898,28 +985,7 @@ class IZICard extends StatelessWidget {
             topLeft: Radius.circular(radiusCard ?? IZIDimensions.BLUR_RADIUS_5X * 2),
             bottomRight: Radius.circular(radiusCard ?? IZIDimensions.BLUR_RADIUS_5X * 2),
           ),
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(0, 2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_4X,
-              color: ColorResources.BLACK.withAlpha(10),
-            ),
-            BoxShadow(
-              offset: const Offset(0, -2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_4X,
-              color: ColorResources.BLACK.withAlpha(10),
-            ),
-            BoxShadow(
-              offset: const Offset(2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_4X,
-              color: ColorResources.BLACK.withAlpha(10),
-            ),
-            BoxShadow(
-              offset: const Offset(-2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_4X,
-              color: ColorResources.BLACK.withAlpha(10),
-            ),
-          ],
+          boxShadow: IZIOther().boxShadow,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -927,7 +993,7 @@ class IZICard extends StatelessWidget {
             Align(
               alignment: Alignment.topLeft,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(IZIDimensions.ONE_UNIT_SIZE * 5),
+                borderRadius: BorderRadius.circular(IZIDimensions.ONE_UNIT_SIZE * 15),
                 child: IZIImage(
                   urlImage.toString(),
                   height: IZIDimensions.ONE_UNIT_SIZE * 80,
@@ -1084,28 +1150,7 @@ class IZICard extends StatelessWidget {
               radiusCard ?? IZIDimensions.BLUR_RADIUS_5X * 2,
             ),
           ),
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(0, 2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(0, -2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(-2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-          ],
+          boxShadow: IZIOther().boxShadow,
         ),
         child: Column(
           children: [
@@ -1212,188 +1257,9 @@ class IZICard extends StatelessWidget {
           borderRadius: BorderRadius.circular(
             radiusCard ?? IZIDimensions.BLUR_RADIUS_4X,
           ),
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(0, 2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(0, -2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(-2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-          ],
+          boxShadow: IZIOther().boxShadow,
         ),
-        child: Column(
-          children: [
-            //TODO: truyền child vào ko cần custom
-            Container(
-              padding: EdgeInsets.only(
-                bottom: IZIDimensions.ONE_UNIT_SIZE * 10,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    //TODO: Truyen vao
-                    child: Text(
-                      "Tài khoản",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                  if (!IZIValidate.nullOrEmpty(row1Right))
-                    Expanded(
-                      flex: 3,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IZIImage(
-                            ImagesPath.logoMomo,
-                            height: IZIDimensions.ONE_UNIT_SIZE * 30,
-                            width: IZIDimensions.ONE_UNIT_SIZE * 30,
-                          ),
-                          Flexible(
-                            child: Text(
-                              row1Right.toString(),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(
-                bottom: IZIDimensions.ONE_UNIT_SIZE * 10,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      "Tên người nhận",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                  if (!IZIValidate.nullOrEmpty(row2Right))
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        row2Right.toString(),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(
-                bottom: IZIDimensions.ONE_UNIT_SIZE * 40,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      "Số điện thoại",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                  if (!IZIValidate.nullOrEmpty(row3Right))
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        row3Right.toString(),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              height: IZIDimensions.ONE_UNIT_SIZE * 2,
-              color: ColorResources.BLACK.withOpacity(.4),
-            ),
-            IZIInput(
-              disbleError: true,
-              type: IZIInputType.PRICE,
-              placeHolder: "Nhập số tiền muốn chuyển",
-              onChanged: onChanged1CardTransfer,
-            ),
-            Container(
-              width: double.infinity,
-              height: IZIDimensions.ONE_UNIT_SIZE * 2,
-              color: ColorResources.BLACK.withOpacity(.4),
-            ),
-            IZIInput(
-              disbleError: true,
-              type: IZIInputType.TEXT,
-              placeHolder: "Nhập nội dung (Không bắt buộc)",
-              onChanged: onChanged2CardTransfer,
-            ),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(
-                bottom: IZIDimensions.ONE_UNIT_SIZE * 50,
-              ),
-              height: IZIDimensions.ONE_UNIT_SIZE * 2,
-              color: ColorResources.BLACK.withOpacity(.4),
-            ),
-          ],
-        ),
+        child: child,
       );
     } else if (type == IZICardType.CARD_CAPITAL_CONTRIBUTION) {
       return Container(
@@ -1412,11 +1278,7 @@ class IZICard extends StatelessWidget {
               : BorderRadius.circular(
                   IZIDimensions.BLUR_RADIUS_3X,
                 ),
-          // Đổ bóng default
-          // border: Border.all(
-          //   width: widthBorder ?? IZIDimensions.ONE_UNIT_SIZE * 4,
-          //   color: colorBorder ?? ColorResources.GREY,
-          // ),
+          boxShadow: IZIOther().boxShadow,
         ),
         child: Row(
           children: [
@@ -1515,41 +1377,17 @@ class IZICard extends StatelessWidget {
         ),
       );
     } else if (type == IZICardType.CARD_CONTRIBUTION) {
-      //TODO: SU DUNG FROSTED GLASS
-      return Container(
+      return GlassContainer.frostedGlass(
+        frostedOpacity: 0.1,
+        height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 80,
         width: widthCard ?? double.infinity,
         margin: marginCard ?? const EdgeInsets.all(0),
         padding: paddingCard ??
             EdgeInsets.all(
               IZIDimensions.ONE_UNIT_SIZE * 20,
             ),
-        decoration: BoxDecoration(
-          color: colorBG ?? ColorResources.CARD_CAPITAL_CONTRIBUTION,
-          borderRadius: BorderRadius.circular(
-            radiusCard ?? IZIDimensions.BLUR_RADIUS_2X,
-          ),
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(0, 2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(0, -2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(-2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-          ],
+        borderRadius: BorderRadius.circular(
+          radiusCard ?? IZIDimensions.BLUR_RADIUS_2X,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -1596,28 +1434,7 @@ class IZICard extends StatelessWidget {
           borderRadius: BorderRadius.circular(
             radiusCard ?? IZIDimensions.BLUR_RADIUS_2X,
           ),
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(0, 2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(0, -2),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-            BoxShadow(
-              offset: const Offset(-2, 0),
-              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-              color: ColorResources.BLACK.withAlpha(30),
-            ),
-          ],
+          boxShadow: IZIOther().boxShadow,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -1810,19 +1627,3 @@ class IZICard extends StatelessWidget {
     return getCard(context, cardType!);
   }
 }
-
-// Widget _buildLeft() {
-//   return Container(
-//     child: Center(
-//       child: Text('LEFT PART'),
-//     ),
-//   );
-// }
-
-// Widget _buildRight() {
-//   return Container(
-//     child: Center(
-//       child: Icon(Icons.airplanemode_active),
-//     ),
-//   );
-// }

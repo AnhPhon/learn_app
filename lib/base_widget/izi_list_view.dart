@@ -88,13 +88,14 @@ class IZIListView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IZIText(
-                text: label.toString(),
-                style: TextStyle(
-                  fontSize: IZIDimensions.FONT_SIZE_H5,
-                  fontWeight: FontWeight.bold,
+              if (!IZIValidate.nullOrEmpty(label))
+                IZIText(
+                  text: label.toString(),
+                  style: TextStyle(
+                    fontSize: IZIDimensions.FONT_SIZE_H5,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
               action ?? const SizedBox(),
             ],
           ),
