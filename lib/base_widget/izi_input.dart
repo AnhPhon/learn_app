@@ -399,7 +399,7 @@ class _IZIInputState extends State<IZIInput> {
                       isDense: true,
                       labelText: widget.isLegend == true ? widget.label : null,
                       labelStyle: TextStyle(
-                        fontSize: focusNode!.hasFocus ? IZIDimensions.FONT_SIZE_H4 : IZIDimensions.FONT_SIZE_SPAN,
+                        fontSize: focusNode!.hasFocus ? IZIDimensions.FONT_SIZE_H5 : IZIDimensions.FONT_SIZE_SPAN,
                         fontWeight: focusNode!.hasFocus ? FontWeight.w600 : FontWeight.normal,
                         color: ColorResources.BLACK,
                       ),

@@ -24,7 +24,7 @@ class IZIOtp extends StatefulWidget {
     this.buttonLabel,
     this.isEnabled = false,
     this.lables = const [],
-    this.colorSMS = ColorResources.CIRCLE_COLOR_BG3,
+    this.colorSMS = ColorResources.BLACK,
   }) : super(key: key);
   final List<Widget>? lables;
   final bool Function()? validate;
@@ -135,18 +135,11 @@ class _IZIOtpState extends State<IZIOtp> {
                     vertical: IZIDimensions.SPACE_SIZE_4X,
                   ),
                   child: PinCodeTextField(
-                    // validator: (val) {
-                    //   if (val!.length < 6) {
-                    //     return "";
-                    //   } else {
-                    //     return null;
-                    //   }
-                    // },
                     appContext: context,
                     length: widget.codeLength,
-                    obscureText: true,
-                    obscuringCharacter: '*',
-                    blinkWhenObscuring: true,
+                    obscureText: false,
+                    // obscuringCharacter: '*',
+                    blinkWhenObscuring: false,
                     animationType: AnimationType.fade,
                     pinTheme: PinTheme(
                       shape: PinCodeFieldShape.box,

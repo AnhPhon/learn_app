@@ -11,7 +11,6 @@ class IZIListView extends StatelessWidget {
     required this.itemCount,
     required this.builder,
     this.type = IZIListViewType.LISTVIEW,
-    this.onTap,
     this.label,
     this.action,
     this.crossAxisCount = 2,
@@ -28,7 +27,6 @@ class IZIListView extends StatelessWidget {
   final IZIListViewType type;
   // final List<dynamic> data;
   final int itemCount;
-  final Function? onTap;
   final String? label;
   final Widget? action;
   final int? crossAxisCount;
@@ -66,14 +64,7 @@ class IZIListView extends StatelessWidget {
       itemCount: itemCount,
       physics: physics, //const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            if (IZIValidate.nullOrEmpty(onTap)) {
-              onTap!();
-            }
-          },
-          child: builder(index),
-        );
+        return builder(index);
       },
     );
   }
@@ -85,18 +76,23 @@ class IZIListView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IZIText(
-                text: label.toString(),
-                style: TextStyle(
-                  fontSize: IZIDimensions.FONT_SIZE_H5,
-                  fontWeight: FontWeight.bold,
+          Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: IZIDimensions.SPACE_SIZE_2X,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IZIText(
+                  text: label.toString(),
+                  style: TextStyle(
+                    fontSize: IZIDimensions.FONT_SIZE_H5,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              action ?? const SizedBox(),
-            ],
+                action ?? const SizedBox(),
+              ],
+            ),
           ),
           Container(
             height: scrollDirection == Axis.horizontal ? height ?? IZIDimensions.ONE_UNIT_SIZE * 180 + padding! : null,

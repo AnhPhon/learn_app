@@ -242,147 +242,161 @@ class IZICard extends StatelessWidget {
 
   Widget getCard(BuildContext context, IZICardType type) {
     if (type == IZICardType.CARD_PAYMENT) {
-      return Container(
-        margin: marginCard ?? const EdgeInsets.all(0),
-        padding: EdgeInsets.all(
-          IZIDimensions.SPACE_SIZE_2X,
-        ),
-        decoration: BoxDecoration(
-          color: colorBG ?? ColorResources.WHITE,
-          boxShadow: [
-            BoxShadow(
-              color: ColorResources.BLACK.withAlpha(40),
-              blurRadius: 10,
-              offset: const Offset(0, 2),
-            ),
-          ],
-          // border: Border.all(
-          //   width: 2,
-          //   color: colorBorder ?? ColorResources.GREY,
-          // ),
-          borderRadius: BorderRadius.circular(
-            radiusCard ?? IZIDimensions.BORDER_RADIUS_3X,
+      return GestureDetector(
+        onTap:(){
+          if(!IZIValidate.nullOrEmpty(onTap)){
+            onTap!();
+          }
+        },
+        child: Container(
+          margin: marginCard ?? const EdgeInsets.all(0),
+          padding: EdgeInsets.all(
+            IZIDimensions.SPACE_SIZE_2X,
           ),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: IZIDimensions.ONE_UNIT_SIZE * 50,
-              height: IZIDimensions.ONE_UNIT_SIZE * 60,
-              constraints: BoxConstraints(
-                maxWidth: IZIDimensions.ONE_UNIT_SIZE * 50,
-                maxHeight: IZIDimensions.ONE_UNIT_SIZE * 60,
+          decoration: BoxDecoration(
+            color: colorBG ?? ColorResources.WHITE,
+            boxShadow: [
+              BoxShadow(
+                color: ColorResources.BLACK.withAlpha(40),
+                blurRadius: 10,
+                offset: const Offset(0, 2),
               ),
-              margin: EdgeInsets.only(
-                right: IZIDimensions.SPACE_SIZE_2X,
-              ),
-              child: statusMoney == IZIStatusMoney.DRAW ? IZIImage(ImagesPath.draw) : IZIImage(ImagesPath.reCharge),
+            ],
+            // border: Border.all(
+            //   width: 2,
+            //   color: colorBorder ?? ColorResources.GREY,
+            // ),
+            borderRadius: BorderRadius.circular(
+              radiusCard ?? IZIDimensions.BORDER_RADIUS_3X,
             ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (!IZIValidate.nullOrEmpty(row1Left))
-                        Expanded(
-                          child: IZIText(
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLine: 2,
-                            text: row1Left.toString(),
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                      Expanded(
-                        child: getStatusMoney(statusMoney!),
-                      ),
-                    ],
-                  ),
-                  if (!IZIValidate.nullOrEmpty(row2Left) || !IZIValidate.nullOrEmpty(row2Right))
-                    Row(
-                      children: [
-                        if (!IZIValidate.nullOrEmpty(row2Left))
-                          Expanded(
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: IZIDimensions.BLUR_RADIUS_2X),
-                              child: IZIText(
-                                text: row2Left.toString(),
-                                maxLine: 2,
-                              ),
-                            ),
-                          ),
-                        if (!IZIValidate.nullOrEmpty(row2Right))
-                          Expanded(
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: IZIDimensions.BLUR_RADIUS_2X),
-                              child: IZIText(
-                                text: row2Right.toString(),
-                                maxLine: 1,
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  if (!IZIValidate.nullOrEmpty(row3Left) || !IZIValidate.nullOrEmpty(row3Right))
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: IZIDimensions.ONE_UNIT_SIZE * 50,
+                height: IZIDimensions.ONE_UNIT_SIZE * 60,
+                constraints: BoxConstraints(
+                  maxWidth: IZIDimensions.ONE_UNIT_SIZE * 50,
+                  maxHeight: IZIDimensions.ONE_UNIT_SIZE * 60,
+                ),
+                margin: EdgeInsets.only(
+                  right: IZIDimensions.SPACE_SIZE_2X,
+                ),
+                child: statusMoney == IZIStatusMoney.DRAW ? IZIImage(ImagesPath.draw) : IZIImage(ImagesPath.reCharge),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        if (!IZIValidate.nullOrEmpty(row3Left))
+                        if (!IZIValidate.nullOrEmpty(row1Left))
                           Expanded(
                             child: IZIText(
-                              text: row3Left.toString(),
-                              maxLine: 1,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLine: 2,
+                              text: row1Left.toString(),
+                              textAlign: TextAlign.start,
                             ),
                           ),
                         Expanded(
-                          child: getStatusPayment(statusPayment!),
-                        )
+                          child: getStatusMoney(statusMoney!),
+                        ),
                       ],
                     ),
-                ],
-              ),
-            )
-          ],
+                    if (!IZIValidate.nullOrEmpty(row2Left) || !IZIValidate.nullOrEmpty(row2Right))
+                      Row(
+                        children: [
+                          if (!IZIValidate.nullOrEmpty(row2Left))
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: IZIDimensions.BLUR_RADIUS_2X),
+                                child: IZIText(
+                                  text: row2Left.toString(),
+                                  maxLine: 2,
+                                ),
+                              ),
+                            ),
+                          if (!IZIValidate.nullOrEmpty(row2Right))
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: IZIDimensions.BLUR_RADIUS_2X),
+                                child: IZIText(
+                                  text: row2Right.toString(),
+                                  maxLine: 1,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    if (!IZIValidate.nullOrEmpty(row3Left) || !IZIValidate.nullOrEmpty(row3Right))
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          if (!IZIValidate.nullOrEmpty(row3Left))
+                            Expanded(
+                              child: IZIText(
+                                text: row3Left.toString(),
+                                maxLine: 1,
+                              ),
+                            ),
+                          Expanded(
+                            child: getStatusPayment(statusPayment!),
+                          )
+                        ],
+                      ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       );
     } else if (type == IZICardType.CARD_CIRCLE) {
-      return Container(
-        height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 140,
-        width: widthCard ?? IZIDimensions.ONE_UNIT_SIZE * 120,
-        margin: marginCard ?? const EdgeInsets.all(0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
-              width: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
-              decoration: BoxDecoration(
-                color: colorBG,
-                shape: BoxShape.circle,
-              ),
-              child: getImageUrlType(imageUrlType!),
-            ),
-            if (!IZIValidate.nullOrEmpty(row1Left))
-              Flexible(
-                child: Container(
-                  margin: EdgeInsets.only(
-                    top: IZIDimensions.SPACE_SIZE_1X,
-                  ),
-                  child: IZIText(
-                    maxLine: 2,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: IZIDimensions.FONT_SIZE_H6,
-                    ),
-                    text: row1Left.toString(),
-                  ),
+      return GestureDetector(
+        onTap:(){
+          if(!IZIValidate.nullOrEmpty(onTap)){
+            onTap!();
+          }
+        },
+        child: Container(
+          height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 140,
+          width: widthCard ?? IZIDimensions.ONE_UNIT_SIZE * 120,
+          margin: marginCard ?? const EdgeInsets.all(0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
+                width: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
+                decoration: BoxDecoration(
+                  color: colorBG,
+                  shape: BoxShape.circle,
                 ),
-              )
-          ],
+                child: getImageUrlType(imageUrlType!),
+              ),
+              if (!IZIValidate.nullOrEmpty(row1Left))
+                Flexible(
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      top: IZIDimensions.SPACE_SIZE_1X,
+                    ),
+                    child: IZIText(
+                      maxLine: 2,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: IZIDimensions.FONT_SIZE_H6,
+                      ),
+                      text: row1Left.toString(),
+                    ),
+                  ),
+                )
+            ],
+          ),
         ),
       );
     } else if (type == IZICardType.CARD) {
@@ -774,126 +788,133 @@ class IZICard extends StatelessWidget {
         ),
       );
     } else if (type == IZICardType.CARD_CONTACT) {
-      return Container(
-        margin: marginCard ?? const EdgeInsets.all(0),
-        padding: EdgeInsets.symmetric(
-          horizontal: IZIDimensions.SPACE_SIZE_3X,
-        ),
-        height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 140,
-        width: widthCard ?? double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
-                  width: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
-                  decoration: BoxDecoration(
-                    color: colorBG,
-                    shape: BoxShape.circle,
-                  ),
-                  child: IZIText(
-                    text: title ?? '',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: ColorResources.RED, fontWeight: FontWeight.bold, fontSize: IZIDimensions.FONT_SIZE_H4),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(
-                      left: IZIDimensions.SPACE_SIZE_1X,
+      return GestureDetector(
+        onTap:(){
+          if(!IZIValidate.nullOrEmpty(onTap)){
+            onTap!();
+          }
+        },
+        child: Container(
+          margin: marginCard ?? const EdgeInsets.all(0),
+          padding: EdgeInsets.symmetric(
+            horizontal: IZIDimensions.SPACE_SIZE_3X,
+          ),
+          height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 140,
+          width: widthCard ?? double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
+                    width: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
+                    decoration: BoxDecoration(
+                      color: colorBG,
+                      shape: BoxShape.circle,
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            if (!IZIValidate.nullOrEmpty(row1Left))
-                              Flexible(
-                                child: IZIText(
-                                  maxLine: 2,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: IZIDimensions.FONT_SIZE_H6,
-                                  ),
-                                  text: row1Left.toString(),
-                                ),
-                              ),
-                            if (!IZIValidate.nullOrEmpty(row1Right))
-                              Flexible(
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                    left: IZIDimensions.SPACE_SIZE_1X,
-                                  ),
+                    child: IZIText(
+                      text: title ?? '',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: ColorResources.RED, fontWeight: FontWeight.bold, fontSize: IZIDimensions.FONT_SIZE_H4),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        left: IZIDimensions.SPACE_SIZE_1X,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              if (!IZIValidate.nullOrEmpty(row1Left))
+                                Flexible(
                                   child: IZIText(
-                                    maxLine: 1,
+                                    maxLine: 2,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: IZIDimensions.FONT_SIZE_H6,
                                     ),
-                                    text: row1Right.toString(),
+                                    text: row1Left.toString(),
                                   ),
                                 ),
-                              ),
-                          ],
-                        ),
-                        if (!IZIValidate.nullOrEmpty(row2Right) || !IZIValidate.nullOrEmpty(row2Left))
-                          Row(
-                            children: [
-                              if (!IZIValidate.nullOrEmpty(row2Left))
-                                Flexible(
-                                  child: Container(
-                                    padding: EdgeInsets.only(
-                                      top: IZIDimensions.SPACE_SIZE_1X,
-                                    ),
-                                    child: IZIText(
-                                      maxLine: 2,
-                                      style: TextStyle(
-                                        fontSize: IZIDimensions.FONT_SIZE_H6,
-                                        color: ColorResources.BLACK.withOpacity(0.6),
-                                      ),
-                                      text: row2Left.toString(),
-                                    ),
-                                  ),
-                                ),
-                              if (!IZIValidate.nullOrEmpty(row2Right))
+                              if (!IZIValidate.nullOrEmpty(row1Right))
                                 Flexible(
                                   child: Container(
                                     padding: EdgeInsets.only(
                                       left: IZIDimensions.SPACE_SIZE_1X,
-                                      top: IZIDimensions.SPACE_SIZE_1X,
                                     ),
                                     child: IZIText(
                                       maxLine: 1,
                                       style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         fontSize: IZIDimensions.FONT_SIZE_H6,
-                                        color: ColorResources.BLACK.withOpacity(0.6),
                                       ),
-                                      text: row2Right.toString(),
+                                      text: row1Right.toString(),
                                     ),
                                   ),
                                 ),
                             ],
                           ),
-                      ],
+                          if (!IZIValidate.nullOrEmpty(row2Right) || !IZIValidate.nullOrEmpty(row2Left))
+                            Row(
+                              children: [
+                                if (!IZIValidate.nullOrEmpty(row2Left))
+                                  Flexible(
+                                    child: Container(
+                                      padding: EdgeInsets.only(
+                                        top: IZIDimensions.SPACE_SIZE_1X,
+                                      ),
+                                      child: IZIText(
+                                        maxLine: 2,
+                                        style: TextStyle(
+                                          fontSize: IZIDimensions.FONT_SIZE_H6,
+                                          color: ColorResources.BLACK.withOpacity(0.6),
+                                        ),
+                                        text: row2Left.toString(),
+                                      ),
+                                    ),
+                                  ),
+                                if (!IZIValidate.nullOrEmpty(row2Right))
+                                  Flexible(
+                                    child: Container(
+                                      padding: EdgeInsets.only(
+                                        left: IZIDimensions.SPACE_SIZE_1X,
+                                        top: IZIDimensions.SPACE_SIZE_1X,
+                                      ),
+                                      child: IZIText(
+                                        maxLine: 1,
+                                        style: TextStyle(
+                                          fontSize: IZIDimensions.FONT_SIZE_H6,
+                                          color: ColorResources.BLACK.withOpacity(0.6),
+                                        ),
+                                        text: row2Right.toString(),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                        ],
+                      ),
                     ),
                   ),
+                  if (IZIValidate.nullOrEmpty(actions)) const SizedBox() else ...actions!,
+                ],
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  left: IZIDimensions.ONE_UNIT_SIZE * 40,
                 ),
-                if (IZIValidate.nullOrEmpty(actions)) const SizedBox() else ...actions!,
-              ],
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                left: IZIDimensions.ONE_UNIT_SIZE * 40,
-              ),
-              child: Divider(
-                color: ColorResources.BLACK.withOpacity(0.7),
-              ),
-            )
-          ],
+                child: Divider(
+                  color: ColorResources.BLACK.withOpacity(0.7),
+                ),
+              )
+            ],
+          ),
         ),
       );
     } else if (type == IZICardType.CARD_NOTIFICATION) {
@@ -1411,124 +1432,131 @@ class IZICard extends StatelessWidget {
         ),
       );
     } else if (type == IZICardType.CARD_CAPITAL_CONTRIBUTION) {
-      return Container(
-        height: heightCard,
-        width: widthCard,
-        margin: marginCard ?? const EdgeInsets.all(0),
-        padding: EdgeInsets.all(
-          IZIDimensions.SPACE_SIZE_3X,
-        ),
-        decoration: BoxDecoration(
-          color: colorBG ?? ColorResources.WHITE,
-          borderRadius: !IZIValidate.nullOrEmpty(radiusCard)
-              ? BorderRadius.circular(
-                  radiusCard!,
-                )
-              : BorderRadius.circular(
-                  IZIDimensions.BLUR_RADIUS_3X,
+      return GestureDetector(
+        onTap:(){
+          if(!IZIValidate.nullOrEmpty(onTap)){
+            onTap!();
+          }
+        },
+        child: Container(
+          height: heightCard,
+          width: widthCard,
+          margin: marginCard ?? const EdgeInsets.all(0),
+          padding: EdgeInsets.all(
+            IZIDimensions.SPACE_SIZE_3X,
+          ),
+          decoration: BoxDecoration(
+            color: colorBG ?? ColorResources.WHITE,
+            borderRadius: !IZIValidate.nullOrEmpty(radiusCard)
+                ? BorderRadius.circular(
+                    radiusCard!,
+                  )
+                : BorderRadius.circular(
+                    IZIDimensions.BLUR_RADIUS_3X,
+                  ),
+            // Đổ bóng default
+            // border: Border.all(
+            //   width: widthBorder ?? IZIDimensions.ONE_UNIT_SIZE * 4,
+            //   color: colorBorder ?? ColorResources.GREY,
+            // ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
+                width: widthCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
+                margin: EdgeInsets.only(
+                  right: IZIDimensions.SPACE_SIZE_3X,
                 ),
-          // Đổ bóng default
-          // border: Border.all(
-          //   width: widthBorder ?? IZIDimensions.ONE_UNIT_SIZE * 4,
-          //   color: colorBorder ?? ColorResources.GREY,
-          // ),
-        ),
-        child: Row(
-          children: [
-            Container(
-              height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
-              width: widthCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
-              margin: EdgeInsets.only(
-                right: IZIDimensions.SPACE_SIZE_3X,
+                child: IZIValidate.nullOrEmpty(
+                  imageUrlType,
+                )
+                    ? const SizedBox()
+                    : getImageUrlType(
+                        imageUrlType!,
+                        fit: BoxFit.contain,
+                      ),
               ),
-              child: IZIValidate.nullOrEmpty(
-                imageUrlType,
-              )
-                  ? const SizedBox()
-                  : getImageUrlType(
-                      imageUrlType!,
-                      fit: BoxFit.contain,
-                    ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      if (!IZIValidate.nullOrEmpty(row1Left))
-                        Flexible(
-                          child: IZIText(
-                            text: row1Left!,
-                            maxLine: 2,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: IZIDimensions.FONT_SIZE_H6,
-                            ),
-                          ),
-                        ),
-                      if (!IZIValidate.nullOrEmpty(row1Right))
-                        Flexible(
-                          child: Container(
-                            padding: EdgeInsets.only(
-                              left: IZIDimensions.SPACE_SIZE_1X,
-                            ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        if (!IZIValidate.nullOrEmpty(row1Left))
+                          Flexible(
                             child: IZIText(
-                              text: row1Right!,
+                              text: row1Left!,
+                              maxLine: 2,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: IZIDimensions.FONT_SIZE_H6,
                               ),
                             ),
                           ),
-                        ),
-                    ],
-                  ),
-                  if (!IZIValidate.nullOrEmpty(row2Left) || !IZIValidate.nullOrEmpty(row2Right))
-                    Row(
-                      children: [
-                        if (!IZIValidate.nullOrEmpty(row2Left))
-                          Flexible(
-                            child: IZIText(
-                              text: row2Left!,
-                              style: TextStyle(
-                                fontSize: IZIDimensions.FONT_SIZE_H6,
-                                color: ColorResources.BLACK.withOpacity(0.6),
-                              ),
-                            ),
-                          ),
-                        if (!IZIValidate.nullOrEmpty(row2Right))
+                        if (!IZIValidate.nullOrEmpty(row1Right))
                           Flexible(
                             child: Container(
                               padding: EdgeInsets.only(
                                 left: IZIDimensions.SPACE_SIZE_1X,
                               ),
                               child: IZIText(
-                                text: row2Right!,
+                                text: row1Right!,
                                 style: TextStyle(
+                                  fontWeight: FontWeight.bold,
                                   fontSize: IZIDimensions.FONT_SIZE_H6,
-                                  color: ColorResources.BLACK.withOpacity(0.6),
                                 ),
                               ),
                             ),
                           ),
                       ],
                     ),
-                ],
-              ),
-            ),
-            if (!IZIValidate.nullOrEmpty(groupValue) && !IZIValidate.nullOrEmpty(valRadio))
-              Radio(
-                value: valRadio,
-                groupValue: groupValue,
-                onChanged: onChanged,
-                activeColor: ColorResources.CIRCLE_COLOR_BG3,
-                focusColor: ColorResources.CIRCLE_COLOR_BG3,
-                fillColor: MaterialStateProperty.all(
-                  ColorResources.CIRCLE_COLOR_BG4,
+                    if (!IZIValidate.nullOrEmpty(row2Left) || !IZIValidate.nullOrEmpty(row2Right))
+                      Row(
+                        children: [
+                          if (!IZIValidate.nullOrEmpty(row2Left))
+                            Flexible(
+                              child: IZIText(
+                                text: row2Left!,
+                                style: TextStyle(
+                                  fontSize: IZIDimensions.FONT_SIZE_H6,
+                                  color: ColorResources.BLACK.withOpacity(0.6),
+                                ),
+                              ),
+                            ),
+                          if (!IZIValidate.nullOrEmpty(row2Right))
+                            Flexible(
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                  left: IZIDimensions.SPACE_SIZE_1X,
+                                ),
+                                child: IZIText(
+                                  text: row2Right!,
+                                  style: TextStyle(
+                                    fontSize: IZIDimensions.FONT_SIZE_H6,
+                                    color: ColorResources.BLACK.withOpacity(0.6),
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                  ],
                 ),
-              )
-          ],
+              ),
+              if (!IZIValidate.nullOrEmpty(groupValue) && !IZIValidate.nullOrEmpty(valRadio))
+                Radio(
+                  value: valRadio,
+                  groupValue: groupValue,
+                  onChanged: onChanged,
+                  activeColor: ColorResources.CIRCLE_COLOR_BG3,
+                  focusColor: ColorResources.CIRCLE_COLOR_BG3,
+                  fillColor: MaterialStateProperty.all(
+                    ColorResources.CIRCLE_COLOR_BG4,
+                  ),
+                )
+            ],
+          ),
         ),
       );
     } else if (type == IZICardType.CARD_WITHDRAWAL) {

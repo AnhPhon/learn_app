@@ -39,6 +39,7 @@ class IZIDialog {
                   ),
                   onTap: () {
                     onCancel!();
+                    Get.back();
                   },
                 ),
               if (!IZIValidate.nullOrEmpty(onConfirm))
@@ -53,6 +54,7 @@ class IZIDialog {
                   label: "Đồng ý",
                   onTap: () {
                     onConfirm!();
+                    Get.back();
                   },
                 ),
             ],
