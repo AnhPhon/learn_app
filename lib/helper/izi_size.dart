@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class IZISize {
@@ -23,7 +24,8 @@ class IZISize {
   }
 
   static Size get size {
-    return _size;
+    return Get.size;
+    // return _size;
   }
 
   static void update({required double width, required double height}) {

@@ -7,10 +7,8 @@ import 'package:template/utils/color_resources.dart';
 class IZITabBar<T> extends StatelessWidget {
   const IZITabBar({
     Key? key,
-    required this.data,
-    required this.itemCount,
+    required this.items,
     required this.onTapChangedTabbar,
-    required this.label,
     this.currentIndex = 0,
     this.onTap,
     this.heightTabView,
@@ -22,10 +20,8 @@ class IZITabBar<T> extends StatelessWidget {
     this.colorText,
   }) : super(key: key);
 
-  final List<T> data;
-  final int itemCount;
+  final List<T> items;
   final int? currentIndex;
-  final String Function(int index) label;
   final Function? onTap;
   final Function(int index) onTapChangedTabbar;
   final double? heightTabView;
@@ -51,7 +47,7 @@ class IZITabBar<T> extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           ...List.generate(
-            itemCount,
+            items.length,
             (index) => GestureDetector(
               onTap: () {
                 onTapChangedTabbar(index);
@@ -62,7 +58,7 @@ class IZITabBar<T> extends StatelessWidget {
                   vertical: IZIDimensions.ONE_UNIT_SIZE * 5,
                 ),
                 height: double.infinity,
-                width: widthTabBar != null ? (widthTabBar!.roundToDouble() / (itemCount + .5)) : IZIDimensions.ONE_UNIT_SIZE * 580.roundToDouble() / (itemCount + .5),
+                width: widthTabBar != null ? (widthTabBar!.roundToDouble() / (items.length + .5)) : IZIDimensions.ONE_UNIT_SIZE * 580.roundToDouble() / (items.length + .5),
                 decoration: BoxDecoration(
                   color: colorTabBar ?? ColorResources.WHITE,
                   borderRadius: !isUnderLine!
@@ -83,7 +79,7 @@ class IZITabBar<T> extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    label(index),
+                    items[index].toString(),
                     style: TextStyle(
                       color: currentIndex == index ? colorText ?? ColorResources.MY_ORDER_LABEL : ColorResources.GREY,
                       fontWeight: currentIndex == index ? FontWeight.w600 : FontWeight.normal,

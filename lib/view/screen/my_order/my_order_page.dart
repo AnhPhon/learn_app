@@ -35,21 +35,15 @@ class MyOrderPage extends GetView<MyOrderController> {
           return Column(
             children: [
               IZITabBar(
-                //TODO: items
-                data: controller.tieuDe,
-                //TODO: ko cần thiết
-                itemCount: controller.tieuDe.length,
+                items: controller.tieuDe,
                 onTapChangedTabbar: (index) => controller.onChangeTab(index: index),
                 currentIndex: controller.currentIndex,
-                //TODO: label.
-                label: (index) => controller.tieuDe[index].toString(),
               ),
               IZITabView(
                 onRefresh: controller.onRefresh,
                 onLoading: controller.onLoading,
                 refreshController: controller.refreshControllerList![controller.currentIndex],
                 enablePullDown: true,
-                //TODO: Dư item count and
                 itemCount: controller.data.length,
                 isLoading: controller.isLoading,
                 builder: (index) {
@@ -61,20 +55,28 @@ class MyOrderPage extends GetView<MyOrderController> {
                     urlImage: "https://i.ytimg.com/vi/QOcNo0DC7Qg/maxresdefault.jpg",
                     cardType: IZICardType.CARD_ORDER,
                     row1Left: "Đơn hàng 1",
-                    //TODO: truyền vào sản phẩm tiển khai ngang. truyền vào ...
                     row2Left: "200",
                     row3Left: "22/07/2021",
                     row2Right: "100.460.000",
+                    widgetLine: Container(
+                      margin: EdgeInsets.symmetric(
+                        horizontal: IZIDimensions.SPACE_SIZE_2X,
+                      ),
+                      width: IZIDimensions.ONE_UNIT_SIZE * 3,
+                      height: IZIDimensions.ONE_UNIT_SIZE * 30,
+                      color: ColorResources.BLACK.withOpacity(
+                        .5,
+                      ),
+                    ),
                     statusOrder: controller.data[index]["status"] == 1
-                        ? IZIStatusOrder.XAC_NHAN
+                        ? IZIStatusOrder.LABEL_GREEN
                         : controller.data[index]["status"] == 2
-                            ? IZIStatusOrder.HUY_DON
+                            ? IZIStatusOrder.LABEL_RED
                             : controller.data[index]["status"] == 3
-                                //TODO: fix thành label button green. fix all
-                                ? IZIStatusOrder.DANG_GIAO
+                                ? IZIStatusOrder.LABEL_BLUE
                                 : controller.data[index]["status"] == 4
-                                    ? IZIStatusOrder.DA_GIAO
-                                    : IZIStatusOrder.HUY_DON,
+                                    ? IZIStatusOrder.LABEL_ORANGE
+                                    : IZIStatusOrder.LABEL_ORANGE,
                   );
                 },
               ),

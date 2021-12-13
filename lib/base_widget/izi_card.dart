@@ -27,12 +27,11 @@ enum IZICardType {
   CARD_CAPITAL_CONTRIBUTION,
 }
 
-//TODO: fix thành izi status label color
 enum IZIStatusOrder {
-  XAC_NHAN,
-  HUY_DON,
-  DA_GIAO,
-  DANG_GIAO,
+  LABEL_GREEN,
+  LABEL_RED,
+  LABEL_BLUE,
+  LABEL_ORANGE,
 }
 
 enum IZIStatusPayment {
@@ -84,6 +83,7 @@ class IZICard extends StatelessWidget {
     this.title,
     this.actions,
     this.child,
+    this.widgetLine,
   }) : super(key: key);
 
   final String? row1Left;
@@ -110,6 +110,7 @@ class IZICard extends StatelessWidget {
   final String? title;
   final List<Widget>? actions;
   final Widget? child;
+  final Widget? widgetLine;
   final Function(dynamic val)? onChanged;
   final Function(String val)? onChanged1CardTransfer;
   final Function(String val)? onChanged2CardTransfer;
@@ -145,7 +146,7 @@ class IZICard extends StatelessWidget {
   }
 
   Widget getButtonOrder(IZIStatusOrder statusOrder) {
-    if (statusOrder == IZIStatusOrder.XAC_NHAN) {
+    if (statusOrder == IZIStatusOrder.LABEL_GREEN) {
       return IZIButton(
         colorBG: ColorResources.ORDER_XAC_NHAN,
         isEnabled: isEnabled,
@@ -159,7 +160,7 @@ class IZICard extends StatelessWidget {
         padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_1X),
       );
     }
-    if (statusOrder == IZIStatusOrder.DA_GIAO) {
+    if (statusOrder == IZIStatusOrder.LABEL_ORANGE) {
       return IZIButton(
         colorBG: ColorResources.ORDER_DA_GIAO,
         isEnabled: isEnabled,
@@ -173,7 +174,7 @@ class IZICard extends StatelessWidget {
         padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_1X),
       );
     }
-    if (statusOrder == IZIStatusOrder.HUY_DON) {
+    if (statusOrder == IZIStatusOrder.LABEL_RED) {
       return IZIButton(
         colorBG: ColorResources.ORDER_HUY_DON,
         isEnabled: isEnabled,
@@ -187,7 +188,7 @@ class IZICard extends StatelessWidget {
         padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_1X),
       );
     }
-    if (statusOrder == IZIStatusOrder.DANG_GIAO) {
+    if (statusOrder == IZIStatusOrder.LABEL_BLUE) {
       return IZIButton(
         colorBG: ColorResources.ORDER_DANG_GIAO,
         isEnabled: isEnabled,
@@ -207,7 +208,7 @@ class IZICard extends StatelessWidget {
   Widget getStatusMoney(IZIStatusMoney statusPrice) {
     if (statusPrice == IZIStatusMoney.DRAW && !IZIValidate.nullOrEmpty(row1Right)) {
       return IZIText(
-        text: '${row1Right.toString()}',
+        text: row1Right.toString(),
         style: const TextStyle(
           color: ColorResources.RED,
         ),
@@ -216,7 +217,7 @@ class IZICard extends StatelessWidget {
       );
     } else if (statusPrice == IZIStatusMoney.RECHARGE && !IZIValidate.nullOrEmpty(row1Right)) {
       return IZIText(
-        text: '${row1Right.toString()}',
+        text: row1Right.toString(),
         style: const TextStyle(
           color: ColorResources.CIRCLE_COLOR_BG3,
         ),
@@ -253,7 +254,10 @@ class IZICard extends StatelessWidget {
   Widget getCard(BuildContext context, IZICardType type) {
     if (type == IZICardType.CARD_PAYMENT) {
       return Container(
-        margin: marginCard ?? const EdgeInsets.all(0),
+        margin: marginCard ??
+            EdgeInsets.only(
+              bottom: IZIDimensions.SPACE_SIZE_2X,
+            ),
         padding: EdgeInsets.all(
           IZIDimensions.SPACE_SIZE_2X,
         ),
@@ -271,6 +275,8 @@ class IZICard extends StatelessWidget {
         child: Row(
           children: [
             Container(
+              height: IZIDimensions.ONE_UNIT_SIZE * 40,
+              width: IZIDimensions.ONE_UNIT_SIZE * 40,
               margin: EdgeInsets.only(right: IZIDimensions.SPACE_SIZE_1X),
               child: statusMoney == IZIStatusMoney.DRAW ? IZIImage(ImagesPath.draw) : IZIImage(ImagesPath.reCharge),
             ),
@@ -293,9 +299,10 @@ class IZICard extends StatelessWidget {
                             textAlign: TextAlign.start,
                           ),
                         ),
-                      Expanded(
-                        child: getStatusMoney(statusMoney!),
-                      ),
+                      if (!IZIValidate.nullOrEmpty(row1Right))
+                        Expanded(
+                          child: getStatusMoney(statusMoney!),
+                        ),
                     ],
                   ),
                   if (!IZIValidate.nullOrEmpty(row2Left) || !IZIValidate.nullOrEmpty(row2Right))
@@ -334,9 +341,10 @@ class IZICard extends StatelessWidget {
                               maxLine: 1,
                             ),
                           ),
-                        Expanded(
-                          child: getStatusPayment(statusPayment!),
-                        )
+                        if (!IZIValidate.nullOrEmpty(row3Right))
+                          Expanded(
+                            child: getStatusPayment(statusPayment!),
+                          )
                       ],
                     ),
                 ],
@@ -422,7 +430,7 @@ class IZICard extends StatelessWidget {
                               Expanded(
                                 child: Container(
                                   child: IZIText(
-                                    text: "${row2Left.toString()} sản phẩm",
+                                    text: row2Left.toString(),
                                     maxLine: 1,
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
@@ -431,21 +439,12 @@ class IZICard extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            Container(
-                              margin: EdgeInsets.symmetric(
-                                horizontal: IZIDimensions.SPACE_SIZE_2X,
-                              ),
-                              width: IZIDimensions.ONE_UNIT_SIZE * 3,
-                              height: IZIDimensions.ONE_UNIT_SIZE * 30,
-                              color: ColorResources.BLACK.withOpacity(
-                                .5,
-                              ),
-                            ),
+                            widgetLine ?? const SizedBox(),
                             if (!IZIValidate.nullOrEmpty(row2Right))
                               Expanded(
                                 child: Container(
                                   child: IZIText(
-                                    text: "${row2Right.toString()} đ",
+                                    text: row2Right.toString(),
                                     maxLine: 1,
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
@@ -518,7 +517,8 @@ class IZICard extends StatelessWidget {
                     maxLine: 2,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: IZIDimensions.FONT_SIZE_H6,
+                      fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
+                      fontWeight: FontWeight.w600,
                     ),
                     text: row1Left.toString(),
                   ),
@@ -614,7 +614,7 @@ class IZICard extends StatelessWidget {
                   if (!IZIValidate.nullOrEmpty(row2Left))
                     Expanded(
                       child: Text(
-                        "đ${row2Left.toString()}",
+                        row2Left.toString(),
                         style: TextStyle(
                           color: ColorResources.GREY,
                           fontSize: IZIDimensions.FONT_SIZE_SPAN,
@@ -649,7 +649,7 @@ class IZICard extends StatelessWidget {
                   if (!IZIValidate.nullOrEmpty(row3Left))
                     Expanded(
                       child: Text(
-                        "đ${row3Left.toString()}",
+                        row3Left.toString(),
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           color: ColorResources.RED,
@@ -663,7 +663,7 @@ class IZICard extends StatelessWidget {
                   if (!IZIValidate.nullOrEmpty(row3Right))
                     Expanded(
                       child: Text(
-                        "Đã bán ${row3Right.toString()}",
+                        row3Right.toString(),
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           color: ColorResources.BLACK.withOpacity(.7),
@@ -736,7 +736,7 @@ class IZICard extends StatelessWidget {
                   if (!IZIValidate.nullOrEmpty(row1Left))
                     Expanded(
                       child: IZIText(
-                        text: row1Left.toString(),
+                        text: row1Left.toString().toUpperCase(),
                         maxLine: 2,
                         style: TextStyle(
                           color: ColorResources.BLACK,
@@ -770,7 +770,7 @@ class IZICard extends StatelessWidget {
                   if (!IZIValidate.nullOrEmpty(row2Left))
                     Expanded(
                       child: Text(
-                        "đ${row2Left.toString()}",
+                        row2Left.toString(),
                         style: TextStyle(
                           color: ColorResources.GREY,
                           fontSize: IZIDimensions.FONT_SIZE_SPAN,
@@ -805,7 +805,7 @@ class IZICard extends StatelessWidget {
                   if (!IZIValidate.nullOrEmpty(row3Left))
                     Expanded(
                       child: Text(
-                        "đ${row3Left.toString()}",
+                        row3Left.toString(),
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           color: ColorResources.RED,
@@ -819,7 +819,7 @@ class IZICard extends StatelessWidget {
                   if (!IZIValidate.nullOrEmpty(row3Right))
                     Expanded(
                       child: Text(
-                        "Đã bán ${row3Right.toString()}",
+                        row3Right.toString(),
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           color: ColorResources.BLACK.withOpacity(.7),
@@ -840,7 +840,10 @@ class IZICard extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: IZIOther().boxShadow,
         ),
-        margin: marginCard ?? const EdgeInsets.all(0),
+        margin: marginCard ??
+            EdgeInsets.only(
+              bottom: IZIDimensions.SPACE_SIZE_2X,
+            ),
         width: double.infinity,
         child: TicketMaterial(
           shadowSize: 0,
@@ -854,7 +857,10 @@ class IZICard extends StatelessWidget {
       );
     } else if (type == IZICardType.CARD_CONTACT) {
       return Container(
-        margin: marginCard ?? const EdgeInsets.all(0),
+        margin: marginCard ??
+            EdgeInsets.only(
+              bottom: IZIDimensions.SPACE_SIZE_2X,
+            ),
         padding: EdgeInsets.symmetric(
           horizontal: IZIDimensions.SPACE_SIZE_3X,
         ),
@@ -873,10 +879,16 @@ class IZICard extends StatelessWidget {
                     color: colorBG,
                     shape: BoxShape.circle,
                   ),
-                  child: IZIText(
-                    text: title ?? '',
+                  child: Text(
+                    !IZIValidate.nullOrEmpty(title) ? title!.substring(0, 1) : "",
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: ColorResources.RED, fontWeight: FontWeight.bold, fontSize: IZIDimensions.FONT_SIZE_H4),
+                    style: TextStyle(
+                      color: ColorResources.RED,
+                      fontWeight: FontWeight.bold,
+                      fontSize: IZIDimensions.FONT_SIZE_H4,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
                 ),
                 Expanded(
@@ -969,6 +981,7 @@ class IZICard extends StatelessWidget {
                 left: IZIDimensions.ONE_UNIT_SIZE * 40,
               ),
               child: Divider(
+                thickness: IZIDimensions.ONE_UNIT_SIZE * 1.7,
                 color: ColorResources.BLACK.withOpacity(0.7),
               ),
             )
@@ -978,7 +991,10 @@ class IZICard extends StatelessWidget {
     } else if (type == IZICardType.CARD_NOTIFICATION) {
       return Container(
         width: double.infinity,
-        margin: marginCard ?? const EdgeInsets.all(0),
+        margin: marginCard ??
+            EdgeInsets.only(
+              bottom: IZIDimensions.SPACE_SIZE_2X,
+            ),
         padding: paddingCard ??
             EdgeInsets.fromLTRB(
               IZIDimensions.ONE_UNIT_SIZE * 30,
@@ -1146,7 +1162,10 @@ class IZICard extends StatelessWidget {
     } else if (type == IZICardType.CARD_NEWS) {
       return Container(
         width: double.infinity,
-        margin: marginCard ?? const EdgeInsets.all(0),
+        margin: marginCard ??
+            EdgeInsets.only(
+              bottom: IZIDimensions.SPACE_SIZE_4X,
+            ),
         decoration: BoxDecoration(
           color: ColorResources.WHITE,
           borderRadius: BorderRadius.only(
@@ -1272,7 +1291,10 @@ class IZICard extends StatelessWidget {
       return Container(
         height: heightCard,
         width: widthCard,
-        margin: marginCard ?? const EdgeInsets.all(0),
+        margin: marginCard ??
+            EdgeInsets.only(
+              bottom: IZIDimensions.SPACE_SIZE_2X,
+            ),
         padding: EdgeInsets.all(
           IZIDimensions.SPACE_SIZE_3X,
         ),
@@ -1387,10 +1409,14 @@ class IZICard extends StatelessWidget {
       );
     } else if (type == IZICardType.CARD_CONTRIBUTION) {
       return GlassContainer.frostedGlass(
-        frostedOpacity: 0.1,
-        height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 80,
-        width: widthCard ?? double.infinity,
-        margin: marginCard ?? const EdgeInsets.all(0),
+        frostedOpacity: 0.05,
+        blur: 20,
+        height: heightCard ?? IZIDimensions.iziSize.height * .1,
+        width: widthCard ?? IZIDimensions.iziSize.width,
+        margin: marginCard ??
+            EdgeInsets.only(
+              bottom: IZIDimensions.SPACE_SIZE_2X,
+            ),
         padding: paddingCard ??
             EdgeInsets.all(
               IZIDimensions.ONE_UNIT_SIZE * 20,
@@ -1433,7 +1459,10 @@ class IZICard extends StatelessWidget {
     } else if (type == IZICardType.CARD_WITHDRAWAL) {
       return Container(
         width: widthCard ?? double.infinity,
-        margin: marginCard ?? const EdgeInsets.all(0),
+        margin: marginCard ??
+            EdgeInsets.only(
+              bottom: IZIDimensions.SPACE_SIZE_2X,
+            ),
         padding: paddingCard ??
             EdgeInsets.all(
               IZIDimensions.ONE_UNIT_SIZE * 20,
@@ -1470,7 +1499,7 @@ class IZICard extends StatelessWidget {
                   Expanded(
                     flex: 4,
                     child: IZIText(
-                      text: "Ngày hết hạn ${row2Left.toString()}",
+                      text: row2Left.toString(),
                       maxLine: 1,
                       textAlign: TextAlign.start,
                       style: TextStyle(
@@ -1544,7 +1573,7 @@ class IZICard extends StatelessWidget {
               if (!IZIValidate.nullOrEmpty(row2Left))
                 Expanded(
                   child: Text(
-                    "Điều kiện:\nĐơn tối thiểu ${row2Left.toString()}đ",
+                    row2Left.toString(),
                     style: TextStyle(
                       color: ColorResources.BLACK,
                       fontSize: IZIDimensions.FONT_SIZE_SPAN * 1.1,
@@ -1554,7 +1583,7 @@ class IZICard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-              if (!IZIValidate.nullOrEmpty(row3Right))
+              if (!IZIValidate.nullOrEmpty(row2Right))
                 Expanded(
                   child: Text(
                     row2Right.toString(),
@@ -1579,7 +1608,7 @@ class IZICard extends StatelessWidget {
                     fontStyle: FontStyle.italic,
                   ),
                   textAlign: TextAlign.start,
-                  text: "Hạn sử dụng: ${row3Left.toString()}",
+                  text: row3Left.toString(),
                   maxLine: 1,
                 ),
               ),
