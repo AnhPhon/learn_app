@@ -142,7 +142,6 @@ class IZICard extends StatelessWidget {
     );
   }
 
-
   Widget getButtonOrder(IZIStatusOrder status) {
     if (status == IZIStatusOrder.XAC_NHAN) {
       return IZIButton(
@@ -195,7 +194,7 @@ class IZICard extends StatelessWidget {
     return Container();
   }
 
- Widget getStatusMoney(IZIStatusMoney statusPrice) {
+  Widget getStatusMoney(IZIStatusMoney statusPrice) {
     if (statusPrice == IZIStatusMoney.DRAW && !IZIValidate.nullOrEmpty(row1Right)) {
       return IZIText(
         text: '${row1Right.toString()}',
@@ -217,7 +216,6 @@ class IZICard extends StatelessWidget {
     }
     return const SizedBox();
   }
-
 
   Widget getImageUrlType(IZIImageUrlType type, {BoxFit? fit = BoxFit.cover}) {
     if (type == IZIImageUrlType.ICON && !IZIValidate.nullOrEmpty(icon)) {
@@ -242,12 +240,13 @@ class IZICard extends StatelessWidget {
     );
   }
 
-
   Widget getCard(BuildContext context, IZICardType type) {
     if (type == IZICardType.CARD_PAYMENT) {
       return Container(
         margin: marginCard ?? const EdgeInsets.all(0),
-        padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_2X,),
+        padding: EdgeInsets.all(
+          IZIDimensions.SPACE_SIZE_2X,
+        ),
         decoration: BoxDecoration(
           color: colorBG ?? ColorResources.WHITE,
           boxShadow: [
@@ -268,7 +267,15 @@ class IZICard extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              margin: EdgeInsets.only(right: IZIDimensions.SPACE_SIZE_1X),
+              width: IZIDimensions.ONE_UNIT_SIZE * 50,
+              height: IZIDimensions.ONE_UNIT_SIZE * 60,
+              constraints: BoxConstraints(
+                maxWidth: IZIDimensions.ONE_UNIT_SIZE * 50,
+                maxHeight: IZIDimensions.ONE_UNIT_SIZE * 60,
+              ),
+              margin: EdgeInsets.only(
+                right: IZIDimensions.SPACE_SIZE_2X,
+              ),
               child: statusMoney == IZIStatusMoney.DRAW ? IZIImage(ImagesPath.draw) : IZIImage(ImagesPath.reCharge),
             ),
             Expanded(
@@ -357,24 +364,24 @@ class IZICard extends StatelessWidget {
                 color: colorBG,
                 shape: BoxShape.circle,
               ),
-              child:  getImageUrlType(imageUrlType!),
+              child: getImageUrlType(imageUrlType!),
             ),
             if (!IZIValidate.nullOrEmpty(row1Left))
-            Flexible(
-              child: Container(
-                margin: EdgeInsets.only(
-                  top: IZIDimensions.SPACE_SIZE_1X,
-                ),
-                child: IZIText(
-                  maxLine: 2,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: IZIDimensions.FONT_SIZE_H6,
+              Flexible(
+                child: Container(
+                  margin: EdgeInsets.only(
+                    top: IZIDimensions.SPACE_SIZE_1X,
                   ),
-                  text: row1Left.toString(),
+                  child: IZIText(
+                    maxLine: 2,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: IZIDimensions.FONT_SIZE_H6,
+                    ),
+                    text: row1Left.toString(),
+                  ),
                 ),
-              ),
-            )
+              )
           ],
         ),
       );
@@ -627,18 +634,18 @@ class IZICard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (!IZIValidate.nullOrEmpty(row1Left))
-                  Expanded(
-                    child: IZIText(
-                      text: row1Left.toString(),
-                      maxLine: 2,
-                      style: TextStyle(
-                        color: ColorResources.BLACK,
-                        fontSize: IZIDimensions.FONT_SIZE_H6 * 0.9,
-                        fontWeight: FontWeight.w500,
+                    Expanded(
+                      child: IZIText(
+                        text: row1Left.toString(),
+                        maxLine: 2,
+                        style: TextStyle(
+                          color: ColorResources.BLACK,
+                          fontSize: IZIDimensions.FONT_SIZE_H6 * 0.9,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.start,
                       ),
-                      textAlign: TextAlign.start,
                     ),
-                  ),
                   if (!IZIValidate.nullOrEmpty(row1Right))
                     Expanded(
                       child: IZIText(
@@ -805,16 +812,16 @@ class IZICard extends StatelessWidget {
                         Row(
                           children: [
                             if (!IZIValidate.nullOrEmpty(row1Left))
-                            Flexible(
-                              child: IZIText(
-                                maxLine: 2,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: IZIDimensions.FONT_SIZE_H6,
+                              Flexible(
+                                child: IZIText(
+                                  maxLine: 2,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: IZIDimensions.FONT_SIZE_H6,
+                                  ),
+                                  text: row1Left.toString(),
                                 ),
-                                text: row1Left.toString(),
                               ),
-                            ),
                             if (!IZIValidate.nullOrEmpty(row1Right))
                               Flexible(
                                 child: Container(
@@ -876,7 +883,6 @@ class IZICard extends StatelessWidget {
                   ),
                 ),
                 if (IZIValidate.nullOrEmpty(actions)) const SizedBox() else ...actions!,
-            
               ],
             ),
             Container(
@@ -1451,16 +1457,16 @@ class IZICard extends StatelessWidget {
                   Row(
                     children: [
                       if (!IZIValidate.nullOrEmpty(row1Left))
-                      Flexible(
-                        child: IZIText(
-                          text: row1Left!,
-                          maxLine: 2,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: IZIDimensions.FONT_SIZE_H6,
+                        Flexible(
+                          child: IZIText(
+                            text: row1Left!,
+                            maxLine: 2,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: IZIDimensions.FONT_SIZE_H6,
+                            ),
                           ),
                         ),
-                      ),
                       if (!IZIValidate.nullOrEmpty(row1Right))
                         Flexible(
                           child: Container(

@@ -19,7 +19,7 @@ class BackgroundOtp extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Container(
-              height: IZIDimensions.iziSize.width,
+              height: IZIDimensions.iziSize.height,
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: ColorResources.CIRCLE_COLOR_BG3,

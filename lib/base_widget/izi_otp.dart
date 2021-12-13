@@ -111,9 +111,8 @@ class _IZIOtpState extends State<IZIOtp> {
     return Container(
       child: Center(
         child: GlassContainer.frostedGlass(
-          // TODO: Dùng iziSize
-          width: IZIDimensions.iziSize.width * 0.8, //IZIDimensions.ONE_UNIT_SIZE * 500,
-          height: IZIDimensions.iziSize.height * 0.6,//IZIDimensions.ONE_UNIT_SIZE * 600,
+          width: IZIDimensions.iziSize.width * 0.8,
+          height: IZIDimensions.iziSize.height * 0.6,
             borderColor: Colors.transparent,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(
