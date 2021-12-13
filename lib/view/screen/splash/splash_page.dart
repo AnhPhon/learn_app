@@ -70,31 +70,30 @@ class SplashPage extends GetView<SplashController> {
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(
-                  bottom: IZIDimensions.SPACE_SIZE_2X,
-                ),
-                width: double.infinity,
-                height: IZIDimensions.ONE_UNIT_SIZE * 923,
-                color: ColorResources.BACKGROUND,
-                child: Column(
-                  children: [
-                    IZIButton(
-                      margin: EdgeInsets.all(
-                        IZIDimensions.ONE_UNIT_SIZE * 20,
-                      ),
-                      onTap: () => controller.goToMyOrder(),
-                      label: "Click to Đơn hàng của tôi",
+              Column(
+                children: [
+                  IZIButton(
+                    margin: EdgeInsets.all(
+                      IZIDimensions.ONE_UNIT_SIZE * 20,
                     ),
-                    IZIButton(
-                      margin: EdgeInsets.all(
-                        IZIDimensions.ONE_UNIT_SIZE * 20,
-                      ),
-                      onTap: () => controller.goToDemoBaseCard(),
-                      label: "Click to Demo Base Card",
+                    onTap: () => Get.to(TestComponentPage()),
+                    label: "Click to Demo Base Input",
+                  ),
+                  IZIButton(
+                    margin: EdgeInsets.all(
+                      IZIDimensions.ONE_UNIT_SIZE * 20,
                     ),
-                  ],
-                ),
+                    onTap: () => controller.goToMyOrder(),
+                    label: "Click to Đơn hàng của tôi",
+                  ),
+                  IZIButton(
+                    margin: EdgeInsets.all(
+                      IZIDimensions.ONE_UNIT_SIZE * 20,
+                    ),
+                    onTap: () => controller.goToDemoBaseCard(),
+                    label: "Click to Demo Base Card",
+                  ),
+                ],
               ),
             ],
           );

@@ -415,7 +415,7 @@ class TestComponentPage extends GetView<TestComponentController> {
               IZICard(
                 urlImage: "",
                 row1Left: "434323423FĐGJ3434F",
-                row1Right: "10000000000000000",
+                row1Right: "1000000000",
                 row2Left: "Thanh toán tháng 12 Thanh toán tháng 12 Thanh toán tháng 12",
                 row3Left: "12-12-2021",
                 statusPayment: IZIStatusPayment.AWAIT,
@@ -427,7 +427,7 @@ class TestComponentPage extends GetView<TestComponentController> {
               IZICard(
                 urlImage: "",
                 row1Left: "434323423FĐGJ3434F",
-                row1Right: "10000000000000000",
+                row1Right: "10000",
                 row2Left: "Thanh toán tháng 12 Thanh toán tháng 12 Thanh toán tháng 12",
                 row3Left: "12-12-2021",
                 statusPayment: IZIStatusPayment.FAIL,
