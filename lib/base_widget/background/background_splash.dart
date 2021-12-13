@@ -3,8 +3,8 @@ import 'package:template/helper/izi_device.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
 
-class BackgroundOne extends StatelessWidget {
-  const BackgroundOne({
+class BackgroundSplash extends StatelessWidget {
+  const BackgroundSplash({
     Key? key,
   }) : super(key: key);
 
@@ -21,16 +21,16 @@ class BackgroundOne extends StatelessWidget {
               top: 0,
               left: 0,
               child: Container(
-                height: double.infinity,
-                width: double.infinity,
+                height: IZIDimensions.iziSize.height,
+                width: IZIDimensions.iziSize.width,
                 decoration: const BoxDecoration(
                     gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    ColorResources.CIRCLE_COLOR_BG,
+                    ColorResources.CIRCLE_COLOR_BG3,
                     ColorResources.CIRCLE_COLOR_BG2,
-                    ColorResources.CIRCLE_COLOR_BG4,
+                    ColorResources.CIRCLE_COLOR_BG3,
                   ],
                   stops: [
                     0.3,

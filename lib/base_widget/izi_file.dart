@@ -147,8 +147,8 @@ class _IZIFileState extends State<IZIFile> {
         padding: EdgeInsets.symmetric(
           horizontal: IZIDimensions.SPACE_SIZE_2X,
         ),
-        height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 70 : IZIDimensions.ONE_UNIT_SIZE * widget.height!,
-        width: IZIValidate.nullOrEmpty(widget.width) ? double.infinity : IZIDimensions.ONE_UNIT_SIZE * widget.width!,
+        height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 70 : widget.height!,
+        width: IZIValidate.nullOrEmpty(widget.width) ? double.infinity : widget.width!,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(
@@ -197,8 +197,8 @@ class _IZIFileState extends State<IZIFile> {
           EdgeInsets.symmetric(
             vertical: IZIDimensions.BLUR_RADIUS_2X,
           ),
-      height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 250 : IZIDimensions.ONE_UNIT_SIZE * widget.height!,
-      width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 250 : IZIDimensions.ONE_UNIT_SIZE * widget.width!,
+      height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 250 : widget.height!,
+      width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 250 : widget.width!,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           IZIDimensions.BLUR_RADIUS_3X,
@@ -209,8 +209,8 @@ class _IZIFileState extends State<IZIFile> {
         alignment: Alignment.center,
         children: [
           Container(
-            height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 250 : IZIDimensions.ONE_UNIT_SIZE * widget.height!,
-            width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 250 : IZIDimensions.ONE_UNIT_SIZE * widget.width!,
+            height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 250 : widget.height!,
+            width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 250 : widget.width!,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(
                 IZIDimensions.BLUR_RADIUS_3X,
@@ -226,8 +226,8 @@ class _IZIFileState extends State<IZIFile> {
             ),
           ),
           Container(
-            height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 50 : IZIDimensions.ONE_UNIT_SIZE * (widget.height! / 5),
-            width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 50 : IZIDimensions.ONE_UNIT_SIZE * (widget.height! / 5),
+            height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 50 : widget.height! / 5,
+            width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 50 : widget.height! / 5,
             decoration: BoxDecoration(
               color: Colors.transparent,
               shape: BoxShape.circle,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template/base_widget/background/background_one.dart';
+import 'package:template/base_widget/background/background_splash.dart';
 import 'package:template/helper/izi_size.dart';
 
 class IZIScreen extends StatelessWidget {
@@ -24,7 +24,7 @@ class IZIScreen extends StatelessWidget {
       bottom: false,
       child: Stack(
         children: [
-          background ?? const BackgroundOne(),
+          background ?? const BackgroundSplash(),
           SafeArea(
             child: LayoutBuilder(builder: (
               BuildContext context,
@@ -42,7 +42,6 @@ class IZIScreen extends StatelessWidget {
                     tabBar ?? const SizedBox(),
                     if (isSingleChildScrollView!)
                       Expanded(
-                        //TODO: Thêm optional cho SingleScrollView
                         child: SingleChildScrollView(
                           child: body,
                         ),

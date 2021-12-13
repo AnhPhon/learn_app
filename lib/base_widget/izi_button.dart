@@ -25,6 +25,8 @@ class IZIButton extends StatelessWidget {
     this.colorBGDisabled = ColorResources.GREY,
     this.colorDisible = ColorResources.BLACK,
     this.colorBG = ColorResources.CIRCLE_COLOR_BG3,
+    this.colorIcon,
+    this.colorText,
   }) : super(key: key);
 
   // OnTap
@@ -40,6 +42,8 @@ class IZIButton extends StatelessWidget {
   final double? height;
   final int? maxLine;
   final IZIButtonType? type;
+  final Color? colorIcon;
+  final Color? colorText;
 
   final bool? isEnabled;
   final EdgeInsets? padding;
@@ -113,7 +117,7 @@ class IZIButton extends StatelessWidget {
             if (icon != null)
               Icon(
                 icon,
-                color: getColor(type!),
+                color: colorIcon ?? getColor(type!),
                 size: IZIDimensions.FONT_SIZE_H6 * 1.25,
               )
             else
@@ -123,7 +127,7 @@ class IZIButton extends StatelessWidget {
                 " $label",
                 style: TextStyle(
                   fontSize: IZIDimensions.FONT_SIZE_H6,
-                  color: getColor(type!),
+                  color: colorText ?? getColor(type!),
                   fontWeight: FontWeight.w500,
                 ),
                 maxLines: maxLine ?? 1,

@@ -267,6 +267,37 @@ class _IZIInputState extends State<IZIInput> {
     }
   }
 
+  Widget? getSuffixIcon() {
+    if (widget.type == IZIInputType.PRICE) {
+      return SizedBox.shrink(
+        child: Padding(
+          padding: EdgeInsets.only(
+            right: IZIDimensions.SPACE_SIZE_1X,
+          ),
+          child: const Align(
+            alignment: Alignment.centerRight,
+            child: Text("VNĐ"),
+          ),
+        ),
+      );
+    } else if (widget.type == IZIInputType.PASSWORD) {
+      return GestureDetector(
+        onTap: () {
+          setState(() {
+            isVisible = !isVisible;
+          });
+        },
+        child: Icon(
+          isVisible ? Icons.visibility : Icons.visibility_off,
+        ),
+      );
+    }
+    if(!IZIValidate.nullOrEmpty(widget.suffixIcon)){
+      return widget.suffixIcon!;
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!focusNode!.hasListeners) {
@@ -464,28 +495,7 @@ class _IZIInputState extends State<IZIInput> {
                             fontSize: IZIDimensions.FONT_SIZE_SPAN,
                           ),
                       fillColor: (widget.allowEdit == false) ? widget.fillColor ?? ColorResources.LIGHT_GREY.withOpacity(0.4) : widget.fillColor ?? ColorResources.WHITE,
-                      suffixIcon: widget.type == IZIInputType.PRICE
-                          ? SizedBox.shrink(
-                              child: Padding(
-                                padding: EdgeInsets.only(right: IZIDimensions.SPACE_SIZE_1X),
-                                child: const Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Text("VNĐ"),
-                                ),
-                              ),
-                            )
-                          : (widget.type == IZIInputType.PASSWORD
-                              ? GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      isVisible = !isVisible;
-                                    });
-                                  },
-                                  child: Icon(
-                                    isVisible ? Icons.visibility : Icons.visibility_off,
-                                  ),
-                                )
-                              : null),
+                      suffixIcon: getSuffixIcon(),
                     ),
                   ),
                 ),
