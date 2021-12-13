@@ -35,10 +35,13 @@ class MyOrderPage extends GetView<MyOrderController> {
           return Column(
             children: [
               IZITabBar(
+                //TODO: items
                 data: controller.tieuDe,
+                //TODO: ko cần thiết
                 itemCount: controller.tieuDe.length,
                 onTapChangedTabbar: (index) => controller.onChangeTab(index: index),
                 currentIndex: controller.currentIndex,
+                //TODO: label.
                 label: (index) => controller.tieuDe[index].toString(),
               ),
               IZITabView(
@@ -46,6 +49,7 @@ class MyOrderPage extends GetView<MyOrderController> {
                 onLoading: controller.onLoading,
                 refreshController: controller.refreshControllerList![controller.currentIndex],
                 enablePullDown: true,
+                //TODO: Dư item count and
                 itemCount: controller.data.length,
                 isLoading: controller.isLoading,
                 builder: (index) {
@@ -57,6 +61,7 @@ class MyOrderPage extends GetView<MyOrderController> {
                     urlImage: "https://i.ytimg.com/vi/QOcNo0DC7Qg/maxresdefault.jpg",
                     cardType: IZICardType.CARD_ORDER,
                     row1Left: "Đơn hàng 1",
+                    //TODO: truyền vào sản phẩm tiển khai ngang. truyền vào ...
                     row2Left: "200",
                     row3Left: "22/07/2021",
                     row2Right: "100.460.000",
@@ -65,6 +70,7 @@ class MyOrderPage extends GetView<MyOrderController> {
                         : controller.data[index]["status"] == 2
                             ? IZIStatusOrder.HUY_DON
                             : controller.data[index]["status"] == 3
+                                //TODO: fix thành label button green. fix all
                                 ? IZIStatusOrder.DANG_GIAO
                                 : controller.data[index]["status"] == 4
                                     ? IZIStatusOrder.DA_GIAO

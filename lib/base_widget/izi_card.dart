@@ -10,7 +10,6 @@ import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/images_path.dart';
 import 'package:ticket_material/ticket_material.dart';
-import 'package:glass/glass.dart';
 
 enum IZICardType {
   CARD,
@@ -28,6 +27,7 @@ enum IZICardType {
   CARD_CAPITAL_CONTRIBUTION,
 }
 
+//TODO: fix thành izi status label color
 enum IZIStatusOrder {
   XAC_NHAN,
   HUY_DON,
