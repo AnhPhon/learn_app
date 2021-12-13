@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:template/base_widget/app_bar.dart';
 import 'package:template/base_widget/background/background_one.dart';
 import 'package:template/base_widget/background/background_otp.dart';
@@ -12,6 +13,7 @@ import 'package:template/base_widget/izi_input.dart';
 import 'package:template/base_widget/izi_list_view.dart';
 import 'package:template/base_widget/izi_otp.dart';
 import 'package:template/base_widget/izi_screen.dart';
+import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/images_path.dart';
@@ -39,11 +41,39 @@ class SplashPage extends GetView<SplashController> {
                 }
               ),
               IZIFile(
-
+                imageSource: ImageSource.camera,
               ),
               IZIOtp(
-                lable: "Xác thực tài khoản",
-                content: "Mã xác thực sẽ được gửi đến số điện thoại của bạn",
+                lables: [
+                Container(
+                  margin: EdgeInsets.only(
+                    top: IZIDimensions.SPACE_SIZE_5X,
+                  ),
+                  child: IZIText(
+                    text: "Xác thực tài khoản",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: IZIDimensions.FONT_SIZE_H4,
+                      color: ColorResources.CIRCLE_COLOR_BG3,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(
+                    IZIDimensions.SPACE_SIZE_1X,
+                  ),
+                  child: IZIText(
+                    text:"Nôi dung miêu tả xác thực tài khoản",
+                    textAlign: TextAlign.center,
+                    maxLine: 4,
+                    style: TextStyle(
+                      color: ColorResources.BLACK,
+                      fontSize: IZIDimensions.FONT_SIZE_H6,
+                    ),
+                  ),
+                ),
+                ],
                 codeLength: 4,
                 countDown: 10,
                 isEnabled: true,
@@ -124,7 +154,6 @@ class SplashPage extends GetView<SplashController> {
                 },
               ),
               IZICard(
-                // TODO: Thêm right text
                 urlImage: ImagesPath.capital_contribution_year,
                 row1Left: "2 năm",
                 row1Right: "Lãi suất 42%/năm Lãi suất 42%/năm",
@@ -202,8 +231,6 @@ class SplashPage extends GetView<SplashController> {
               ),
 
               IZICard(
-                // TODO: Right text maxline 1 line
-                // TODO: Chuyển border sang boxShadown
                 urlImage: "",
                 row1Left: "434323423FĐGJ3434F",
                 row1Right: "10000000000000000",

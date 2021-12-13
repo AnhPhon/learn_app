@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/base_widget/izi_input.dart';
-import 'package:template/helper/izi_device.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';

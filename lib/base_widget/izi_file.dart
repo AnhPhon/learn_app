@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:template/base_widget/izi_image.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
@@ -16,13 +17,12 @@ enum IZIFileType {
 }
 
 class IZIFile extends StatefulWidget {
-  // TODO: Bổ sung margin
-  // TODO: Bổ sung kiểm tra quyền truy cập
   IZIFile({
     this.height,
     this.width,
     this.imageSource = ImageSource.gallery,
     this.onPikerFile,
+    this.margin,
     Key? key,
   })  : type = IZIFileType.IMAGE,
         super(key: key);
@@ -31,6 +31,7 @@ class IZIFile extends StatefulWidget {
     this.height,
     this.width,
     this.onPikerFile,
+    this.margin,
     Key? key,
   })  : type = IZIFileType.FILE,
         super(key: key);
@@ -38,6 +39,7 @@ class IZIFile extends StatefulWidget {
   final double? height, width;
   // TODO: return file
   final String? Function(String? val)? onPikerFile;
+  final EdgeInsets? margin;
 
   ImageSource? imageSource;
   IZIFileType type;
@@ -103,11 +105,22 @@ class _IZIFileState extends State<IZIFile> {
     }
   }
 
-  void onPicker(IZIFileType type) {
+  void onPicker(IZIFileType type) async {
     if (type == IZIFileType.FILE) {
-      pickFiles();
+      final status = await Permission.storage.request();
+      if (status.isGranted) {
+        pickFiles();
+      }
     } else {
-      pickImages();
+      PermissionStatus? status;
+      if (widget.imageSource == ImageSource.gallery) {
+        status = await Permission.photos.request();
+      } else {
+        status = await Permission.camera.request();
+      }
+      if (status.isGranted) {
+        pickImages();
+      }
     }
     if (!IZIValidate.nullOrEmpty(widget.onPikerFile) && !IZIValidate.nullOrEmpty(file)) {
       // TODO: Upload file and return url image
@@ -128,6 +141,9 @@ class _IZIFileState extends State<IZIFile> {
         onPicker(widget.type);
       },
       child: Container(
+        margin: widget.margin ?? EdgeInsets.symmetric(
+            vertical: IZIDimensions.BLUR_RADIUS_2X,
+          ),
         padding: EdgeInsets.symmetric(
           horizontal: IZIDimensions.SPACE_SIZE_2X,
         ),
@@ -155,9 +171,7 @@ class _IZIFileState extends State<IZIFile> {
                         text: "Chọn tập tin",
                       ),
                     ),
-                    Icon(
-                      Icons.file_download_outlined,
-                    ),
+                    Icon(Icons.folder, color: ColorResources.CIRCLE_COLOR_BG3),
                   ],
                 ),
               )
@@ -170,10 +184,7 @@ class _IZIFileState extends State<IZIFile> {
                       maxLine: 1,
                     ),
                   ),
-                  // TODO: Dùng icon khác (Foder)
-                  const Icon(
-                    Icons.file_download_outlined,
-                  )
+                  const Icon(Icons.folder, color: ColorResources.CIRCLE_COLOR_BG3)
                 ],
               ),
       ),
@@ -182,6 +193,10 @@ class _IZIFileState extends State<IZIFile> {
 
   Widget imageWidget() {
     return Container(
+      margin: widget.margin ??
+          EdgeInsets.symmetric(
+            vertical: IZIDimensions.BLUR_RADIUS_2X,
+          ),
       height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 250 : IZIDimensions.ONE_UNIT_SIZE * widget.height!,
       width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 250 : IZIDimensions.ONE_UNIT_SIZE * widget.width!,
       decoration: BoxDecoration(
@@ -205,7 +220,9 @@ class _IZIFileState extends State<IZIFile> {
               borderRadius: BorderRadius.circular(
                 IZIDimensions.BLUR_RADIUS_3X,
               ),
-              child: IZIImage.file(file),
+              child: IZIImage.file(
+                file,
+              ),
             ),
           ),
           Container(

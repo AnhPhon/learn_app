@@ -39,7 +39,6 @@ class _GetXSmartRefreshPageState extends State<GetXSmartRefreshPage> with Automa
   @override
   void initState() {
     // print('GetXSmartRefreshPage initState ${widget.key.toString()}');
-    // TODO: implement initState
     super.initState();
     controller = Get.put(
       GetXSmartRefreshController(),

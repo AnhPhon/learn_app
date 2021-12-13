@@ -14,30 +14,25 @@ import 'package:template/utils/color_resources.dart';
 class IZIOtp extends StatefulWidget {
   const IZIOtp({
     Key? key,
-    this.lable,
-    this.content,
     this.validate,
     this.onTap,
     this.onTapSendSMS,
-    this.colorLable,
     this.countDown = 90,
     this.labelSendOtp,
     this.onChanged,
     this.codeLength = 4,
     this.buttonLabel,
     this.isEnabled = false,
+    this.lables = const [],
+    this.colorSMS = ColorResources.CIRCLE_COLOR_BG3,
   }) : super(key: key);
-  // TODO: Nhận vào array 
-  final String? lable;
-  final String? content;
-  
+  final List<Widget>? lables;
   final bool Function()? validate;
   final Function? onTap;
   final Function? onTapSendSMS;
+  final Color? colorSMS;
   final String Function(String?)? onChanged;
   final String? labelSendOtp;
-  // TODO: Bỏ
-  final Color? colorLable;
   final int? countDown;
   final int codeLength;
   final String? buttonLabel;
@@ -48,8 +43,6 @@ class IZIOtp extends StatefulWidget {
 }
 
 class _IZIOtpState extends State<IZIOtp> {
-  //TODO: Hiển thị rõ số nhập vào
-  // TODO: Gưi lại để sát với thời gian
   StreamController<ErrorAnimationType>? errorController;
   bool hasError = false;
   bool isCountDown = true;
@@ -59,7 +52,6 @@ class _IZIOtpState extends State<IZIOtp> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     errorController = StreamController<ErrorAnimationType>();
     textEditingController = TextEditingController();
@@ -120,8 +112,8 @@ class _IZIOtpState extends State<IZIOtp> {
       child: Center(
         child: GlassContainer.frostedGlass(
           // TODO: Dùng iziSize
-          width: IZIDimensions.ONE_UNIT_SIZE * 500,
-          height: IZIDimensions.ONE_UNIT_SIZE * 600,
+          width: IZIDimensions.iziSize.width * 0.8, //IZIDimensions.ONE_UNIT_SIZE * 500,
+          height: IZIDimensions.iziSize.height * 0.6,//IZIDimensions.ONE_UNIT_SIZE * 600,
             borderColor: Colors.transparent,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(
@@ -135,36 +127,8 @@ class _IZIOtpState extends State<IZIOtp> {
           blur: 20,
           child: Column(
             children: [
-              if (!IZIValidate.nullOrEmpty(widget.lable))
-                Container(
-                  margin: EdgeInsets.only(
-                    top: IZIDimensions.SPACE_SIZE_5X,
-                  ),
-                  child: IZIText(
-                    text: widget.lable!,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: IZIDimensions.FONT_SIZE_H4,
-                      color: widget.colorLable ?? ColorResources.CIRCLE_COLOR_BG3,
-                    ),
-                  ),
-                ),
-              if (!IZIValidate.nullOrEmpty(widget.content))
-                Container(
-                  margin: EdgeInsets.all(
-                    IZIDimensions.SPACE_SIZE_1X,
-                  ),
-                  child: IZIText(
-                    text: widget.content!,
-                    textAlign: TextAlign.center,
-                    maxLine: 4,
-                    style: TextStyle(
-                      color: ColorResources.BLACK,
-                      fontSize: IZIDimensions.FONT_SIZE_H6,
-                    ),
-                  ),
-                ),
+              if(!IZIValidate.nullOrEmpty(widget.lables))
+              ...widget.lables!,
               Center(
                 child: Container(
                   margin: EdgeInsets.symmetric(
@@ -244,7 +208,7 @@ class _IZIOtpState extends State<IZIOtp> {
                           text: widget.labelSendOtp ?? "Gửi xác thực đến sms",
                           style: TextStyle(
                             fontSize: IZIDimensions.FONT_SIZE_H6,
-                            color: !isCountDown && count <= 0 ? widget.colorLable ?? ColorResources.WHITE : ColorResources.GREY,
+                            color: !isCountDown && count <= 0 ? widget.colorSMS ?? ColorResources.WHITE : ColorResources.GREY,
                           ),
                         ),
                       ),

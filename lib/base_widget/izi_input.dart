@@ -98,7 +98,6 @@ class IZIInput extends StatefulWidget {
 }
 
 class _IZIInputState extends State<IZIInput> {
-  // TODO: Thêm đổ bóng cho input
   FocusNode? focusNode;
   TextEditingController? textEditingController;
   MoneyMaskedTextController? numberEditingController;
@@ -358,6 +357,7 @@ class _IZIInputState extends State<IZIInput> {
                 ),
               Flexible(
                 child: Container(
+
                   width: IZIInputType.INCREMENT == widget.type ? widget.width ?? IZIDimensions.ONE_UNIT_SIZE * 90 : null,
                   height: widget.miniSize ? 45 : null,
                   child: TextFormField(
