@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/helper/izi_device.dart';
+import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
 
 class BackgroundHome extends StatelessWidget {
@@ -17,7 +18,7 @@ class BackgroundHome extends StatelessWidget {
         body: Stack(
           children: [
             Container(
-              height: IZIDevice.getScaledSize(context, 0.4),
+              height: IZIDimensions.iziSize.width * 0.4,
               width: double.infinity,
               decoration:  const BoxDecoration(
                  color: ColorResources.CIRCLE_COLOR_BG3,
@@ -36,8 +37,8 @@ class BackgroundHome extends StatelessWidget {
               top: -90,
               left: -70,
               child: Container(
-                height: IZIDevice.getScaledSize(context, 0.5),
-                width: IZIDevice.getScaledSize(context, 0.4),
+                height: IZIDimensions.iziSize.width * 0.5,
+                width: IZIDimensions.iziSize.width * 0.4,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
@@ -57,8 +58,8 @@ class BackgroundHome extends StatelessWidget {
               top: -100,
               right: -70,
               child: Container(
-                height: IZIDevice.getScaledSize(context, 0.5),
-                width: IZIDevice.getScaledSize(context, 0.5),
+                height: IZIDimensions.iziSize.height * 0.5,
+                width: IZIDimensions.iziSize.width * 0.5,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(

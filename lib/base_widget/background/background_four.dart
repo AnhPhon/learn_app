@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:template/helper/izi_device.dart';
+import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/images_path.dart';
 
@@ -24,7 +25,7 @@ class BackgroundFour extends StatelessWidget {
               child: Image.asset(
                 ImagesPath.splash3,
                 fit: BoxFit.contain,
-                width: IZIDevice.getScaledWidth(context, 1),
+                width: IZIDimensions.iziSize.width ,
               ),
             ),
           ],

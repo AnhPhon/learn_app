@@ -46,6 +46,10 @@ enum IZIStatusMoney {
 }
 
 class IZICard extends StatelessWidget {
+  // TODO: Hình ảnh cho bóng mờ
+  // TODO: Title card contact cho boxshadown
+  // TODO: AUTO margin bottom
+  // TODO: ảnh card payment to hơn xiu
   IZICard({
     Key? key,
     this.row1Left,
@@ -62,7 +66,7 @@ class IZICard extends StatelessWidget {
     this.widthBorder,
     this.radiusCard,
     this.colorBorder,
-    this.colorBG,
+    this.colorBG = ColorResources.WHITE,
     this.statusMoney,
     this.statusPayment,
     this.icon,
@@ -203,7 +207,7 @@ class IZICard extends StatelessWidget {
   Widget getStatusMoney(IZIStatusMoney statusPrice) {
     if (statusPrice == IZIStatusMoney.DRAW && !IZIValidate.nullOrEmpty(row1Right)) {
       return IZIText(
-        text: '-${row1Right.toString()} vnđ',
+        text: '${row1Right.toString()}',
         style: const TextStyle(
           color: ColorResources.RED,
         ),
@@ -212,7 +216,7 @@ class IZICard extends StatelessWidget {
       );
     } else if (statusPrice == IZIStatusMoney.RECHARGE && !IZIValidate.nullOrEmpty(row1Right)) {
       return IZIText(
-        text: '+${row1Right.toString()} vnđ',
+        text: '${row1Right.toString()}',
         style: const TextStyle(
           color: ColorResources.CIRCLE_COLOR_BG3,
         ),
@@ -240,8 +244,8 @@ class IZICard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(IZIDimensions.BORDER_RADIUS_7X),
       child: IZIImage(
-        urlImage ?? "",
-        fit: fit,
+        urlImage ?? '',
+        fit: urlImage.toString().endsWith('.svg') ? fit : BoxFit.cover,
       ),
     );
   }
@@ -504,21 +508,22 @@ class IZICard extends StatelessWidget {
               ),
               child: getImageUrlType(imageUrlType!),
             ),
-            Flexible(
-              child: Container(
-                margin: EdgeInsets.only(
-                  top: IZIDimensions.SPACE_SIZE_1X,
-                ),
-                child: IZIText(
-                  maxLine: 2,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: IZIDimensions.FONT_SIZE_H6,
+            if (!IZIValidate.nullOrEmpty(row1Left))
+              Flexible(
+                child: Container(
+                  margin: EdgeInsets.only(
+                    top: IZIDimensions.SPACE_SIZE_1X,
                   ),
-                  text: row1Left.toString(),
+                  child: IZIText(
+                    maxLine: 2,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: IZIDimensions.FONT_SIZE_H6,
+                    ),
+                    text: row1Left.toString(),
+                  ),
                 ),
-              ),
-            )
+              )
           ],
         ),
       );
@@ -728,18 +733,19 @@ class IZICard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: IZIText(
-                      text: row1Left.toString(),
-                      maxLine: 2,
-                      style: TextStyle(
-                        color: ColorResources.BLACK,
-                        fontSize: IZIDimensions.FONT_SIZE_H6 * 0.9,
-                        fontWeight: FontWeight.w500,
+                  if (!IZIValidate.nullOrEmpty(row1Left))
+                    Expanded(
+                      child: IZIText(
+                        text: row1Left.toString(),
+                        maxLine: 2,
+                        style: TextStyle(
+                          color: ColorResources.BLACK,
+                          fontSize: IZIDimensions.FONT_SIZE_H6 * 0.9,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.start,
                       ),
-                      textAlign: TextAlign.start,
                     ),
-                  ),
                   if (!IZIValidate.nullOrEmpty(row1Right))
                     Expanded(
                       child: IZIText(
@@ -884,16 +890,17 @@ class IZICard extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Flexible(
-                              child: IZIText(
-                                maxLine: 2,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: IZIDimensions.FONT_SIZE_H6,
+                            if (!IZIValidate.nullOrEmpty(row1Left))
+                              Flexible(
+                                child: IZIText(
+                                  maxLine: 2,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: IZIDimensions.FONT_SIZE_H6,
+                                  ),
+                                  text: row1Left.toString(),
                                 ),
-                                text: row1Left.toString(),
                               ),
-                            ),
                             if (!IZIValidate.nullOrEmpty(row1Right))
                               Flexible(
                                 child: Container(
@@ -1288,7 +1295,9 @@ class IZICard extends StatelessWidget {
               margin: EdgeInsets.only(
                 right: IZIDimensions.SPACE_SIZE_3X,
               ),
-              child: IZIValidate.nullOrEmpty(imageUrlType)
+              child: IZIValidate.nullOrEmpty(
+                imageUrlType,
+              )
                   ? const SizedBox()
                   : getImageUrlType(
                       imageUrlType!,
@@ -1304,7 +1313,7 @@ class IZICard extends StatelessWidget {
                       if (!IZIValidate.nullOrEmpty(row1Left))
                         Flexible(
                           child: IZIText(
-                            text: row1Left.toString(),
+                            text: row1Left!,
                             maxLine: 2,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,

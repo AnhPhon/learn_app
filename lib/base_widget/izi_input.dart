@@ -98,6 +98,7 @@ class IZIInput extends StatefulWidget {
 }
 
 class _IZIInputState extends State<IZIInput> {
+  // TODO: Thêm đổ bóng cho input
   FocusNode? focusNode;
   TextEditingController? textEditingController;
   MoneyMaskedTextController? numberEditingController;
@@ -277,7 +278,7 @@ class _IZIInputState extends State<IZIInput> {
       _errorText = widget.errorText.toString();
     }
     return Container(
-      width: widget.width ?? IZIDevice.getScaledWidth(context, 1),
+      width: widget.width ?? IZIDimensions.iziSize.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
