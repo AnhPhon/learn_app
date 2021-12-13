@@ -13,7 +13,6 @@ class IZIButton extends StatelessWidget {
     Key? key,
     required this.onTap,
     this.label,
-    this.width,
     this.height,
     this.maxLine,
     this.type = IZIButtonType.DEFAULT,
@@ -38,7 +37,6 @@ class IZIButton extends StatelessWidget {
   final Color? colorBGDisabled;
   final Color? colorBG;
   final Function onTap;
-  final double? width;
   final double? height;
   final int? maxLine;
   final IZIButtonType? type;
@@ -82,9 +80,11 @@ class IZIButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: isEnabled! ? (){
-        onTap();
-      } : null,
+      onTap: isEnabled!
+          ? () {
+              onTap();
+            }
+          : null,
       child: Container(
         padding: padding ??
             EdgeInsets.symmetric(

@@ -66,6 +66,21 @@ class IZIValidate {
   }
 
   ///
+  /// empty
+  ///
+  static String? increment(String? number) {
+    if(IZIValidate.nullOrEmpty(number)){
+      number = '0';
+    }
+    if(int.parse(number!) <= 0){
+      return "Số lượng không được bé hơn 0";
+    }else if(int.parse(number) >= 999){
+      return "Số lượng không được lớn hơn 999";
+    }
+    return null;
+  }
+
+  ///
   /// Check nullOrEmpty
   ///
   static bool nullOrEmpty(dynamic value) {

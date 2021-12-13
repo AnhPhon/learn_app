@@ -8,10 +8,14 @@ class IZIScreen extends StatelessWidget {
     required this.body,
     this.background,
     this.appBar,
+    this.isSingleChildScrollView = true,
+    this.tabBar,
   }) : super(key: key);
   final Widget body;
   final Widget? background;
   final Widget? appBar;
+  final Widget? tabBar;
+  final bool? isSingleChildScrollView;
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +39,18 @@ class IZIScreen extends StatelessWidget {
                 body: Column(
                   children: [
                     appBar ?? const SizedBox(),
-                    Expanded(
-                      child: SingleChildScrollView(
+                    tabBar ?? const SizedBox(),
+                    if (isSingleChildScrollView!)
+                      Expanded(
+                        //TODO: Thêm optional cho SingleScrollView
+                        child: SingleChildScrollView(
+                          child: body,
+                        ),
+                      )
+                    else
+                      Expanded(
                         child: body,
                       ),
-                    ),
                   ],
                 ),
               );
