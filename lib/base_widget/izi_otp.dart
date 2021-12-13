@@ -27,13 +27,16 @@ class IZIOtp extends StatefulWidget {
     this.buttonLabel,
     this.isEnabled = false,
   }) : super(key: key);
+  // TODO: Nhận vào array 
   final String? lable;
   final String? content;
+  
   final bool Function()? validate;
   final Function? onTap;
   final Function? onTapSendSMS;
   final String Function(String?)? onChanged;
   final String? labelSendOtp;
+  // TODO: Bỏ
   final Color? colorLable;
   final int? countDown;
   final int codeLength;
@@ -45,6 +48,8 @@ class IZIOtp extends StatefulWidget {
 }
 
 class _IZIOtpState extends State<IZIOtp> {
+  //TODO: Hiển thị rõ số nhập vào
+  // TODO: Gưi lại để sát với thời gian
   StreamController<ErrorAnimationType>? errorController;
   bool hasError = false;
   bool isCountDown = true;
@@ -114,6 +119,7 @@ class _IZIOtpState extends State<IZIOtp> {
     return Container(
       child: Center(
         child: GlassContainer.frostedGlass(
+          // TODO: Dùng iziSize
           width: IZIDimensions.ONE_UNIT_SIZE * 500,
           height: IZIDimensions.ONE_UNIT_SIZE * 600,
             borderColor: Colors.transparent,
@@ -125,7 +131,8 @@ class _IZIOtpState extends State<IZIOtp> {
                 IZIDimensions.BORDER_RADIUS_7X,
               ),
           ),
-          frostedOpacity: 0.1,
+          frostedOpacity: 0.05,
+          blur: 20,
           child: Column(
             children: [
               if (!IZIValidate.nullOrEmpty(widget.lable))
@@ -180,7 +187,7 @@ class _IZIOtpState extends State<IZIOtp> {
                     animationType: AnimationType.fade,
                     pinTheme: PinTheme(
                       shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(IZIDimensions.BORDER_RADIUS_5X),
                       fieldHeight: IZIDimensions.ONE_UNIT_SIZE * (120 - (10.5 * widget.codeLength)),
                       fieldWidth: IZIDimensions.ONE_UNIT_SIZE * (120 - (10.5 * widget.codeLength)),
                       activeFillColor: Colors.white,

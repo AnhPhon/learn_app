@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/base_widget/app_bar.dart';
+import 'package:template/base_widget/background/background_one.dart';
 import 'package:template/base_widget/background/background_otp.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_card.dart';
@@ -22,7 +23,7 @@ class SplashPage extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
     return IZIScreen(
-      background: const BackgroundOtp(),
+      background: BackgroundOtp(),
       appBar: const IZIAppBar(
         title: "Splash Page",
       ),
@@ -32,8 +33,6 @@ class SplashPage extends GetView<SplashController> {
           return Column(
             children: [
               IZIFile.file(
-                height: 70,
-                width: 500,
                 onPikerFile:(val){
                   print("abc");
                   print("Url file ${val}");
@@ -47,7 +46,7 @@ class SplashPage extends GetView<SplashController> {
                 content: "Mã xác thực sẽ được gửi đến số điện thoại của bạn",
                 codeLength: 4,
                 countDown: 10,
-                isEnabled: false,
+                isEnabled: true,
                 onTapSendSMS: (){},
               ),
               IZIInput(
@@ -213,6 +212,7 @@ class SplashPage extends GetView<SplashController> {
                 statusPayment: IZIStatusPayment.AWAIT,
                 cardType: IZICardType.CARD_PAYMENT,
                 statusMoney: IZIStatusMoney.RECHARGE,
+                marginCard: EdgeInsets.symmetric(vertical: 10),
               ),
 
               IZICard(

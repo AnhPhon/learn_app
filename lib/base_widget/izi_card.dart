@@ -46,6 +46,10 @@ enum IZIStatusMoney {
 }
 
 class IZICard extends StatelessWidget {
+  // TODO: Hình ảnh cho bóng mờ
+  // TODO: Title card contact cho boxshadown
+  // TODO: AUTO margin bottom
+  // TODO: ảnh card payment to hơn xiu
   IZICard({
     Key? key,
     this.row1Left,
@@ -194,7 +198,7 @@ class IZICard extends StatelessWidget {
  Widget getStatusMoney(IZIStatusMoney statusPrice) {
     if (statusPrice == IZIStatusMoney.DRAW && !IZIValidate.nullOrEmpty(row1Right)) {
       return IZIText(
-        text: '-${row1Right.toString()} vnđ',
+        text: '${row1Right.toString()}',
         style: const TextStyle(
           color: ColorResources.RED,
         ),
@@ -203,7 +207,7 @@ class IZICard extends StatelessWidget {
       );
     } else if (statusPrice == IZIStatusMoney.RECHARGE && !IZIValidate.nullOrEmpty(row1Right)) {
       return IZIText(
-        text: '+${row1Right.toString()} vnđ',
+        text: '${row1Right.toString()}',
         style: const TextStyle(
           color: ColorResources.CIRCLE_COLOR_BG3,
         ),

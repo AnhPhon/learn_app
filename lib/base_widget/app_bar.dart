@@ -31,7 +31,7 @@ class IZIAppBar extends StatelessWidget {
                 left: IZIDimensions.SPACE_SIZE_3X,
               ),
               alignment: Alignment.centerLeft,
-              width: IZIDevice.getScaledWidth(context, 0.125),
+              width: IZIDimensions.iziSize.width * 0.125,
               child: iconBack ??
                   GestureDetector(
                     onTap: () {
@@ -49,7 +49,7 @@ class IZIAppBar extends StatelessWidget {
                 right: IZIDimensions.SPACE_SIZE_3X,
               ),
               alignment: Alignment.centerRight,
-              width: IZIDevice.getScaledWidth(context, 0.125) * actions!.length,
+              width: (IZIDimensions.iziSize.width * 0.125) * actions!.length,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: actions!,
@@ -60,7 +60,7 @@ class IZIAppBar extends StatelessWidget {
         Container(
           height: kToolbarHeight,
           alignment: Alignment.center,
-          width: IZIDevice.getScaledWidth(context, 1),
+          width: IZIDimensions.iziSize.width,
           child: !IZIValidate.nullOrEmpty(callbackSearch)
               ? search(context)
               : Text(
@@ -80,7 +80,7 @@ class IZIAppBar extends StatelessWidget {
 
   Widget search(BuildContext context) {
     return IZIInput(
-      width: IZIDevice.getScaledWidth(context, 1) - (IZIDevice.getScaledWidth(context, 0.125) * (actions!.length + 1) * 2),
+      width: IZIDimensions.iziSize.width - (IZIDimensions.iziSize.width * 0.125 * (actions!.length + 1) * 2),
       type: IZIInputType.TEXT,
       isRequired: false,
       allowEdit: true,

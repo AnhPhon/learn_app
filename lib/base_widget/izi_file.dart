@@ -16,6 +16,8 @@ enum IZIFileType {
 }
 
 class IZIFile extends StatefulWidget {
+  // TODO: Bổ sung margin
+  // TODO: Bổ sung kiểm tra quyền truy cập
   IZIFile({
     this.height,
     this.width,
@@ -24,6 +26,7 @@ class IZIFile extends StatefulWidget {
     Key? key,
   })  : type = IZIFileType.IMAGE,
         super(key: key);
+
   IZIFile.file({
     this.height,
     this.width,
@@ -33,6 +36,7 @@ class IZIFile extends StatefulWidget {
         super(key: key);
 
   final double? height, width;
+  // TODO: return file
   final String? Function(String? val)? onPikerFile;
 
   ImageSource? imageSource;
@@ -106,7 +110,7 @@ class _IZIFileState extends State<IZIFile> {
       pickImages();
     }
     if (!IZIValidate.nullOrEmpty(widget.onPikerFile) && !IZIValidate.nullOrEmpty(file)) {
-      // Upload file and return url image
+      // TODO: Upload file and return url image
       widget.onPikerFile!(file!.path);
     }
   }
@@ -166,6 +170,7 @@ class _IZIFileState extends State<IZIFile> {
                       maxLine: 1,
                     ),
                   ),
+                  // TODO: Dùng icon khác (Foder)
                   const Icon(
                     Icons.file_download_outlined,
                   )

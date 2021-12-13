@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/helper/izi_device.dart';
+import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
 
 class BackgroundAuth extends StatelessWidget {
@@ -21,7 +22,7 @@ class BackgroundAuth extends StatelessWidget {
               color: ColorResources.WHITE,
             ),
             Container(
-              height: IZIDevice.getScaledHeight(context, 0.4),
+              height: IZIDimensions.iziSize.height * 0.4,
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: ColorResources.CIRCLE_COLOR_BG3,

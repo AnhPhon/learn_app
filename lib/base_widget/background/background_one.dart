@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/helper/izi_device.dart';
+import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
 
 class BackgroundOne extends StatelessWidget {
@@ -43,8 +44,8 @@ class BackgroundOne extends StatelessWidget {
               top: -70,
               left: -25,
               child: Container(
-                height: IZIDevice.getScaledSize(context, 0.5),
-                width: IZIDevice.getScaledSize(context, 0.4),
+                height: IZIDimensions.iziSize.width * 0.5,
+                width: IZIDimensions.iziSize.width * 0.4,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
@@ -64,8 +65,8 @@ class BackgroundOne extends StatelessWidget {
               top: -90,
               right: -35,
               child: Container(
-                height: IZIDevice.getScaledSize(context, 0.5),
-                width: IZIDevice.getScaledSize(context, 0.5),
+                height: IZIDimensions.iziSize.height * 0.5,
+                width: IZIDimensions.iziSize.width * 0.5,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
