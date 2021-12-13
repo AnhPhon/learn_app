@@ -9,11 +9,11 @@ import 'package:template/base_widget/izi_screen.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/view/screen/splash/splash_controller.dart';
+import 'package:template/view/screen/mock/mock_controller.dart';
 import 'package:flutter/widgets.dart';
-import 'package:template/view/screen/test/test_component.dart';
+import 'package:template/view/screen/mock/test/test_component.dart';
 
-class SplashPage extends GetView<SplashController> {
+class MockPage extends GetView<MockController> {
   @override
   Widget build(BuildContext context) {
     return IZIScreen(
@@ -22,8 +22,8 @@ class SplashPage extends GetView<SplashController> {
         title: "Splash Page",
       ),
       body: GetBuilder(
-        init: SplashController(),
-        builder: (SplashController controller) {
+        init: MockController(),
+        builder: (MockController controller) {
           return Column(
             children: [
               SizedBox(

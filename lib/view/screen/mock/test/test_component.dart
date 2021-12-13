@@ -3,9 +3,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:template/base_widget/app_bar.dart';
 import 'package:template/base_widget/background/background_app_bar.dart';
-import 'package:template/base_widget/background/background_home.dart';
-import 'package:template/base_widget/background/background_one.dart';
-import 'package:template/base_widget/background/background_otp.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_card.dart';
 import 'package:template/base_widget/izi_dialog.dart';
@@ -13,15 +10,13 @@ import 'package:template/base_widget/izi_file.dart';
 import 'package:template/base_widget/izi_image.dart';
 import 'package:template/base_widget/izi_input.dart';
 import 'package:template/base_widget/izi_list_view.dart';
-import 'package:template/base_widget/izi_otp.dart';
 import 'package:template/base_widget/izi_screen.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_alert.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/images_path.dart';
-import 'package:template/view/screen/splash/splash_controller.dart';
-import 'package:template/view/screen/test/test_component_controller.dart';
+import 'package:template/view/screen/mock/test/test_component_controller.dart';
 
 class TestComponentPage extends GetView<TestComponentController> {
   TestComponentPage({Key? key}) : super(key: key);

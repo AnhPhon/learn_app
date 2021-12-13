@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:template/routes/route_path/demo_base_card_routers.dart';
 import 'package:template/routes/route_path/my_order_routes.dart';
 
-class SplashController extends GetxController {
+class MockController extends GetxController {
   @override
   void onInit() {
     super.onInit();

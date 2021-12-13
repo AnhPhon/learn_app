@@ -9,7 +9,7 @@ import 'package:template/base_widget/izi_screen.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/view/screen/demo_base_card/demo_base_card_controller.dart';
+import 'package:template/view/screen/mock/demo_base_card/demo_base_card_controller.dart';
 
 class DemoBaseCardPage extends GetView<DemoBaseCardController> {
   @override

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:template/view/screen/my_order/my_order_page.dart';
+import 'package:template/view/screen/mock/my_order/my_order_page.dart';
 
 class MyOrderRouter {
   static const String MY_ORDER = "/my_order";

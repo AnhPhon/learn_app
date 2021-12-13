@@ -9,7 +9,7 @@ import 'package:template/base_widget/izi_tabbar.dart';
 import 'package:template/base_widget/izi_tabview.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/view/screen/my_order/my_order_controller.dart';
+import 'package:template/view/screen/mock/my_order/my_order_controller.dart';
 
 class MyOrderPage extends GetView<MyOrderController> {
   @override

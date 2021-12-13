@@ -347,12 +347,6 @@ class IZICard extends StatelessWidget {
                                 text: row3Left.toString(),
                                 maxLine: 1,
                               ),
-                            ),
-                          Expanded(
-                            child: IZIText(
-                              text: row3Left.toString(),
-                              maxLine: 1,
-                            ),
                           ),
                           if (!IZIValidate.nullOrEmpty(row3Right))
                             Expanded(
