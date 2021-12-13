@@ -5,6 +5,7 @@ import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:template/helper/izi_device.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/helper/izi_number.dart';
+import 'package:template/helper/izi_other.dart';
 
 import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
@@ -330,6 +331,7 @@ class _IZIInputState extends State<IZIInput> {
                     ),
                     width: widget.widthIncrement ?? IZIDimensions.ONE_UNIT_SIZE * 80,
                     decoration: BoxDecoration(
+                      boxShadow: IZIOther().boxShadow,
                       border: widget.isBorder!
                           ? isDisibleReduction
                               ? Border.all(
@@ -357,7 +359,9 @@ class _IZIInputState extends State<IZIInput> {
                 ),
               Flexible(
                 child: Container(
-
+                  decoration: BoxDecoration(
+                    boxShadow: IZIOther().boxShadow,
+                  ),
                   width: IZIInputType.INCREMENT == widget.type ? widget.width ?? IZIDimensions.ONE_UNIT_SIZE * 90 : null,
                   height: widget.miniSize ? 45 : null,
                   child: TextFormField(
@@ -501,6 +505,7 @@ class _IZIInputState extends State<IZIInput> {
                     height: widget.height ?? IZIDimensions.ONE_UNIT_SIZE * 80,
                     width: widget.widthIncrement ?? IZIDimensions.ONE_UNIT_SIZE * 80,
                     decoration: BoxDecoration(
+                        boxShadow: IZIOther().boxShadow,
                         border: widget.isBorder!
                             ? isDisibleIncrement
                                 ? Border.all(

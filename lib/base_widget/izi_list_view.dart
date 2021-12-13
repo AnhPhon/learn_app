@@ -76,13 +76,10 @@ class IZIListView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: IZIDimensions.SPACE_SIZE_2X,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (!IZIValidate.nullOrEmpty(label))
                 IZIText(
                   text: label.toString(),
                   style: TextStyle(
@@ -90,9 +87,8 @@ class IZIListView extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                action ?? const SizedBox(),
-              ],
-            ),
+              action ?? const SizedBox(),
+            ],
           ),
           Container(
             height: scrollDirection == Axis.horizontal ? height ?? IZIDimensions.ONE_UNIT_SIZE * 180 + padding! : null,

@@ -26,9 +26,8 @@ class ColorResources {
   // static const Color IMAGE_BG = Color(0xffE2F0FF);
   // static const Color SELLER_TXT = Color(0xff92C6FF);
   // static const Color CHAT_ICON_COLOR = Color(0xffD4D4D4);
-  // static const Color LOW_GREEN = Color(0xffEFF6FE);
+  static const Color MY_ORDER_LABEL = Color(0xff2196F3);
   static const Color GREEN = Color(0xff23CB60);
-
   static const Color BUTTON_DEFAULT = Color(0xFF0DAC43);
   static const Color CARD_CAPITAL_CONTRIBUTION = Color(0xFFb7efc5);
   static const Color ORDER_XAC_NHAN = Color(0xFFD7FAE0);
@@ -45,7 +44,7 @@ class ColorResources {
   // static const Color PRIMARYCOLOR = Color(0xff2196F3);
   // static const Color APPBARCIRCLECOLOR = Color(0xffE6E9F9);
   // static const Color APPBARCIRCLECOLOR2 = Color(0xffE6E9F9);
-  // static const Color BACKGROUND = Color(0xffF6F6F7);
+  static const Color BACKGROUND = Color(0xffF3F3F3);
 
   // static const Color THEME_DEFAULT = Color(0xff2196F3);
   static const Color PINK = Color(0xffFFCDD2);

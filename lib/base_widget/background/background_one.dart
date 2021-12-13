@@ -7,7 +7,7 @@ class BackgroundOne extends StatelessWidget {
   const BackgroundOne({
     Key? key,
   }) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
