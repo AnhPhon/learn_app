@@ -1,20 +1,14 @@
 import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:template/base_widget/izi_image.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
-import 'dart:io' as Io;
 import 'package:image/image.dart';
-import 'dart:ui' as ui;
 
 enum IZIFileType {
   IMAGE,
@@ -26,20 +20,20 @@ class IZIFile extends StatefulWidget {
     this.height,
     this.width,
     this.imageSource = ImageSource.gallery,
-    this.onFile,
+    this.onPikerFile,
     Key? key,
   })  : type = IZIFileType.IMAGE,
         super(key: key);
   IZIFile.file({
     this.height,
     this.width,
-    this.onFile,
+    this.onPikerFile,
     Key? key,
   })  : type = IZIFileType.FILE,
         super(key: key);
 
   final double? height, width;
-  final String? Function(String? val)? onFile;
+  final String? Function(String? val)? onPikerFile;
 
   ImageSource? imageSource;
   IZIFileType type;
@@ -66,8 +60,7 @@ class _IZIFileState extends State<IZIFile> {
     }
   }
 
-
-  static Future<File> _resizeImage(String filePath,{int? height = 1024, int? width = 1024, int? quality = 100}) async {
+  static Future<File> _resizeImage(String filePath, {int? height = 1024, int? width = 1024, int? quality = 100}) async {
     final file = File(filePath);
 
     final bytes = await file.readAsBytes();
@@ -90,8 +83,8 @@ class _IZIFileState extends State<IZIFile> {
         source: widget.imageSource!,
       );
       if (result == null) return;
-      if (await File(result.path).length() > 1024) {
-        await _resizeImage(result.path, height: 250, width: 250).then((value) {
+      if (await File(result.path).length() > 2 * 1024 * 1024) {
+        await _resizeImage(result.path, height: 512, width: 512).then((value) {
           setState(() {
             file = value;
           });
@@ -112,9 +105,9 @@ class _IZIFileState extends State<IZIFile> {
     } else {
       pickImages();
     }
-    if (!IZIValidate.nullOrEmpty(widget.onFile) && !IZIValidate.nullOrEmpty(file)) {
+    if (!IZIValidate.nullOrEmpty(widget.onPikerFile) && !IZIValidate.nullOrEmpty(file)) {
       // Upload file and return url image
-      widget.onFile!(file!.path);
+      widget.onPikerFile!(file!.path);
     }
   }
 
@@ -131,7 +124,9 @@ class _IZIFileState extends State<IZIFile> {
         onPicker(widget.type);
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: IZIDimensions.SPACE_SIZE_2X),
+        padding: EdgeInsets.symmetric(
+          horizontal: IZIDimensions.SPACE_SIZE_2X,
+        ),
         height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 70 : IZIDimensions.ONE_UNIT_SIZE * widget.height!,
         width: IZIValidate.nullOrEmpty(widget.width) ? double.infinity : IZIDimensions.ONE_UNIT_SIZE * widget.width!,
         alignment: Alignment.center,

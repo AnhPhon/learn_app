@@ -1,14 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:template/base_widget/app_bar.dart';
-import 'package:template/base_widget/background/background_four.dart';
-import 'package:template/base_widget/background/background_home.dart';
-import 'package:template/base_widget/background/background_one.dart';
 import 'package:template/base_widget/background/background_otp.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_card.dart';
@@ -19,16 +11,13 @@ import 'package:template/base_widget/izi_input.dart';
 import 'package:template/base_widget/izi_list_view.dart';
 import 'package:template/base_widget/izi_otp.dart';
 import 'package:template/base_widget/izi_screen.dart';
-import 'package:template/helper/izi_device.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/images_path.dart';
 import 'package:template/view/screen/splash/splash_controller.dart';
-import 'package:ticket_material/ticket_material.dart';
 
 class SplashPage extends GetView<SplashController> {
   SplashPage({Key? key}) : super(key: key);
-  List<String> data = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "m"];
   final keyList = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -45,7 +34,7 @@ class SplashPage extends GetView<SplashController> {
               IZIFile.file(
                 height: 70,
                 width: 500,
-                onFile:(val){
+                onPikerFile:(val){
                   print("abc");
                   print("Url file ${val}");
                 }
@@ -58,7 +47,7 @@ class SplashPage extends GetView<SplashController> {
                 content: "Mã xác thực sẽ được gửi đến số điện thoại của bạn",
                 codeLength: 4,
                 countDown: 10,
-                isEnabled: true,
+                isEnabled: false,
                 onTapSendSMS: (){},
               ),
               IZIInput(
