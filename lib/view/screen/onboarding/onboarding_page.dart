@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
 import 'package:template/base_widget/background/background_splash3.dart';
 import 'package:template/base_widget/background/background_splash1.dart';
 import 'package:template/base_widget/background/background_splash2.dart';
@@ -17,6 +16,7 @@ class OnBoardingPage extends GetView<OnBoardingController> {
   @override
   Widget build(BuildContext context) {
     return IZIScreen(
+      isSingleChildScrollView: false,
       background: GetBuilder(
         builder: (OnBoardingController controller) {
           return background(controller.currentIndex);
@@ -24,7 +24,8 @@ class OnBoardingPage extends GetView<OnBoardingController> {
       ),
       body: GetBuilder(
         builder: (OnBoardingController controller) {
-          return Column(
+          return ListView(
+            physics: NeverScrollableScrollPhysics(),
             children: [
               SizedBox(
                 height: IZIDimensions.iziSize.height,
@@ -216,7 +217,8 @@ class OnBoardingPage extends GetView<OnBoardingController> {
   }
 
   Widget buttonComplete(OnBoardingController controller) {
-    return Center(
+    return Container(
+      alignment: Alignment.bottomCenter,
       child: IZIButton(
         margin: EdgeInsets.symmetric(
           horizontal: IZIDimensions.ONE_UNIT_SIZE * 30,

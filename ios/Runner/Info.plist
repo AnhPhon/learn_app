@@ -60,5 +60,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Cho phép ứng dụng sử dụng xác thực vân tay</string>
 </dict>
 </plist>

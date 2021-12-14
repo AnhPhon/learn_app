@@ -58,6 +58,7 @@ class IZIInput extends StatefulWidget {
     this.min = 1,
     this.max = 10,
     this.widthIncrement,
+    this.onController,
   }) : super(key: key);
   final String? label;
   final String? placeHolder;
@@ -74,6 +75,7 @@ class IZIInput extends StatefulWidget {
   final TextInputAction? textInputAction;
   final Function(String value)? onChanged;
   final Function(bool value)? isValidate;
+  final Function(TextEditingController value)? onController;
   bool? boldHinText;
   final FocusNode? focusNode;
   final EdgeInsetsGeometry? padding;
@@ -121,11 +123,20 @@ class _IZIInputState extends State<IZIInput> {
       precision: 0,
       decimalSeparator: '',
     );
+    
     doubleEditingController = MoneyMaskedTextController(
       precision: 1,
     );
     focusNode = FocusNode();
-    checkDisibleIncrement(IZINumber.parseInt(numberEditingController!.text));
+    if(widget.type == IZIInputType.INCREMENT){
+      checkDisibleIncrement(IZINumber.parseInt(numberEditingController!.text));
+    }else if(widget.type == IZIInputType.NUMBER){
+       numberEditingController!.clear();
+    }
+    if(!IZIValidate.nullOrEmpty(widget.onController)){
+      widget.onController!(getController(widget.type));
+    }
+    
   }
 
   @override
@@ -292,7 +303,7 @@ class _IZIInputState extends State<IZIInput> {
         ),
       );
     }
-    if(!IZIValidate.nullOrEmpty(widget.suffixIcon)){
+    if (!IZIValidate.nullOrEmpty(widget.suffixIcon)) {
       return widget.suffixIcon!;
     }
     return null;
@@ -300,6 +311,7 @@ class _IZIInputState extends State<IZIInput> {
 
   @override
   Widget build(BuildContext context) {
+    
     if (!focusNode!.hasListeners) {
       focusNode!.addListener(() {
         setState(() {});
@@ -515,23 +527,26 @@ class _IZIInputState extends State<IZIInput> {
                     height: widget.height ?? IZIDimensions.ONE_UNIT_SIZE * 80,
                     width: widget.widthIncrement ?? IZIDimensions.ONE_UNIT_SIZE * 80,
                     decoration: BoxDecoration(
-                        boxShadow: IZIOther().boxShadow,
-                        border: widget.isBorder!
-                            ? isDisibleIncrement
-                                ? Border.all(
-                                    color: widget.colorDisibleBorder ?? ColorResources.CIRCLE_COLOR_BG3,
-                                  )
-                                : Border.all(
-                                    color: widget.colorBorder ?? ColorResources.CIRCLE_COLOR_BG3,
-                                  )
-                            : isDisibleIncrement
-                                ? Border.all(
-                                    color: widget.colorDisibleBorder ?? ColorResources.CIRCLE_COLOR_BG3,
-                                  )
-                                : Border.all(
-                                    color: widget.colorBorder ?? ColorResources.CIRCLE_COLOR_BG3,
-                                  ),
-                        borderRadius: BorderRadius.circular(IZIDimensions.BLUR_RADIUS_2X)),
+                      boxShadow: IZIOther().boxShadow,
+                      border: widget.isBorder!
+                          ? isDisibleIncrement
+                              ? Border.all(
+                                  color: widget.colorDisibleBorder ?? ColorResources.CIRCLE_COLOR_BG3,
+                                )
+                              : Border.all(
+                                  color: widget.colorBorder ?? ColorResources.CIRCLE_COLOR_BG3,
+                                )
+                          : isDisibleIncrement
+                              ? Border.all(
+                                  color: widget.colorDisibleBorder ?? ColorResources.CIRCLE_COLOR_BG3,
+                                )
+                              : Border.all(
+                                  color: widget.colorBorder ?? ColorResources.CIRCLE_COLOR_BG3,
+                                ),
+                      borderRadius: BorderRadius.circular(
+                        IZIDimensions.BLUR_RADIUS_2X,
+                      ),
+                    ),
                     child: Icon(
                       Icons.add,
                       color: isDisibleIncrement ? widget.colorDisibleBorder ?? ColorResources.GREY : widget.colorBorder ?? ColorResources.CIRCLE_COLOR_BG3,

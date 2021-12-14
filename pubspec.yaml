@@ -67,6 +67,7 @@ dependencies:
   permission_handler: ^8.0.0+2
   glass_kit: ^2.0.1
   image_cropper: ^1.4.1
+  local_auth: ^1.1.7
   
 
   flutter_phone_direct_caller: ^2.1.0

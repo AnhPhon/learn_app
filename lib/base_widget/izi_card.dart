@@ -347,7 +347,7 @@ class IZICard extends StatelessWidget {
                                 text: row3Left.toString(),
                                 maxLine: 1,
                               ),
-                          ),
+                            ),
                           if (!IZIValidate.nullOrEmpty(row3Right))
                             Expanded(
                               child: getStatusPayment(statusPayment!),
@@ -506,11 +506,9 @@ class IZICard extends StatelessWidget {
           }
         },
         child: Container(
-          height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 140,
+          height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 150,
           width: widthCard ?? IZIDimensions.ONE_UNIT_SIZE * 120,
-          margin: marginCard ?? const EdgeInsets.all(0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
@@ -533,6 +531,7 @@ class IZICard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
                         fontWeight: FontWeight.w600,
+                        color: ColorResources.BLACK,
                       ),
                       text: row1Left.toString(),
                     ),
@@ -616,6 +615,10 @@ class IZICard extends StatelessWidget {
                 ],
               ),
             ),
+            const Flexible(
+              fit: FlexFit.tight,
+              child: SizedBox(),
+            ),
             Container(
               padding: EdgeInsets.fromLTRB(
                 IZIDimensions.ONE_UNIT_SIZE * 10,
@@ -650,6 +653,10 @@ class IZICard extends StatelessWidget {
                     ),
                 ],
               ),
+            ),
+            const Flexible(
+              fit: FlexFit.tight,
+              child: SizedBox(),
             ),
             Container(
               padding: EdgeInsets.fromLTRB(

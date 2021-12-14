@@ -267,7 +267,7 @@ class TestComponentPage extends GetView<TestComponentController> {
                 ),
                 label: "Danh mục",
                 scrollDirection: Axis.horizontal,
-                padding: IZIDimensions.ONE_UNIT_SIZE * 10,
+                margin: IZIDimensions.ONE_UNIT_SIZE * 10,
                 builder: (index) {
                   return Container(
                     padding: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 10),
@@ -297,7 +297,7 @@ class TestComponentPage extends GetView<TestComponentController> {
                 ),
                 label: "Danh mục",
                 scrollDirection: Axis.vertical,
-                padding: IZIDimensions.ONE_UNIT_SIZE * 10,
+                margin: IZIDimensions.ONE_UNIT_SIZE * 10,
                 builder: (index) {
                   return Container(
                     padding: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 10),
@@ -327,7 +327,7 @@ class TestComponentPage extends GetView<TestComponentController> {
                 ),
                 label: "Danh mục",
                 scrollDirection: Axis.vertical,
-                padding: IZIDimensions.ONE_UNIT_SIZE * 10,
+                margin: IZIDimensions.ONE_UNIT_SIZE * 10,
                 builder: (index) {
                   return Container(
                     padding: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 10),

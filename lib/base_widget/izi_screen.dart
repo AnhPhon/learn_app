@@ -26,34 +26,36 @@ class IZIScreen extends StatelessWidget {
         children: [
           background ?? const BackgroundSplash(),
           SafeArea(
-            child: LayoutBuilder(builder: (
-              BuildContext context,
-              BoxConstraints constraints,
-            ) {
-              IZISize.update(
-                width: constraints.maxWidth,
-                height: constraints.maxHeight,
-              );
-              return Scaffold(
-                backgroundColor: Colors.transparent,
-                body: Column(
-                  children: [
-                    appBar ?? const SizedBox(),
-                    tabBar ?? const SizedBox(),
-                    if (isSingleChildScrollView!)
-                      Expanded(
-                        child: SingleChildScrollView(
+            child: LayoutBuilder(
+              builder: (
+                BuildContext context,
+                BoxConstraints constraints,
+              ) {
+                IZISize.update(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                );
+                return Scaffold(
+                  backgroundColor: Colors.transparent,
+                  body: Column(
+                    children: [
+                      appBar ?? const SizedBox(),
+                      tabBar ?? const SizedBox(),
+                      if (isSingleChildScrollView!)
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: body,
+                          ),
+                        )
+                      else
+                        Expanded(
                           child: body,
                         ),
-                      )
-                    else
-                      Expanded(
-                        child: body,
-                      ),
-                  ],
-                ),
-              );
-            }),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),

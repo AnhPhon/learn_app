@@ -82,8 +82,11 @@ class IZIImage extends StatelessWidget {
       return IZIImageUrlType.NETWORK;
     } else if (url.startsWith('assets/')) {
       return IZIImageUrlType.ASSET;
-    } else if (icon!.fontFamily.toString().toLowerCase().contains('CupertinoIcons'.toLowerCase()) || icon!.fontFamily.toString().toLowerCase().contains('MaterialIcons'.toLowerCase())) {
-      return IZIImageUrlType.ICON;
+    }else if (icon != null) {
+      if (icon!.fontFamily.toString().toLowerCase().contains('CupertinoIcons'.toLowerCase()) || icon!.fontFamily.toString().toLowerCase().contains('MaterialIcons'.toLowerCase())) {
+        return IZIImageUrlType.ICON;
+      }
+      return IZIImageUrlType.FILE;
     }
     return IZIImageUrlType.FILE;
   }

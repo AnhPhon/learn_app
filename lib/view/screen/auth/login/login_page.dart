@@ -14,6 +14,7 @@ class LoginPage extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return IZIScreen(
+      isSingleChildScrollView: false,
       background: const BackgroundAuth(),
       body: GetBuilder(
         init: LoginController(),
@@ -30,10 +31,15 @@ class LoginPage extends GetView<LoginController> {
                   child: Column(
                     children: [
                       label(),
+
                       phone(),
+
                       password(),
-                      button(),
+
+                      button(controller),
+
                       fingerprint(),
+
                       Expanded(
                         child: other(controller),
                       ),
@@ -86,19 +92,26 @@ class LoginPage extends GetView<LoginController> {
         Icons.lock,
         size: IZIDimensions.ONE_UNIT_SIZE * 40,
       ),
-      suffixIcon: Icon(
-        Icons.fingerprint,
-        size: IZIDimensions.ONE_UNIT_SIZE * 40,
+      suffixIcon: GestureDetector(
+        onTap: () {
+          controller.onFingerprintUnlock();
+        },
+        child: Icon(
+          Icons.fingerprint,
+          size: IZIDimensions.ONE_UNIT_SIZE * 40,
+        ),
       ),
     );
   }
 
-  Widget button() {
+  Widget button(LoginController controller) {
     return IZIButton(
       padding: EdgeInsets.all(
         IZIDimensions.SPACE_SIZE_3X,
       ),
-      onTap: () {},
+      onTap: () {
+        controller.onLogin();
+      },
       label: 'Đăng nhập',
     );
   }
@@ -130,7 +143,7 @@ class LoginPage extends GetView<LoginController> {
         children: [
           GestureDetector(
             onTap: () {
-              controller.onToPageForgetPassword();
+              controller.onToForgetPasswordPage();
             },
             child: const IZIText(
               text: "Quên mật khẩu?",
@@ -144,7 +157,7 @@ class LoginPage extends GetView<LoginController> {
           ),
           GestureDetector(
             onTap: () {
-              controller.onToPageSignUp();
+              controller.onToSignUpPage();
             },
             child: const IZIText(
               text: "Đăng ký",

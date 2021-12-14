@@ -21,7 +21,7 @@ class IZIListView extends StatelessWidget {
     this.physics = const NeverScrollableScrollPhysics(),
     this.scrollDirection = Axis.vertical,
     this.height,
-    this.padding = 0,
+    this.margin = 0,
   }) : super(key: key);
 
   final IZIListViewType type;
@@ -37,7 +37,7 @@ class IZIListView extends StatelessWidget {
   final Axis? scrollDirection;
   final ScrollPhysics? physics;
   final Widget Function(int index) builder;
-  final double? height, padding;
+  final double? height, margin;
 
   Widget getListView(IZIListViewType type) {
     if (type == IZIListViewType.GRIDVIEW) {
@@ -91,7 +91,10 @@ class IZIListView extends StatelessWidget {
             ],
           ),
           Container(
-            height: scrollDirection == Axis.horizontal ? height ?? IZIDimensions.ONE_UNIT_SIZE * 180 + padding! : null,
+            margin: EdgeInsets.only(
+              top: margin!
+            ),
+            height: scrollDirection == Axis.horizontal ? height ?? IZIDimensions.ONE_UNIT_SIZE * 180 + margin! : null,
             child: getListView(type),
           )
         ],

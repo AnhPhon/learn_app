@@ -14,6 +14,7 @@ import 'package:image/image.dart';
 enum IZIFileType {
   IMAGE,
   FILE,
+  AVATAR,
 }
 
 class IZIFile extends StatefulWidget {
@@ -25,6 +26,16 @@ class IZIFile extends StatefulWidget {
     this.margin,
     Key? key,
   })  : type = IZIFileType.IMAGE,
+        super(key: key);
+
+  IZIFile.avatar({
+    this.height,
+    this.width,
+    this.imageSource = ImageSource.gallery,
+    this.onPikerFile,
+    this.margin,
+    Key? key,
+  })  : type = IZIFileType.AVATAR,
         super(key: key);
 
   IZIFile.file({
@@ -131,7 +142,11 @@ class _IZIFileState extends State<IZIFile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: widget.type == IZIFileType.FILE ? fileWidget() : imageWidget(),
+      child: widget.type == IZIFileType.FILE
+          ? fileWidget()
+          : widget.type == IZIFileType.AVATAR
+              ? avatar()
+              : imageWidget(),
     );
   }
 
@@ -141,9 +156,10 @@ class _IZIFileState extends State<IZIFile> {
         onPicker(widget.type);
       },
       child: Container(
-        margin: widget.margin ?? EdgeInsets.symmetric(
-            vertical: IZIDimensions.BLUR_RADIUS_2X,
-          ),
+        margin: widget.margin ??
+            EdgeInsets.symmetric(
+              vertical: IZIDimensions.BLUR_RADIUS_2X,
+            ),
         padding: EdgeInsets.symmetric(
           horizontal: IZIDimensions.SPACE_SIZE_2X,
         ),
@@ -250,6 +266,26 @@ class _IZIFileState extends State<IZIFile> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget avatar() {
+    return GestureDetector(
+      onTap: () {
+        onPicker(widget.type);
+      },
+      child: Container(
+        decoration: const BoxDecoration(
+          color: ColorResources.WHITE,
+          shape: BoxShape.circle,
+        ),
+        padding: EdgeInsets.all(
+          IZIDimensions.ONE_UNIT_SIZE * 5,
+        ),
+        child: const Icon(
+          Icons.camera_alt,
+        ),
       ),
     );
   }
