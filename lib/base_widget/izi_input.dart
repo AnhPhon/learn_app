@@ -19,7 +19,16 @@ import 'package:template/utils/color_resources.dart';
 // Sufix label nếu nó là tiền (Nếu là tiền hiện thị thêm icon tiền)
 //
 
-enum IZIInputType { TEXT, PASSWORD, NUMBER, DOUBLE, PRICE, EMAIL, PHONE, INCREMENT }
+enum IZIInputType {
+  TEXT,
+  PASSWORD,
+  NUMBER,
+  DOUBLE,
+  PRICE,
+  EMAIL,
+  PHONE,
+  INCREMENT,
+}
 
 class IZIInput extends StatefulWidget {
   IZIInput({
@@ -335,7 +344,7 @@ class _IZIInputState extends State<IZIInput> {
                 text: TextSpan(
                   text: widget.label,
                   style: TextStyle(
-                    fontSize: IZIDimensions.FONT_SIZE_SPAN,
+                    fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
                     fontWeight: FontWeight.w600,
                     color: ColorResources.BLACK,
                   ),
@@ -446,7 +455,7 @@ class _IZIInputState extends State<IZIInput> {
                       isDense: true,
                       labelText: widget.isLegend == true ? widget.label : null,
                       labelStyle: TextStyle(
-                        fontSize: focusNode!.hasFocus ? IZIDimensions.FONT_SIZE_H5 : IZIDimensions.FONT_SIZE_SPAN,
+                        fontSize: focusNode!.hasFocus ? IZIDimensions.FONT_SIZE_H5 : IZIDimensions.FONT_SIZE_H6,
                         fontWeight: focusNode!.hasFocus ? FontWeight.w600 : FontWeight.normal,
                         color: ColorResources.BLACK,
                       ),

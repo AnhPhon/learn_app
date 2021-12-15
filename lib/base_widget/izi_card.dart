@@ -20,7 +20,7 @@ enum IZICardType {
   CARD_OUTLINE,
   CARD_PAYMENT,
   CARD_NOTIFICATION,
-  CARD_VORCHER,
+  CARD_VOUCHER,
   CARD_CIRCLE,
   CARD_NEWS,
   CARD_TRANSFERS,
@@ -88,6 +88,8 @@ class IZICard extends StatelessWidget {
     this.actions,
     this.child,
     this.widgetLine,
+    this.colorIcon,
+    this.widgetCardVoucher,
   }) : super(key: key);
 
   final String? row1Left;
@@ -115,6 +117,8 @@ class IZICard extends StatelessWidget {
   final List<Widget>? actions;
   final Widget? child;
   final Widget? widgetLine;
+  final Widget? widgetCardVoucher;
+  final Color? colorIcon;
   final Function(dynamic val)? onChanged;
   final Function(String val)? onChanged1CardTransfer;
   final Function(String val)? onChanged2CardTransfer;
@@ -236,7 +240,7 @@ class IZICard extends StatelessWidget {
     if (type == IZIImageUrlType.ICON && !IZIValidate.nullOrEmpty(icon)) {
       return IZIImage.icon(
         icon ?? Icons.ac_unit_outlined,
-        color: ColorResources.WHITE,
+        color: colorIcon ?? ColorResources.WHITE,
         size: IZIDimensions.ONE_UNIT_SIZE * 45,
         fit: fit,
       );
@@ -247,7 +251,7 @@ class IZICard extends StatelessWidget {
       );
     }
     return ClipRRect(
-      borderRadius: BorderRadius.circular(IZIDimensions.BORDER_RADIUS_7X),
+      borderRadius: BorderRadius.circular(IZIDimensions.BORDER_RADIUS_4X),
       child: IZIImage(
         urlImage ?? '',
         fit: urlImage.toString().endsWith('.svg') ? fit : BoxFit.cover,
@@ -789,6 +793,10 @@ class IZICard extends StatelessWidget {
                 ],
               ),
             ),
+            const Flexible(
+              fit: FlexFit.tight,
+              child: SizedBox(),
+            ),
             Container(
               padding: EdgeInsets.fromLTRB(
                 IZIDimensions.ONE_UNIT_SIZE * 10,
@@ -823,6 +831,10 @@ class IZICard extends StatelessWidget {
                     ),
                 ],
               ),
+            ),
+            const Flexible(
+              fit: FlexFit.tight,
+              child: SizedBox(),
             ),
             Container(
               padding: EdgeInsets.fromLTRB(
@@ -867,7 +879,7 @@ class IZICard extends StatelessWidget {
           ],
         ),
       );
-    } else if (type == IZICardType.CARD_VORCHER) {
+    } else if (type == IZICardType.CARD_VOUCHER) {
       return Container(
         decoration: BoxDecoration(
           boxShadow: IZIOther().boxShadow,
@@ -1334,8 +1346,6 @@ class IZICard extends StatelessWidget {
           }
         },
         child: Container(
-          height: heightCard,
-          width: widthCard,
           margin: marginCard ??
               EdgeInsets.only(
                 bottom: IZIDimensions.SPACE_SIZE_2X,
@@ -1344,7 +1354,7 @@ class IZICard extends StatelessWidget {
             IZIDimensions.SPACE_SIZE_3X,
           ),
           decoration: BoxDecoration(
-            color: colorBG ?? ColorResources.WHITE,
+            color: valRadio == groupValue ? colorBG ?? ColorResources.WHITE : ColorResources.GREY.withOpacity(.7),
             borderRadius: !IZIValidate.nullOrEmpty(radiusCard)
                 ? BorderRadius.circular(
                     radiusCard!,
@@ -1405,37 +1415,6 @@ class IZICard extends StatelessWidget {
                           ),
                       ],
                     ),
-                    if (!IZIValidate.nullOrEmpty(row2Left) || !IZIValidate.nullOrEmpty(row2Right))
-                      Row(
-                        children: [
-                          if (!IZIValidate.nullOrEmpty(row1Left))
-                            Flexible(
-                              child: IZIText(
-                                text: row1Left!,
-                                maxLine: 2,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: IZIDimensions.FONT_SIZE_H6,
-                                ),
-                              ),
-                            ),
-                          if (!IZIValidate.nullOrEmpty(row1Right))
-                            Flexible(
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                  left: IZIDimensions.SPACE_SIZE_1X,
-                                ),
-                                child: IZIText(
-                                  text: row1Right!,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: IZIDimensions.FONT_SIZE_H6,
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
                     if (!IZIValidate.nullOrEmpty(row2Left) || !IZIValidate.nullOrEmpty(row2Right))
                       Row(
                         children: [
@@ -1679,18 +1658,19 @@ class IZICard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: IZIText(
-                  style: TextStyle(
-                    color: ColorResources.BLACK,
-                    fontSize: IZIDimensions.FONT_SIZE_SPAN,
-                    fontStyle: FontStyle.italic,
+              if (!IZIValidate.nullOrEmpty(row3Left))
+                Expanded(
+                  child: IZIText(
+                    style: TextStyle(
+                      color: ColorResources.BLACK,
+                      fontSize: IZIDimensions.FONT_SIZE_SPAN,
+                      fontStyle: FontStyle.italic,
+                    ),
+                    textAlign: TextAlign.start,
+                    text: row3Left.toString(),
+                    maxLine: 1,
                   ),
-                  textAlign: TextAlign.start,
-                  text: row3Left.toString(),
-                  maxLine: 1,
                 ),
-              ),
               if (!IZIValidate.nullOrEmpty(row3Right))
                 Expanded(
                   child: IZIText(
@@ -1724,17 +1704,7 @@ class IZICard extends StatelessWidget {
       );
     } else {
       return Container(
-        child: Center(
-          child: IZIButton(
-            isEnabled: isEnabled,
-            margin: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 13),
-            onTap: () {
-              onTap!();
-            },
-            label: "Lưu",
-            padding: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 7),
-          ),
-        ),
+        child: widgetCardVoucher ?? const SizedBox(),
       );
     }
   }
