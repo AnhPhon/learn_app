@@ -8,6 +8,7 @@ mixin IZIDimensions {
 
   // Divide screen to 1000 unit, get one unit to make base
   static double ONE_UNIT_SIZE = IZISize.getFontSize();
+  
 
   // Font size text and icon
   static double FONT_SIZE_SPAN_SMALL_EXTRA = 10.0 * ONE_UNIT_SIZE * ONE_UNIT_SIZE;

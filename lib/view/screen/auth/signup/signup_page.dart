@@ -17,55 +17,45 @@ class SignUpPage extends GetView<SignUpController> {
   @override
   Widget build(BuildContext context) {
     return IZIScreen(
-      isSingleChildScrollView: false,
+      isSingleChildScrollView: true,
       background: const BackgroundAuth(),
       body: GetBuilder(
         init: SignUpController(),
         builder: (SignUpController controller) {
-          return SizedBox(
+          return Container(
             height: IZIDimensions.iziSize.height,
-            child: Center(
-              child: IZIGlass(
-                width: IZIDimensions.iziSize.width * 0.9,
-                height: IZIDimensions.iziSize.height * 0.9,
-                child: Container(
+            width: IZIDimensions.iziSize.width,
+            child: Column(
+              children: [
+                IZIGlass(
                   width: IZIDimensions.iziSize.width * 0.9,
                   height: IZIDimensions.iziSize.height * 0.9,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: IZIDimensions.SPACE_SIZE_3X,
-                  ),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: SizedBox(
-                            height: 1000,
-                            child: Column(
-                              children: [
-                                label(),
-                                phone(),
-                                accountInput(),
-                                email(),
-                                password(),
-                                avatar(),
-                                citizenID(),
-                                Expanded(
-                                  child: other(
-                                    controller,
-                                  ),
-                                ),
-                                button(
-                                  controller,
-                                ),
-                              ],
-                            ),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: IZIDimensions.SPACE_SIZE_3X,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          label(),
+                          phone(),
+                          accountInput(),
+                          email(),
+                          password(),
+                          avatar(),
+                          citizenID(),
+                          other(
+                            controller,
                           ),
-                        ),
-                      )
-                    ],
+                          button(
+                            controller,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
           );
         },
@@ -96,9 +86,11 @@ class SignUpPage extends GetView<SignUpController> {
       type: IZIInputType.PHONE,
       placeHolder: "Số điện thoại",
       borderRadius: IZIDimensions.BLUR_RADIUS_4X,
+      textInputAction: TextInputAction.next,
       prefixIcon: Icon(
         Icons.phone,
         size: IZIDimensions.ONE_UNIT_SIZE * 40,
+        color: ColorResources.GREEN,
       ),
     );
   }
@@ -108,9 +100,11 @@ class SignUpPage extends GetView<SignUpController> {
       type: IZIInputType.TEXT,
       placeHolder: "Nhập họ và tên",
       borderRadius: IZIDimensions.BLUR_RADIUS_4X,
+      textInputAction: TextInputAction.next,
       prefixIcon: Icon(
         CupertinoIcons.person_crop_circle,
         size: IZIDimensions.ONE_UNIT_SIZE * 40,
+        color: ColorResources.GREEN,
       ),
     );
   }
@@ -120,9 +114,11 @@ class SignUpPage extends GetView<SignUpController> {
       type: IZIInputType.EMAIL,
       placeHolder: "Email",
       borderRadius: IZIDimensions.BLUR_RADIUS_4X,
+      textInputAction: TextInputAction.next,
       prefixIcon: Icon(
         CupertinoIcons.mail,
         size: IZIDimensions.ONE_UNIT_SIZE * 40,
+        color: ColorResources.GREEN,
       ),
     );
   }
@@ -132,13 +128,16 @@ class SignUpPage extends GetView<SignUpController> {
       type: IZIInputType.PHONE,
       placeHolder: "Nhập mật khẩu",
       borderRadius: IZIDimensions.BLUR_RADIUS_4X,
+      textInputAction: TextInputAction.done,
       prefixIcon: Icon(
         Icons.lock,
         size: IZIDimensions.ONE_UNIT_SIZE * 40,
+        color: ColorResources.GREEN,
       ),
       suffixIcon: Icon(
         Icons.fingerprint,
         size: IZIDimensions.ONE_UNIT_SIZE * 40,
+        color: ColorResources.GREEN,
       ),
     );
   }

@@ -127,7 +127,7 @@ class _IZIInputState extends State<IZIInput> {
     doubleEditingController = MoneyMaskedTextController(
       precision: 1,
     );
-    focusNode = FocusNode();
+    focusNode = widget.focusNode ?? FocusNode();
     if(widget.type == IZIInputType.INCREMENT){
       checkDisibleIncrement(IZINumber.parseInt(numberEditingController!.text));
     }else if(widget.type == IZIInputType.NUMBER){

@@ -7,6 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:template/base_widget/izi_image.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
+import 'package:template/helper/izi_other.dart';
 import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:image/image.dart';
@@ -167,15 +168,15 @@ class _IZIFileState extends State<IZIFile> {
         width: IZIValidate.nullOrEmpty(widget.width) ? double.infinity : widget.width!,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(
-            IZIDimensions.BLUR_RADIUS_2X,
-          ),
-          color: ColorResources.WHITE,
-          border: Border.all(
-            color: ColorResources.GREEN,
-            width: 2,
-          ),
-        ),
+            borderRadius: BorderRadius.circular(
+              IZIDimensions.BLUR_RADIUS_2X,
+            ),
+            color: ColorResources.WHITE,
+            border: Border.all(
+              color: ColorResources.GREEN,
+              width: 2,
+            ),
+            boxShadow: IZIOther().boxShadow),
         child: IZIValidate.nullOrEmpty(file)
             ? Container(
                 color: ColorResources.WHITE,
@@ -187,7 +188,10 @@ class _IZIFileState extends State<IZIFile> {
                         text: "Chọn tập tin",
                       ),
                     ),
-                    Icon(Icons.folder, color: ColorResources.CIRCLE_COLOR_BG3),
+                    Icon(
+                      Icons.folder,
+                      color: ColorResources.CIRCLE_COLOR_BG3,
+                    ),
                   ],
                 ),
               )
@@ -231,6 +235,7 @@ class _IZIFileState extends State<IZIFile> {
               borderRadius: BorderRadius.circular(
                 IZIDimensions.BLUR_RADIUS_3X,
               ),
+              boxShadow: IZIOther().boxShadow,
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(
@@ -276,9 +281,10 @@ class _IZIFileState extends State<IZIFile> {
         onPicker(widget.type);
       },
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: ColorResources.WHITE,
           shape: BoxShape.circle,
+          boxShadow: IZIOther().boxShadow,
         ),
         padding: EdgeInsets.all(
           IZIDimensions.ONE_UNIT_SIZE * 5,

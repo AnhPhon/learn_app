@@ -211,7 +211,7 @@ class _IZIOtpState extends State<IZIOtp> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            const Text("Gửi lại sau: "),
+                            const Text("Gửi lại sau "),
                             Container(
                               margin: EdgeInsets.only(
                                 left: IZIDimensions.SPACE_SIZE_1X,

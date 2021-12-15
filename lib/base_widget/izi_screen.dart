@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/base_widget/background/background_splash.dart';
 import 'package:template/helper/izi_size.dart';
-
 class IZIScreen extends StatelessWidget {
   const IZIScreen({
     Key? key,
@@ -10,13 +9,14 @@ class IZIScreen extends StatelessWidget {
     this.appBar,
     this.isSingleChildScrollView = true,
     this.tabBar,
+    this.widgetBottomSheet,
   }) : super(key: key);
   final Widget body;
   final Widget? background;
   final Widget? appBar;
   final Widget? tabBar;
+  final Widget? widgetBottomSheet;
   final bool? isSingleChildScrollView;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,36 +26,35 @@ class IZIScreen extends StatelessWidget {
         children: [
           background ?? const BackgroundSplash(),
           SafeArea(
-            child: LayoutBuilder(
-              builder: (
-                BuildContext context,
-                BoxConstraints constraints,
-              ) {
-                IZISize.update(
-                  width: constraints.maxWidth,
-                  height: constraints.maxHeight,
-                );
-                return Scaffold(
-                  backgroundColor: Colors.transparent,
-                  body: Column(
-                    children: [
-                      appBar ?? const SizedBox(),
-                      tabBar ?? const SizedBox(),
-                      if (isSingleChildScrollView!)
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: body,
-                          ),
-                        )
-                      else
-                        Expanded(
+            child: LayoutBuilder(builder: (
+              BuildContext context,
+              BoxConstraints constraints,
+            ) {
+              IZISize.update(
+                width: constraints.maxWidth,
+                height: constraints.maxHeight,
+              );
+              return Scaffold(
+                backgroundColor: Colors.transparent,
+                body: Column(
+                  children: [
+                    appBar ?? const SizedBox(),
+                    if (isSingleChildScrollView!)
+                      Expanded(
+                        //TODO: Thêm optional cho SingleScrollView
+                        child: SingleChildScrollView(
                           child: body,
                         ),
-                    ],
-                  ),
-                );
-              },
-            ),
+                      )
+                    else
+                      Expanded(
+                        child: body,
+                      ),
+                  ],
+                ),
+                bottomSheet: widgetBottomSheet ?? const SizedBox(),
+              );
+            }),
           ),
         ],
       ),

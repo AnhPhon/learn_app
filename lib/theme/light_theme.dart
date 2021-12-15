@@ -3,7 +3,7 @@ import 'package:template/utils/color_resources.dart';
 
 ThemeData lightTheme = ThemeData(
   fontFamily: 'Nutito',
-  primaryColor: const Color(0xFF2196F3),
+  primaryColor: const Color(0xFF0DAC43),
   brightness: Brightness.light,
   // scaffoldBackgroundColor: ColorResources.BACKGROUND,
   hintColor: const Color(0xFF9E9E9E),

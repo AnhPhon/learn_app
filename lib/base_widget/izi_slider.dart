@@ -5,7 +5,7 @@ import 'package:template/base_widget/izi_image.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
 
-class IZISlider extends StatelessWidget {
+class IZISlider extends StatefulWidget {
   const IZISlider({
     Key? key,
     this.axis = Axis.horizontal,
@@ -17,43 +17,61 @@ class IZISlider extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
 
   @override
+  _IZISliderState createState() => _IZISliderState();
+}
+
+class _IZISliderState extends State<IZISlider> {
+  int currentIndex = 0;
+  @override
   Widget build(BuildContext context) {
     return Container(
-      margin: margin ?? EdgeInsets.all(
-        IZIDimensions.SPACE_SIZE_2X,
-      ),
-      child: CarouselSlider.builder(
-        itemCount: data.length,
-        itemBuilder: (context, index, realIndex) {
-          return Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              imageSlider(
-                data[index].toString(),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  bottom: IZIDimensions.SPACE_SIZE_2X,
+      margin: widget.margin ??
+          EdgeInsets.all(
+            IZIDimensions.SPACE_SIZE_2X,
+          ),
+      child: Stack(
+        children: [
+          CarouselSlider.builder(
+            itemCount: widget.data.length,
+            itemBuilder: (context, index, realIndex) {
+              return Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  imageSlider(
+                    widget.data[index].toString(),
+                  ),
+                ],
+              );
+            },
+            options: CarouselOptions(
+              height: IZIDimensions.ONE_UNIT_SIZE * 250,
+              autoPlay: true,
+              enlargeCenterPage: true,
+              scrollDirection: widget.axis!,
+              onPageChanged: (index, value) {
+                setState(() {
+                  currentIndex = index;
+                });
+              },
+            ),
+          ),
+          Container(
+            height: IZIDimensions.ONE_UNIT_SIZE * 240,
+            margin: EdgeInsets.only(
+              bottom: IZIDimensions.SPACE_SIZE_2X,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                ..._buildIndicator(
+                  length: widget.data.length,
+                  currentIndex: currentIndex,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ..._buildIndicator(
-                      length: data.length,
-                      currentIndex: index,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          );
-        },
-        options: CarouselOptions(
-          height: IZIDimensions.ONE_UNIT_SIZE * 250,
-          autoPlay: true,
-          enlargeCenterPage: true,
-          scrollDirection: axis!,
-        ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

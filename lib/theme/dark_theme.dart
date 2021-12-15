@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 ThemeData darkTheme = ThemeData(
   fontFamily: 'TitilliumWeb',
-  primaryColor: const Color(0xFF2196F3),
+  primaryColor: const Color(0xFF0DAC43),
   brightness: Brightness.dark,
   hintColor: const Color(0xFFc7c7c7),
   pageTransitionsTheme: const PageTransitionsTheme(builders: {

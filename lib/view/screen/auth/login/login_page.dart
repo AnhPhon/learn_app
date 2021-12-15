@@ -38,7 +38,7 @@ class LoginPage extends GetView<LoginController> {
 
                       button(controller),
 
-                      fingerprint(),
+                      // fingerprint(),
 
                       Expanded(
                         child: other(controller),
@@ -76,9 +76,11 @@ class LoginPage extends GetView<LoginController> {
       type: IZIInputType.PHONE,
       placeHolder: "Số điện thoại",
       borderRadius: IZIDimensions.BLUR_RADIUS_4X,
+      textInputAction: TextInputAction.next,
       prefixIcon: Icon(
         Icons.account_circle_outlined,
         size: IZIDimensions.ONE_UNIT_SIZE * 40,
+        color: ColorResources.GREEN,
       ),
     );
   }
@@ -88,9 +90,11 @@ class LoginPage extends GetView<LoginController> {
       type: IZIInputType.PHONE,
       placeHolder: "Nhập mật khẩu",
       borderRadius: IZIDimensions.BLUR_RADIUS_4X,
+      textInputAction: TextInputAction.done,
       prefixIcon: Icon(
         Icons.lock,
         size: IZIDimensions.ONE_UNIT_SIZE * 40,
+        color: ColorResources.GREEN,
       ),
       suffixIcon: GestureDetector(
         onTap: () {
@@ -99,6 +103,7 @@ class LoginPage extends GetView<LoginController> {
         child: Icon(
           Icons.fingerprint,
           size: IZIDimensions.ONE_UNIT_SIZE * 40,
+          color: ColorResources.GREEN,
         ),
       ),
     );
@@ -145,10 +150,11 @@ class LoginPage extends GetView<LoginController> {
             onTap: () {
               controller.onToForgetPasswordPage();
             },
-            child: const IZIText(
+            child: IZIText(
               text: "Quên mật khẩu?",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
+                fontSize: IZIDimensions.FONT_SIZE_H6,
               ),
             ),
           ),
@@ -159,11 +165,12 @@ class LoginPage extends GetView<LoginController> {
             onTap: () {
               controller.onToSignUpPage();
             },
-            child: const IZIText(
+            child: IZIText(
               text: "Đăng ký",
               style: TextStyle(
                 color: ColorResources.CIRCLE_COLOR_BG3,
                 fontWeight: FontWeight.bold,
+                fontSize: IZIDimensions.FONT_SIZE_H6,
               ),
             ),
           )

@@ -11,6 +11,7 @@ class VerifyPage extends GetView<VerifyController> {
   @override
   Widget build(BuildContext context) {
     return IZIScreen(
+      isSingleChildScrollView: false,
       background: const BackgroundOtp(),
       body: GetBuilder(
         init: VerifyController(),

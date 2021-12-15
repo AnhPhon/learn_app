@@ -45,8 +45,8 @@ class _GetXSmartRefreshPageState extends State<GetXSmartRefreshPage> with Automa
     );
     controller!.onRefresh = widget.onRefresh;
     controller!.onLoading = widget.onLoading;
-    controller!.keyRefresh = (widget.key as ValueKey<String>).value;
-    print('GetXSmartRefreshController key full ${(widget.key as ValueKey<String>).value}');
+    // controller!.keyRefresh = (widget.key as ValueKey<String>).value;
+    // print('GetXSmartRefreshController key full ${(widget.key as ValueKey<String>).value}');
 
   }
 

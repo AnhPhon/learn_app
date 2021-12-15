@@ -13,6 +13,7 @@ class UpdatePasswordPage extends GetView<UpdatePasswordController> {
   @override
   Widget build(BuildContext context) {
     return IZIScreen(
+      isSingleChildScrollView: false,
       background: const BackgroundOtp(),
       body: GetBuilder(
         init: UpdatePasswordController(),

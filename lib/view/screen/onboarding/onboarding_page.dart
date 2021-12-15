@@ -40,22 +40,33 @@ class OnBoardingPage extends GetView<OnBoardingController> {
                         lableWidget()
                       else
                         Container(
-                          height: IZIDimensions.iziSize.height * 0.1,
+                          margin: EdgeInsets.only(
+                            top: IZIDimensions.ONE_UNIT_SIZE * 50,
+                            left: IZIDimensions.ONE_UNIT_SIZE * 20,
+                          ),
+                          height: IZIDimensions.ONE_UNIT_SIZE * 100,
                         ),
                       // Page
-                      pageViewWidget(context),
+                      Expanded(
+                        child: pageViewWidget(context),
+                      ),
                       // Indicator
-                      getWidgetGoToPageEnd(controller),
+
                       // Space bottom
-                      SizedBox(
-                        height: IZIDimensions.SPACE_SIZE_2X,
-                      )
+                      // SizedBox(
+                      //   height: IZIDimensions.SPACE_SIZE_2X,
+                      // )
                     ],
                   ),
                 ),
               ),
             ],
           );
+        },
+      ),
+      widgetBottomSheet: GetBuilder(
+        builder: (OnBoardingController controller) {
+          return getWidgetGoToPageEnd(controller);
         },
       ),
     );
@@ -76,7 +87,10 @@ class OnBoardingPage extends GetView<OnBoardingController> {
   ///
   Widget getWidgetGoToPageEnd(OnBoardingController controller) {
     if (controller.currentIndex != 2) {
-      return Expanded(
+      return Container(
+        margin: EdgeInsets.only(
+          bottom: IZIDimensions.ONE_UNIT_SIZE * 30,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -84,14 +98,12 @@ class OnBoardingPage extends GetView<OnBoardingController> {
         ),
       );
     }
-    return Expanded(
-      child: buttonComplete(controller),
-    );
+    return buttonComplete(controller);
   }
 
   Widget lableWidget() {
     return Container(
-      height: IZIDimensions.iziSize.height * 0.1,
+      height: IZIDimensions.ONE_UNIT_SIZE * 100,
       margin: EdgeInsets.only(
         top: IZIDimensions.ONE_UNIT_SIZE * 50,
         left: IZIDimensions.ONE_UNIT_SIZE * 20,
@@ -146,8 +158,9 @@ class OnBoardingPage extends GetView<OnBoardingController> {
   /// Page view
   ///
   Widget pageViewWidget(BuildContext context) {
-    return SizedBox(
-      height: IZIDimensions.iziSize.height * 0.65,
+    return Container(
+      // height: IZIDimensions.ONE_UNIT_SIZE * 570,
+      alignment: Alignment.center,
       child: PageView(
         controller: controller.pageController,
         onPageChanged: (index) {
@@ -193,8 +206,16 @@ class OnBoardingPage extends GetView<OnBoardingController> {
           ),
           width: IZIDimensions.iziSize.width,
           child: Center(
-            child: IZIImage(
-              image,
+            child: Container(
+              // height: IZIDimensions.ONE_UNIT_SIZE * 350,
+              // width: IZIDimensions.ONE_UNIT_SIZE * 350,
+              constraints: BoxConstraints(
+                maxHeight: IZIDimensions.ONE_UNIT_SIZE * 750,
+                maxWidth: IZIDimensions.ONE_UNIT_SIZE * 750,
+              ),
+              child: IZIImage(
+                image,
+              ),
             ),
           ),
         ),
@@ -218,10 +239,12 @@ class OnBoardingPage extends GetView<OnBoardingController> {
 
   Widget buttonComplete(OnBoardingController controller) {
     return Container(
-      alignment: Alignment.bottomCenter,
+      // alignment: Alignment.bottomCenter,
       child: IZIButton(
-        margin: EdgeInsets.symmetric(
-          horizontal: IZIDimensions.ONE_UNIT_SIZE * 30,
+        margin: EdgeInsets.only(
+          left: IZIDimensions.ONE_UNIT_SIZE * 30,
+          right: IZIDimensions.ONE_UNIT_SIZE * 30,
+          bottom: IZIDimensions.ONE_UNIT_SIZE * 30,
         ),
         padding: EdgeInsets.all(
           IZIDimensions.ONE_UNIT_SIZE * 25,

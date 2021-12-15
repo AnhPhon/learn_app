@@ -13,6 +13,7 @@ class ForgetPasswordPage extends GetView<ForgetPasswordController> {
   @override
   Widget build(BuildContext context) {
     return IZIScreen(
+      isSingleChildScrollView: false,
       background: const BackgroundOtp(),
       body: GetBuilder(
         init: ForgetPasswordController(),
