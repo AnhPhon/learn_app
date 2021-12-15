@@ -44,12 +44,12 @@ class ColorResources {
   // static const Color PRIMARYCOLOR = Color(0xff2196F3);
   // static const Color APPBARCIRCLECOLOR = Color(0xffE6E9F9);
   // static const Color APPBARCIRCLECOLOR2 = Color(0xffE6E9F9);
-  static const Color BACKGROUND = Color(0xffF3F3F3);
+  static const Color BACKGROUND = Color(0xfff8f9fa);
 
   // static const Color THEME_DEFAULT = Color(0xff2196F3);
   static const Color PINK = Color(0xffFFCDD2);
 
-  // static const Color UNREAD_NOTICE = Color(0xffEAF2FF);
+  // static const Color UNREAD_NOTICE = Color(0xffe9ecef);
   // static const Color UNSELECT_TABBAR = Color(0xff848485);
   // static const Color ERROR_NOTICE_SNACKBAR = Color(0xffFFEBEE);
   // static const Color NOT_ALLOW_EDIT = Color(0xffced4da);
