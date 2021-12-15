@@ -12,8 +12,10 @@ class IZIAppBar extends StatelessWidget {
     this.iconBack,
     this.actions = const [],
     this.callbackSearch,
+    this.colorTitle,
   }) : super(key: key);
   final String title;
+  final Color? colorTitle;
   final Widget? iconBack;
   final List<Widget>? actions;
   final Function(String)? callbackSearch;
@@ -67,9 +69,9 @@ class IZIAppBar extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     fontSize: IZIDimensions.FONT_SIZE_H4,
-                    color: ColorResources.WHITE,
+                    color: colorTitle ?? ColorResources.WHITE,
                   ),
                 ),
         ),

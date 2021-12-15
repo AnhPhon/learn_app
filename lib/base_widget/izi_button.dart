@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:template/base_widget/izi_image.dart';
 import 'package:template/helper/izi_device.dart';
 import 'package:template/helper/izi_dimensions.dart';
+import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
 
 enum IZIButtonType {
@@ -25,6 +27,8 @@ class IZIButton extends StatelessWidget {
     this.colorBGDisabled = ColorResources.GREY,
     this.colorDisible = ColorResources.BLACK,
     this.colorBG = ColorResources.CIRCLE_COLOR_BG3,
+    this.imageUrlIcon,
+    this.withBorder,
   }) : super(key: key);
 
   // OnTap
@@ -40,12 +44,13 @@ class IZIButton extends StatelessWidget {
   final double? height;
   final int? maxLine;
   final IZIButtonType? type;
-
   final bool? isEnabled;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final double? borderRadius;
   final IconData? icon;
+  final String? imageUrlIcon;
+  final double? withBorder;
 
   Color getColorBG(IZIButtonType type) {
     if (type == IZIButtonType.DEFAULT) {
@@ -101,7 +106,7 @@ class IZIButton extends StatelessWidget {
               ? null
               : Border.all(
                   color: isEnabled! ? colorBG! : ColorResources.GREY,
-                  width: IZIDimensions.ONE_UNIT_SIZE * 5,
+                  width: withBorder ?? IZIDimensions.ONE_UNIT_SIZE * 5,
                 ),
           borderRadius: BorderRadius.circular(borderRadius ?? IZIDimensions.ONE_UNIT_SIZE * 20),
         ),
@@ -110,6 +115,10 @@ class IZIButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if (!IZIValidate.nullOrEmpty(imageUrlIcon))
+              IZIImage(
+                imageUrlIcon.toString(),
+              ),
             if (icon != null)
               Icon(
                 icon,

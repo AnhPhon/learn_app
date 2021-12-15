@@ -93,6 +93,27 @@ class MockPage extends GetView<MockController> {
                     onTap: () => controller.goToDemoBaseCard(),
                     label: "Click to Demo Base Card",
                   ),
+                  IZIButton(
+                    margin: EdgeInsets.all(
+                      IZIDimensions.ONE_UNIT_SIZE * 20,
+                    ),
+                    onTap: () => controller.goToAccountManagements(),
+                    label: "Click to Account Managements",
+                  ),
+                  IZIButton(
+                    margin: EdgeInsets.all(
+                      IZIDimensions.ONE_UNIT_SIZE * 20,
+                    ),
+                    onTap: () => controller.goToVoucher(),
+                    label: "Click to Voucher",
+                  ),
+                  IZIButton(
+                    margin: EdgeInsets.all(
+                      IZIDimensions.ONE_UNIT_SIZE * 20,
+                    ),
+                    onTap: () => controller.goToRefeFriend(),
+                    label: "Click to Refer Friends",
+                  ),
                 ],
               ),
             ],

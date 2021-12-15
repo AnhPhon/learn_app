@@ -57,7 +57,7 @@ class DemoBaseCardPage extends GetView<DemoBaseCardController> {
                   builder: (index) {
                     return IZICard(
                       row1Left: "2123123FGS4312",
-                      row1Right: "-500.000 vnđ",
+                      row1Right: "-500.000 VNĐ",
                       row2Left: "Thanh toán đơn hàng ĐH001",
                       row3Left: "26/09/2021 15:30",
                       row3Right: "Thành công",
@@ -137,12 +137,12 @@ class DemoBaseCardPage extends GetView<DemoBaseCardController> {
                   builder: (index) {
                     return IZICard(
                       row1Left: "2123123FGS4312",
-                      row1Right: "-500.000 vnđ",
+                      row1Right: "-500.000 VNĐ",
                       row2Left: "Điều kiện:\nĐơn tối thiểu 5.000.000đ ",
                       row3Left: "Hạn sử dụng: 25/12/2021",
                       statusMoney: IZIStatusMoney.DRAW,
                       statusPayment: IZIStatusPayment.DONE,
-                      cardType: IZICardType.CARD_VORCHER,
+                      cardType: IZICardType.CARD_VOUCHER,
                     );
                   },
                 ),

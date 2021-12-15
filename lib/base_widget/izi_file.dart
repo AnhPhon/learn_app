@@ -141,9 +141,10 @@ class _IZIFileState extends State<IZIFile> {
         onPicker(widget.type);
       },
       child: Container(
-        margin: widget.margin ?? EdgeInsets.symmetric(
-            vertical: IZIDimensions.BLUR_RADIUS_2X,
-          ),
+        margin: widget.margin ??
+            EdgeInsets.symmetric(
+              vertical: IZIDimensions.BLUR_RADIUS_2X,
+            ),
         padding: EdgeInsets.symmetric(
           horizontal: IZIDimensions.SPACE_SIZE_2X,
         ),
