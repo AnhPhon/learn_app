@@ -168,7 +168,7 @@ class HomePage extends GetView<HomeController> {
                     ),
                   ),
                   IZIText(
-                    text: controller.isVisibleWallet ? '999.999.999.999 vnđ' : "************",
+                    text: controller.isVisibleWallet ? '999.999.999.999 VNĐ' : "************",
                     style: TextStyle(
                       fontSize: IZIDimensions.FONT_SIZE_H5,
                       color: ColorResources.BLACK,

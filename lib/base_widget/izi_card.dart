@@ -601,7 +601,7 @@ class IZICard extends StatelessWidget {
                         maxLine: 2,
                         style: TextStyle(
                           color: ColorResources.BLACK,
-                          fontSize: IZISize.device == IZIDevice.TABLE ? IZIDimensions.FONT_SIZE_H5 : IZIDimensions.FONT_SIZE_H6 * 0.9,
+                          fontSize: IZIDimensions.FONT_SIZE_H6 * 0.9,
                           fontWeight: FontWeight.w500,
                         ),
                         textAlign: TextAlign.start,
@@ -613,7 +613,7 @@ class IZICard extends StatelessWidget {
                         text: row1Right.toString(),
                         maxLine: 2,
                         style: TextStyle(
-                          fontSize: IZISize.device == IZIDevice.TABLE ? IZIDimensions.FONT_SIZE_H5 : IZIDimensions.FONT_SIZE_SPAN,
+                          fontSize: IZIDimensions.FONT_SIZE_SPAN,
                           fontWeight: FontWeight.w500,
                         ),
                         textAlign: TextAlign.end,
@@ -642,7 +642,7 @@ class IZICard extends StatelessWidget {
                         row2Left.toString(),
                         style: TextStyle(
                           color: ColorResources.GREY,
-                          fontSize: IZISize.device == IZIDevice.TABLE ? IZIDimensions.FONT_SIZE_H5 : IZIDimensions.FONT_SIZE_SPAN,
+                          fontSize: IZIDimensions.FONT_SIZE_SPAN,
                           decoration: TextDecoration.lineThrough,
                         ),
                         textAlign: TextAlign.start,
@@ -655,7 +655,7 @@ class IZICard extends StatelessWidget {
                       child: IZIText(
                         text: row2Right.toString(),
                         style: TextStyle(
-                          fontSize: IZISize.device == IZIDevice.TABLE ? IZIDimensions.FONT_SIZE_H5 : IZIDimensions.FONT_SIZE_SPAN,
+                          fontSize: IZIDimensions.FONT_SIZE_SPAN,
                         ),
                         maxLine: 1,
                         textAlign: TextAlign.end,
@@ -685,7 +685,7 @@ class IZICard extends StatelessWidget {
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           color: ColorResources.RED,
-                          fontSize: IZISize.device == IZIDevice.TABLE ? IZIDimensions.FONT_SIZE_H5 : IZIDimensions.FONT_SIZE_H6 * .9,
+                          fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
                           fontWeight: FontWeight.w500,
                         ),
                         maxLines: 1,
@@ -699,7 +699,7 @@ class IZICard extends StatelessWidget {
                         textAlign: TextAlign.end,
                         style: TextStyle(
                           color: ColorResources.BLACK.withOpacity(.7),
-                          fontSize: IZISize.device == IZIDevice.TABLE ? IZIDimensions.FONT_SIZE_H5 : IZIDimensions.FONT_SIZE_SPAN * 0.85,
+                          fontSize: IZIDimensions.FONT_SIZE_SPAN * 0.85,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -772,7 +772,7 @@ class IZICard extends StatelessWidget {
                         maxLine: 2,
                         style: TextStyle(
                           color: ColorResources.BLACK,
-                          fontSize: IZISize.device == IZIDevice.TABLE ? IZIDimensions.FONT_SIZE_H5 : IZIDimensions.FONT_SIZE_H6 * 0.9,
+                          fontSize: IZIDimensions.FONT_SIZE_H6 * 0.9,
                           fontWeight: FontWeight.w500,
                         ),
                         textAlign: TextAlign.start,

@@ -23,6 +23,7 @@ class VerifyPage extends GetView<VerifyController> {
               child: IZIOtp(
                 lables: label(),
                 onTap: () {},
+                codeLength: 6,
                 isEnabled: true,
               ),
             ),

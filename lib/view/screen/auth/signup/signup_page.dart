@@ -163,6 +163,8 @@ class SignUpPage extends GetView<SignUpController> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IZIFile(
+            width: IZIDimensions.iziSize.width * 0.24,
+            height: IZIDimensions.iziSize.width * 0.24,
             imageSource: ImageSource.camera,
           ),
           SizedBox(
@@ -198,15 +200,27 @@ class SignUpPage extends GetView<SignUpController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IZIFile(
-                width: IZIDimensions.iziSize.width * 0.4,
-                height: IZIDimensions.iziSize.width * 0.4,
-                imageSource: ImageSource.camera,
+              Flexible(
+                fit: FlexFit.tight,
+                child: SizedBox(),
               ),
               IZIFile(
-                width: IZIDimensions.iziSize.width * 0.4,
-                height: IZIDimensions.iziSize.width * 0.4,
+                width: IZIDimensions.iziSize.width * 0.24,
+                height: IZIDimensions.iziSize.width * 0.24,
                 imageSource: ImageSource.camera,
+              ),
+              Flexible(
+                fit: FlexFit.tight,
+                child: SizedBox(),
+              ),
+              IZIFile(
+                width: IZIDimensions.iziSize.width * 0.24,
+                height: IZIDimensions.iziSize.width * 0.24,
+                imageSource: ImageSource.camera,
+              ),
+              Flexible(
+                fit: FlexFit.tight,
+                child: SizedBox(),
               ),
             ],
           ),

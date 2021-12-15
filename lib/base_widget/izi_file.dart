@@ -247,8 +247,9 @@ class _IZIFileState extends State<IZIFile> {
             ),
           ),
           Container(
-            height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 50 : widget.height! / 5,
-            width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 50 : widget.height! / 5,
+            alignment: Alignment.center,
+            height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 50 : widget.height! / 4,
+            width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 50 : widget.height! / 4,
             decoration: BoxDecoration(
               color: Colors.transparent,
               shape: BoxShape.circle,
@@ -265,7 +266,7 @@ class _IZIFileState extends State<IZIFile> {
                 child: Icon(
                   Icons.add,
                   color: ColorResources.CIRCLE_COLOR_BG3,
-                  size: IZIDimensions.ONE_UNIT_SIZE * 40,
+                  size: IZIValidate.nullOrEmpty(widget.height) ? widget.height! / 6 : IZIDimensions.ONE_UNIT_SIZE * 40,
                 ),
               ),
             ),

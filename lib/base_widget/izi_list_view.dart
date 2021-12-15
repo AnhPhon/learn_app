@@ -87,7 +87,7 @@ class IZIListView extends StatelessWidget {
                   IZIText(
                     text: label.toString(),
                     style: TextStyle(
-                      fontSize: IZISize.device == IZIDevice.TABLE ? IZIDimensions.FONT_SIZE_H4 : IZIDimensions.FONT_SIZE_H5,
+                      fontSize: IZIDimensions.FONT_SIZE_H5,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
