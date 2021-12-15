@@ -38,7 +38,6 @@ class _GetXSmartRefreshPageState extends State<GetXSmartRefreshPage> with Automa
 
   @override
   void initState() {
-    // print('GetXSmartRefreshPage initState ${widget.key.toString()}');
     super.initState();
     controller = Get.put(
       GetXSmartRefreshController(),
@@ -46,16 +45,9 @@ class _GetXSmartRefreshPageState extends State<GetXSmartRefreshPage> with Automa
     );
     controller!.onRefresh = widget.onRefresh;
     controller!.onLoading = widget.onLoading;
-    controller!.keyRefresh = (widget.key as ValueKey<String>).value;
-    print('GetXSmartRefreshController key full ${(widget.key as ValueKey<String>).value}');
+    // controller!.keyRefresh = (widget.key as ValueKey<String>).value;
+    // print('GetXSmartRefreshController key full ${(widget.key as ValueKey<String>).value}');
 
-    // valueGlobalNotifier.smartRefreshNoData.listen((p0) {
-    //   Future.delayed(const Duration(seconds: 1), () {
-    //     // if (mounted) {
-    //       setState(() {});
-    //     // }
-    //   });
-    // });
   }
 
   @override

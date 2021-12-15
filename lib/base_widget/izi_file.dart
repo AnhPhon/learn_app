@@ -7,6 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:template/base_widget/izi_image.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
+import 'package:template/helper/izi_other.dart';
 import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:image/image.dart';
@@ -14,6 +15,7 @@ import 'package:image/image.dart';
 enum IZIFileType {
   IMAGE,
   FILE,
+  AVATAR,
 }
 
 class IZIFile extends StatefulWidget {
@@ -25,6 +27,16 @@ class IZIFile extends StatefulWidget {
     this.margin,
     Key? key,
   })  : type = IZIFileType.IMAGE,
+        super(key: key);
+
+  IZIFile.avatar({
+    this.height,
+    this.width,
+    this.imageSource = ImageSource.gallery,
+    this.onPikerFile,
+    this.margin,
+    Key? key,
+  })  : type = IZIFileType.AVATAR,
         super(key: key);
 
   IZIFile.file({
@@ -131,7 +143,11 @@ class _IZIFileState extends State<IZIFile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: widget.type == IZIFileType.FILE ? fileWidget() : imageWidget(),
+      child: widget.type == IZIFileType.FILE
+          ? fileWidget()
+          : widget.type == IZIFileType.AVATAR
+              ? avatar()
+              : imageWidget(),
     );
   }
 
@@ -148,19 +164,19 @@ class _IZIFileState extends State<IZIFile> {
         padding: EdgeInsets.symmetric(
           horizontal: IZIDimensions.SPACE_SIZE_2X,
         ),
-        height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 70 : IZIDimensions.ONE_UNIT_SIZE * widget.height!,
-        width: IZIValidate.nullOrEmpty(widget.width) ? double.infinity : IZIDimensions.ONE_UNIT_SIZE * widget.width!,
+        height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 70 : widget.height!,
+        width: IZIValidate.nullOrEmpty(widget.width) ? double.infinity : widget.width!,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(
-            IZIDimensions.BLUR_RADIUS_2X,
-          ),
-          color: ColorResources.WHITE,
-          border: Border.all(
-            color: ColorResources.GREEN,
-            width: 2,
-          ),
-        ),
+            borderRadius: BorderRadius.circular(
+              IZIDimensions.BLUR_RADIUS_2X,
+            ),
+            color: ColorResources.WHITE,
+            border: Border.all(
+              color: ColorResources.GREEN,
+              width: 2,
+            ),
+            boxShadow: IZIOther().boxShadow),
         child: IZIValidate.nullOrEmpty(file)
             ? Container(
                 color: ColorResources.WHITE,
@@ -172,7 +188,10 @@ class _IZIFileState extends State<IZIFile> {
                         text: "Chọn tập tin",
                       ),
                     ),
-                    Icon(Icons.folder, color: ColorResources.CIRCLE_COLOR_BG3),
+                    Icon(
+                      Icons.folder,
+                      color: ColorResources.CIRCLE_COLOR_BG3,
+                    ),
                   ],
                 ),
               )
@@ -198,8 +217,8 @@ class _IZIFileState extends State<IZIFile> {
           EdgeInsets.symmetric(
             vertical: IZIDimensions.BLUR_RADIUS_2X,
           ),
-      height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 250 : IZIDimensions.ONE_UNIT_SIZE * widget.height!,
-      width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 250 : IZIDimensions.ONE_UNIT_SIZE * widget.width!,
+      height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 250 : widget.height!,
+      width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 250 : widget.width!,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           IZIDimensions.BLUR_RADIUS_3X,
@@ -210,12 +229,13 @@ class _IZIFileState extends State<IZIFile> {
         alignment: Alignment.center,
         children: [
           Container(
-            height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 250 : IZIDimensions.ONE_UNIT_SIZE * widget.height!,
-            width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 250 : IZIDimensions.ONE_UNIT_SIZE * widget.width!,
+            height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 250 : widget.height!,
+            width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 250 : widget.width!,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(
                 IZIDimensions.BLUR_RADIUS_3X,
               ),
+              boxShadow: IZIOther().boxShadow,
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(
@@ -227,8 +247,9 @@ class _IZIFileState extends State<IZIFile> {
             ),
           ),
           Container(
-            height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 50 : IZIDimensions.ONE_UNIT_SIZE * (widget.height! / 5),
-            width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 50 : IZIDimensions.ONE_UNIT_SIZE * (widget.height! / 5),
+            alignment: Alignment.center,
+            height: IZIValidate.nullOrEmpty(widget.height) ? IZIDimensions.ONE_UNIT_SIZE * 50 : widget.height! / 4,
+            width: IZIValidate.nullOrEmpty(widget.width) ? IZIDimensions.ONE_UNIT_SIZE * 50 : widget.height! / 4,
             decoration: BoxDecoration(
               color: Colors.transparent,
               shape: BoxShape.circle,
@@ -245,12 +266,33 @@ class _IZIFileState extends State<IZIFile> {
                 child: Icon(
                   Icons.add,
                   color: ColorResources.CIRCLE_COLOR_BG3,
-                  size: IZIDimensions.ONE_UNIT_SIZE * 40,
+                  size: IZIValidate.nullOrEmpty(widget.height) ? widget.height! / 6 : IZIDimensions.ONE_UNIT_SIZE * 40,
                 ),
               ),
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget avatar() {
+    return GestureDetector(
+      onTap: () {
+        onPicker(widget.type);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: ColorResources.WHITE,
+          shape: BoxShape.circle,
+          boxShadow: IZIOther().boxShadow,
+        ),
+        padding: EdgeInsets.all(
+          IZIDimensions.ONE_UNIT_SIZE * 5,
+        ),
+        child: const Icon(
+          Icons.camera_alt,
+        ),
       ),
     );
   }

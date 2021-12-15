@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -87,4 +89,18 @@ class IZISize {
       return _width / size;
     }
   }
+
+  // table
+  static IZIDevice get device {
+    final sizeDevice =  sqrt((size.width * size.width) + (size.height * size.height));
+    if(sizeDevice > 1100){
+      return IZIDevice.TABLE;
+    }
+    return IZIDevice.IPHONE;
+  }
+}
+
+enum IZIDevice {
+  TABLE,
+  IPHONE,
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:template/helper/izi_device.dart';
 import 'package:template/helper/izi_dimensions.dart';
+import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/images_path.dart';
 
-class BackgroundThree extends StatelessWidget {
-  const BackgroundThree({
+class BackgroundSplash3 extends StatelessWidget {
+  const BackgroundSplash3({
     Key? key,
   }) : super(key: key);
 
@@ -20,9 +23,9 @@ class BackgroundThree extends StatelessWidget {
               top: 0,
               left: 0,
               child: Image.asset(
-                ImagesPath.splash2,
+                ImagesPath.splash3,
                 fit: BoxFit.contain,
-                width: IZIDimensions.iziSize.width,
+                width: IZIDimensions.iziSize.width ,
               ),
             ),
           ],

@@ -2,19 +2,27 @@
 
 
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:template/routes/route_path/app_routes.dart';
-import 'package:template/view/screen/mock/mockPage.dart';
+import 'package:template/view/screen/onboarding/onboarding_binding.dart';
+import 'package:template/view/screen/onboarding/onboarding_page.dart';
+import 'package:template/view/screen/splash/splash_binding.dart';
+import 'package:template/view/screen/splash/splash_page.dart';
 
 class SplashRoutes {
   static const String SPLASH = '/splash';
-
-
+  static const String ON_BOARDING = '/onboarding';
 
   static List<GetPage> list = [
-    GetPage(
+     GetPage(
       name: SPLASH,
-      page: () => MockPage(),
+      page: () => SplashPage(),
+      binding: SplashBinding(),
+    ),
+    GetPage(
+      name: ON_BOARDING,
+      page: () => OnBoardingPage(),
+      binding: OnBoardingBinding(),
     ),
   ];
+
 
 }

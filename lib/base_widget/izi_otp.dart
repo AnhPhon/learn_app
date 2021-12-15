@@ -111,23 +111,22 @@ class _IZIOtpState extends State<IZIOtp> {
     return Container(
       child: Center(
         child: GlassContainer.frostedGlass(
-          width: IZIDimensions.iziSize.width * 0.8,
+          width: IZIDimensions.iziSize.width * 0.9,
           height: IZIDimensions.iziSize.height * 0.6,
-            borderColor: Colors.transparent,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(
-                IZIDimensions.BORDER_RADIUS_7X,
-              ),
-              bottomRight: Radius.circular(
-                IZIDimensions.BORDER_RADIUS_7X,
-              ),
+          borderColor: Colors.transparent,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(
+              IZIDimensions.BORDER_RADIUS_7X,
+            ),
+            bottomRight: Radius.circular(
+              IZIDimensions.BORDER_RADIUS_7X,
+            ),
           ),
           frostedOpacity: 0.05,
           blur: 20,
           child: Column(
             children: [
-              if(!IZIValidate.nullOrEmpty(widget.lables))
-              ...widget.lables!,
+              if (!IZIValidate.nullOrEmpty(widget.lables)) ...widget.lables!,
               Center(
                 child: Container(
                   margin: EdgeInsets.symmetric(
@@ -167,7 +166,7 @@ class _IZIOtpState extends State<IZIOtp> {
                       // controller.onBtnCompleteTap();
                     },
                     onChanged: (val) {
-                      if(!IZIValidate.nullOrEmpty(widget.onChanged)){
+                      if (!IZIValidate.nullOrEmpty(widget.onChanged)) {
                         widget.onChanged!(val);
                       }
                     },
@@ -179,7 +178,7 @@ class _IZIOtpState extends State<IZIOtp> {
               ),
               Container(
                 margin: EdgeInsets.symmetric(
-                  horizontal: IZIDimensions.SPACE_SIZE_3X,
+                  horizontal: IZIDimensions.SPACE_SIZE_5X,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -196,13 +195,15 @@ class _IZIOtpState extends State<IZIOtp> {
                             });
                           }
                         },
-                        child: IZIText(
-                          text: widget.labelSendOtp ?? "Gửi xác thực đến sms",
-                          style: TextStyle(
-                            fontSize: IZIDimensions.FONT_SIZE_H6,
-                            color: !isCountDown && count <= 0 ? widget.colorSMS ?? ColorResources.WHITE : ColorResources.GREY,
-                          ),
-                        ),
+                        child: widget.onTapSendSMS != null
+                            ? IZIText(
+                                text: widget.labelSendOtp ?? "Gửi xác thực đến sms",
+                                style: TextStyle(
+                                  fontSize: IZIDimensions.FONT_SIZE_H6,
+                                  color: !isCountDown && count <= 0 ? widget.colorSMS ?? ColorResources.WHITE : ColorResources.GREY,
+                                ),
+                              )
+                            : const SizedBox(),
                       ),
                     ),
                     if (isCountDown && count > 0)
@@ -210,14 +211,14 @@ class _IZIOtpState extends State<IZIOtp> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            const Text("Gửi lại sau: "),
+                            const Text("Gửi lại sau "),
                             Container(
                               margin: EdgeInsets.only(
                                 left: IZIDimensions.SPACE_SIZE_1X,
                               ),
                               alignment: Alignment.center,
                               child: IZIText(
-                                text:"${(count ~/ 60) > 0 ? '${count ~/ 60}:' : ''}${count.toInt() % 60}s",
+                                text: "${(count ~/ 60) > 0 ? '${count ~/ 60}:' : ''}${count.toInt() % 60}s",
                                 style: TextStyle(
                                   fontSize: IZIDimensions.FONT_SIZE_H6,
                                 ),
@@ -237,7 +238,7 @@ class _IZIOtpState extends State<IZIOtp> {
                     ),
                     child: IZIButton(
                       margin: EdgeInsets.symmetric(
-                        horizontal: IZIDimensions.SPACE_SIZE_2X,
+                        horizontal: IZIDimensions.SPACE_SIZE_5X,
                       ),
                       colorBG: ColorResources.WHITE,
                       color: ColorResources.CIRCLE_COLOR_BG3,
@@ -250,7 +251,7 @@ class _IZIOtpState extends State<IZIOtp> {
                         horizontal: IZIDimensions.ONE_UNIT_SIZE * 50,
                         vertical: IZIDimensions.ONE_UNIT_SIZE * 20,
                       ),
-                      onTap: (){
+                      onTap: () {
                         onTap();
                       },
                     ),

@@ -1,10 +1,14 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:glass_kit/glass_kit.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_image.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/helper/izi_other.dart';
+import 'package:template/helper/izi_size.dart';
 import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/images_path.dart';
@@ -351,9 +355,10 @@ class IZICard extends StatelessWidget {
                                 maxLine: 1,
                               ),
                             ),
-                          Expanded(
-                            child: getStatusPayment(statusPayment!),
-                          )
+                          if (!IZIValidate.nullOrEmpty(row3Right))
+                            Expanded(
+                              child: getStatusPayment(statusPayment!),
+                            )
                         ],
                       ),
                   ],
@@ -508,11 +513,9 @@ class IZICard extends StatelessWidget {
           }
         },
         child: Container(
-          height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 140,
+          height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 150,
           width: widthCard ?? IZIDimensions.ONE_UNIT_SIZE * 120,
-          margin: marginCard ?? const EdgeInsets.all(0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
@@ -535,6 +538,7 @@ class IZICard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
                         fontWeight: FontWeight.w600,
+                        color: ColorResources.BLACK,
                       ),
                       text: row1Left.toString(),
                     ),
@@ -612,6 +616,10 @@ class IZICard extends StatelessWidget {
                       child: IZIText(
                         text: row1Right.toString(),
                         maxLine: 2,
+                        style: TextStyle(
+                          fontSize: IZIDimensions.FONT_SIZE_SPAN,
+                          fontWeight: FontWeight.w500,
+                        ),
                         textAlign: TextAlign.end,
                       ),
                     ),
@@ -650,6 +658,9 @@ class IZICard extends StatelessWidget {
                     Expanded(
                       child: IZIText(
                         text: row2Right.toString(),
+                        style: TextStyle(
+                          fontSize: IZIDimensions.FONT_SIZE_SPAN,
+                        ),
                         maxLine: 1,
                         textAlign: TextAlign.end,
                       ),

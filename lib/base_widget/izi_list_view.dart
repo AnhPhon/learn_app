@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
+import 'package:template/helper/izi_size.dart';
 import 'package:template/helper/izi_validate.dart';
 
 enum IZIListViewType { LISTVIEW, GRIDVIEW }
@@ -21,7 +22,7 @@ class IZIListView extends StatelessWidget {
     this.physics = const NeverScrollableScrollPhysics(),
     this.scrollDirection = Axis.vertical,
     this.height,
-    this.padding = 0,
+    this.margin,
   }) : super(key: key);
 
   final IZIListViewType type;
@@ -37,7 +38,8 @@ class IZIListView extends StatelessWidget {
   final Axis? scrollDirection;
   final ScrollPhysics? physics;
   final Widget Function(int index) builder;
-  final double? height, padding;
+  final double? height;
+  final EdgeInsetsGeometry? margin;
 
   Widget getListView(IZIListViewType type) {
     if (type == IZIListViewType.GRIDVIEW) {
@@ -76,22 +78,28 @@ class IZIListView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              if (!IZIValidate.nullOrEmpty(label))
-                IZIText(
-                  text: label.toString(),
-                  style: TextStyle(
-                    fontSize: IZIDimensions.FONT_SIZE_H5,
-                    fontWeight: FontWeight.bold,
+          Container(
+            margin: margin ?? EdgeInsets.all(0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (!IZIValidate.nullOrEmpty(label))
+                  IZIText(
+                    text: label.toString(),
+                    style: TextStyle(
+                      fontSize: IZIDimensions.FONT_SIZE_H5,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-              action ?? const SizedBox(),
-            ],
+                action ?? const SizedBox(),
+              ],
+            ),
           ),
           Container(
-            height: scrollDirection == Axis.horizontal ? height ?? IZIDimensions.ONE_UNIT_SIZE * 180 + padding! : null,
+            // margin: EdgeInsets.only(
+            //   top: margin!
+            // ),
+            height: scrollDirection == Axis.horizontal ? height ?? IZIDimensions.ONE_UNIT_SIZE * 180 + margin!.vertical : null,
             child: getListView(type),
           )
         ],

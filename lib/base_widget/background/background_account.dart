@@ -3,11 +3,11 @@ import 'package:template/helper/izi_device.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
 
-class BackgroundOne extends StatelessWidget {
-  const BackgroundOne({
+class BackgroundAccount extends StatelessWidget {
+  const BackgroundAccount({
     Key? key,
   }) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -17,32 +17,25 @@ class BackgroundOne extends StatelessWidget {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            Positioned(
-              top: 0,
-              left: 0,
-              child: Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    ColorResources.CIRCLE_COLOR_BG,
-                    ColorResources.CIRCLE_COLOR_BG2,
-                    ColorResources.CIRCLE_COLOR_BG4,
-                  ],
-                  stops: [
-                    0.3,
-                    0.6,
-                    1,
-                  ],
-                )),
+            Container(
+              height: IZIDimensions.iziSize.width * 0.4,
+              width: double.infinity,
+              decoration:  const BoxDecoration(
+                 color: ColorResources.CIRCLE_COLOR_BG3,
+                 gradient: LinearGradient(
+                   begin: Alignment.topCenter,
+                   end: Alignment.bottomCenter,
+                   colors: [
+                     ColorResources.CIRCLE_COLOR_BG3,
+                     ColorResources.CIRCLE_COLOR_BG2,
+                   ],
+                   stops: [0.7,1]
+                 )
               ),
             ),
             Positioned(
-              top: -70,
-              left: -25,
+              top: -90,
+              left: -70,
               child: Container(
                 height: IZIDimensions.iziSize.width * 0.5,
                 width: IZIDimensions.iziSize.width * 0.4,
@@ -62,8 +55,8 @@ class BackgroundOne extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: -90,
-              right: -35,
+              top: -100,
+              right: -70,
               child: Container(
                 height: IZIDimensions.iziSize.height * 0.5,
                 width: IZIDimensions.iziSize.width * 0.5,
