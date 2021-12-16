@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/helper/izi_alert.dart';
-import 'package:template/view/screen/%1Daccount/account_page.dart';
+import 'package:template/view/screen/account/account_page.dart';
 import 'package:template/view/screen/home/home_page.dart';
 
 class DashBoardController extends GetxController {

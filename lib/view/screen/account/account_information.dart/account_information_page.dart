@@ -11,7 +11,7 @@ import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/images_path.dart';
-import 'package:template/view/screen/%1Daccount/account_information.dart/account_information_controller.dart';
+import 'package:template/view/screen/account/account_information.dart/account_information_controller.dart';
 
 class AccountInfomationPage extends GetView<AccountInfomationController> {
   @override
