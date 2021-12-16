@@ -1,7 +1,7 @@
 
 import 'package:get/get.dart';
-import 'package:template/view/screen/%1Daccount/account_information.dart/account_infomation_binding.dart';
-import 'package:template/view/screen/%1Daccount/account_information.dart/account_information_page.dart';
+import 'package:template/view/screen/account/account_information.dart/account_infomation_binding.dart';
+import 'package:template/view/screen/account/account_information.dart/account_information_page.dart';
 
 class AccountRoutes {
     static const String ACCOUNT_INFOMATION = '/account_information';

@@ -1,6 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:template/view/screen/%1Daccount/account_binding.dart';
-import 'package:template/view/screen/%1Daccount/account_page.dart';
+import 'package:template/view/screen/account/account_binding.dart';
+import 'package:template/view/screen/account/account_page.dart';
 import 'package:template/view/screen/dash_board/dash_board_binding.dart';
 import 'package:template/view/screen/dash_board/dash_board_page.dart';
 import 'package:template/view/screen/home/home_binding.dart';
