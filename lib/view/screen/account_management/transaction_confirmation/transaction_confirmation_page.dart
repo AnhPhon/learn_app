@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:template/base_widget/app_bar.dart';
-import 'package:template/base_widget/background/background_home.dart';
+import 'package:template/base_widget/background/background_account.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_screen.dart';
 import 'package:template/helper/izi_dimensions.dart';
@@ -15,7 +15,7 @@ class TransactionConfirmationPage extends GetView<TransactionConfirmationControl
   Widget build(BuildContext context) {
     return IZIScreen(
       isSingleChildScrollView: false,
-      background: const BackgroundHome(),
+      background: const BackgroundAccount(),
       appBar: IZIAppBar(
         iconBack: GestureDetector(
           onTap: () {

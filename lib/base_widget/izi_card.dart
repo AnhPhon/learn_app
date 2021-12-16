@@ -1,14 +1,10 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:glass_kit/glass_kit.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_image.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/helper/izi_other.dart';
-import 'package:template/helper/izi_size.dart';
 import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/images_path.dart';

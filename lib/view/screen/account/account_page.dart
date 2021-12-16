@@ -84,7 +84,9 @@ class AccountPage extends GetView<AccountController> {
                   itemMenu(
                     icon: Icons.account_balance_wallet_rounded,
                     label: "Ví của tôi",
-                    onTap: () {},
+                    onTap: () {
+                      controller.goToAccountManagements();
+                    },
                   ),
                   itemMenu(
                     icon: Icons.monetization_on_sharp,

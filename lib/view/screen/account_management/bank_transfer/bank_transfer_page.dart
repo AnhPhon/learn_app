@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:template/base_widget/app_bar.dart';
-import 'package:template/base_widget/background/background_home.dart';
+import 'package:template/base_widget/background/background_account.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_file.dart';
 import 'package:template/base_widget/izi_screen.dart';
@@ -11,12 +11,12 @@ import 'package:template/helper/izi_other.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/account_management/bank_transfer/bank_transfer_controller.dart';
 
-class BankStansferPage extends GetView<BankStansferController> {
+class BankStansferPage extends GetView<BankTransferController> {
   @override
   Widget build(BuildContext context) {
     return IZIScreen(
       isSingleChildScrollView: false,
-      background: const BackgroundHome(),
+      background: const BackgroundAccount(),
       appBar: IZIAppBar(
         iconBack: GestureDetector(
           onTap: () {
@@ -32,8 +32,8 @@ class BankStansferPage extends GetView<BankStansferController> {
         title: "Chuyển khoản ngân hàng",
       ),
       body: GetBuilder(
-        init: BankStansferController(),
-        builder: (BankStansferController controller) {
+        init: BankTransferController(),
+        builder: (BankTransferController controller) {
           return Container(
             color: ColorResources.BACKGROUND,
             constraints: BoxConstraints(
@@ -132,7 +132,7 @@ class BankStansferPage extends GetView<BankStansferController> {
   ///
   ///Nội dung chuyển khoản
   ///
-  Widget _transferContents(BankStansferController controller) {
+  Widget _transferContents(BankTransferController controller) {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(
@@ -211,7 +211,7 @@ class BankStansferPage extends GetView<BankStansferController> {
   ///
   ///Thông tin tài khoản chuyển khoản
   ///
-  Widget _transferAccountInformation(BankStansferController controller) {
+  Widget _transferAccountInformation(BankTransferController controller) {
     return Container(
       child: Column(
         children: [
