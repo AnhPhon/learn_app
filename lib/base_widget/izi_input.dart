@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
+import 'package:get/get.dart';
+import 'package:template/helper/izi_date.dart';
 
 import 'package:template/helper/izi_device.dart';
 import 'package:template/helper/izi_dimensions.dart';
@@ -8,6 +11,7 @@ import 'package:template/helper/izi_number.dart';
 import 'package:template/helper/izi_other.dart';
 
 import 'package:template/helper/izi_validate.dart';
+import 'package:template/theme/app_theme.dart';
 import 'package:template/utils/color_resources.dart';
 
 // Text, number, tiền đều có thể hiện thị defaul = text
@@ -28,6 +32,11 @@ enum IZIInputType {
   EMAIL,
   PHONE,
   INCREMENT,
+}
+
+enum IZIPickerDate {
+  MATERIAL,
+  CUPERTINO,
 }
 
 class IZIInput extends StatefulWidget {
@@ -68,6 +77,8 @@ class IZIInput extends StatefulWidget {
     this.max = 10,
     this.widthIncrement,
     this.onController,
+    this.isDatePicker = false,
+    this.iziPickerDate = IZIPickerDate.MATERIAL,
   }) : super(key: key);
   final String? label;
   final String? placeHolder;
@@ -105,6 +116,8 @@ class IZIInput extends StatefulWidget {
   final double? min;
   final double? max;
   final double? widthIncrement;
+  final bool? isDatePicker;
+  final IZIPickerDate? iziPickerDate;
   @override
   _IZIInputState createState() => _IZIInputState();
 }
@@ -132,20 +145,20 @@ class _IZIInputState extends State<IZIInput> {
       precision: 0,
       decimalSeparator: '',
     );
-    
+
     doubleEditingController = MoneyMaskedTextController(
       precision: 1,
     );
     focusNode = widget.focusNode ?? FocusNode();
-    if(widget.type == IZIInputType.INCREMENT){
+    if (widget.type == IZIInputType.INCREMENT) {
       checkDisibleIncrement(IZINumber.parseInt(numberEditingController!.text));
-    }else if(widget.type == IZIInputType.NUMBER){
-       numberEditingController!.clear();
+    } else if (widget.type == IZIInputType.NUMBER || widget.type == IZIInputType.PRICE) {
+      numberEditingController!.clear();
+      doubleEditingController!.clear();
     }
-    if(!IZIValidate.nullOrEmpty(widget.onController)){
+    if (!IZIValidate.nullOrEmpty(widget.onController)) {
       widget.onController!(getController(widget.type));
     }
-    
   }
 
   @override
@@ -287,7 +300,89 @@ class _IZIInputState extends State<IZIInput> {
     }
   }
 
+  void datePicker(IZIPickerDate pickerType) {
+    print("Onlick");
+    if (pickerType == IZIPickerDate.CUPERTINO) {
+      showCupertinoModalPopup(
+        context: context,
+        builder: (_) => Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
+            ),
+            color: ColorResources.WHITE,
+          ),
+          height: IZIDimensions.ONE_UNIT_SIZE * 500,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25),
+                )),
+                height: IZIDimensions.ONE_UNIT_SIZE * 400,
+                child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.date,
+                    initialDateTime: DateTime.now(),
+                    onDateTimeChanged: (value) {
+                      getController(widget.type).text = IZIDate.formatDate(value);
+                      // "${value.day < 10 ? '0${value.day}' : value.day}-${value.month < 10 ? '0${value.month}' : value.month}-${value.year < 10 ? '0${value.year}' : value.year}";
+                    }),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    right: IZIDimensions.SPACE_SIZE_3X,
+                  ),
+                  child: Text(
+                    "Xác nhận",
+                    style: TextStyle(fontSize: IZIDimensions.FONT_SIZE_H6, color: ColorResources.CIRCLE_COLOR_BG3, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    } else {
+      showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2100),
+        builder: (context, child) {
+          return Theme(
+            data: AppTheme.light.copyWith(
+              colorScheme: const ColorScheme.light(
+                primary: ColorResources.GREEN,
+              ),
+            ),
+            child: child!,
+          );
+        },
+      ).then(
+        (value) {
+          if (!IZIValidate.nullOrEmpty(value)) {
+            getController(widget.type).text = IZIDate.formatDate(value!);
+          }
+        },
+      );
+    }
+  }
+
   Widget? getSuffixIcon() {
+    if (widget.isDatePicker!) {
+      return const Icon(
+        Icons.calendar_today,
+        color: ColorResources.BLACK,
+      );
+    }
     if (widget.type == IZIInputType.PRICE) {
       return SizedBox.shrink(
         child: Padding(
@@ -320,7 +415,6 @@ class _IZIInputState extends State<IZIInput> {
 
   @override
   Widget build(BuildContext context) {
-    
     if (!focusNode!.hasListeners) {
       focusNode!.addListener(() {
         setState(() {});
@@ -410,113 +504,124 @@ class _IZIInputState extends State<IZIInput> {
                   ),
                 ),
               Flexible(
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: IZIOther().boxShadow,
-                  ),
-                  width: IZIInputType.INCREMENT == widget.type ? widget.width ?? IZIDimensions.ONE_UNIT_SIZE * 90 : null,
-                  height: widget.miniSize ? 45 : null,
-                  child: TextFormField(
-                    textAlign: IZIInputType.INCREMENT == widget.type ? TextAlign.center : TextAlign.start,
-                    onFieldSubmitted: (val) {
-                      if (!IZIValidate.nullOrEmpty(widget.onSubmitted)) {
-                        widget.onSubmitted!(val);
-                      }
-                      if (!IZIValidate.nullOrEmpty(val)) {
-                        if (IZINumber.parseInt(val) < widget.min!) {
-                          getController(widget.type).text = IZINumber.parseInt(widget.min.toString()).toString();
+                child: GestureDetector(
+                  onTap: () {
+                    if (widget.isDatePicker! && widget.allowEdit!) {
+                      datePicker(widget.iziPickerDate!);
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      boxShadow: IZIOther().boxShadow,
+                      color: ColorResources.WHITE,
+                      borderRadius: BorderRadius.circular(
+                        widget.borderRadius ?? IZIDimensions.BLUR_RADIUS_1X,
+                      ),
+                    ),
+                    width: IZIInputType.INCREMENT == widget.type ? widget.width ?? IZIDimensions.ONE_UNIT_SIZE * 90 : null,
+                    height: widget.miniSize ? 45 : null,
+                    child: TextFormField(
+                      textAlign: IZIInputType.INCREMENT == widget.type ? TextAlign.center : TextAlign.start,
+                      onFieldSubmitted: (val) {
+                        if (!IZIValidate.nullOrEmpty(widget.onSubmitted)) {
+                          widget.onSubmitted!(val);
                         }
-                      }
-                    },
-                    onChanged: (val) {
-                      isShowedError = true;
-                      if (widget.type == IZIInputType.NUMBER || widget.type == IZIInputType.DOUBLE) {
-                        if (IZIValidate.nullOrEmpty(val)) {
-                          // getController(widget.type).text = '0';
-                          // val = '0';
+                        if (!IZIValidate.nullOrEmpty(val)) {
+                          if (IZINumber.parseInt(val) < widget.min!) {
+                            getController(widget.type).text = IZINumber.parseInt(widget.min.toString()).toString();
+                          }
                         }
-                      }
-                      if (widget.onChanged != null) {
-                        widget.onChanged!(val);
-                        // onIncrement(widget.type, increment: true);
-                      }
-                      validator(widget.type, val.toString());
-                    },
-                    textInputAction: widget.textInputAction,
-                    keyboardType: getType(widget.type),
-                    maxLines: widget.maxLine,
-                    textAlignVertical: TextAlignVertical.top,
-                    enabled: widget.allowEdit,
-                    controller: getController(widget.type),
-                    obscureText: widget.type == IZIInputType.PASSWORD && isVisible,
-                    focusNode: focusNode,
-                    decoration: InputDecoration(
-                      contentPadding: widget.miniSize ? const EdgeInsets.all(12) : null,
-                      isDense: true,
-                      labelText: widget.isLegend == true ? widget.label : null,
-                      labelStyle: TextStyle(
-                        fontSize: focusNode!.hasFocus ? IZIDimensions.FONT_SIZE_H5 : IZIDimensions.FONT_SIZE_H6,
-                        fontWeight: focusNode!.hasFocus ? FontWeight.w600 : FontWeight.normal,
-                        color: ColorResources.BLACK,
-                      ),
-                      prefixIcon: widget.prefixIcon,
-                      border: OutlineInputBorder(
-                        borderSide: widget.isBorder! || widget.isLegend!
-                            ? widget.borderSide ??
-                                BorderSide(
-                                  width: widget.borderSize ?? 1,
-                                  color: (widget.allowEdit == false) ? ColorResources.LIGHT_GREY : ColorResources.LIGHT_GREY,
-                                )
-                            : BorderSide.none,
-                        borderRadius: BorderRadius.circular(
-                          widget.borderRadius ?? IZIDimensions.BLUR_RADIUS_1X,
+                      },
+                      onChanged: (val) {
+                        isShowedError = true;
+                        if (widget.type == IZIInputType.NUMBER || widget.type == IZIInputType.DOUBLE) {
+                          if (IZIValidate.nullOrEmpty(val)) {
+                            // getController(widget.type).text = '0';
+                            // val = '0';
+                          }
+                        }
+                        if (widget.onChanged != null) {
+                          widget.onChanged!(val);
+                          // onIncrement(widget.type, increment: true);
+                        }
+                        validator(widget.type, val.toString());
+                      },
+                      textInputAction: widget.textInputAction,
+                      keyboardType: getType(widget.type),
+                      maxLines: widget.maxLine,
+                      textAlignVertical: TextAlignVertical.top,
+                      enabled: widget.isDatePicker! ? false : widget.allowEdit,
+                      controller: getController(widget.type),
+                      obscureText: widget.type == IZIInputType.PASSWORD && isVisible,
+                      focusNode: focusNode,
+                      decoration: InputDecoration(
+                        contentPadding: widget.miniSize ? const EdgeInsets.all(12) : null,
+                        isDense: true,
+                        labelText: widget.isLegend == true ? widget.label : null,
+                        labelStyle: TextStyle(
+                          fontSize: focusNode!.hasFocus ? IZIDimensions.FONT_SIZE_H5 : IZIDimensions.FONT_SIZE_H6,
+                          fontWeight: focusNode!.hasFocus ? FontWeight.w600 : FontWeight.normal,
+                          color: ColorResources.BLACK,
                         ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: widget.isBorder! || widget.isLegend!
-                            ? widget.borderSide ??
-                                BorderSide(
-                                  width: widget.borderSize ?? 1,
-                                  color: (widget.allowEdit == false) ? ColorResources.LIGHT_GREY : ColorResources.LIGHT_GREY,
-                                )
-                            : BorderSide.none,
-                        borderRadius: BorderRadius.circular(
-                          widget.borderRadius ?? IZIDimensions.BLUR_RADIUS_1X,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: widget.isBorder! || widget.isLegend!
-                            ? widget.borderSide ??
-                                BorderSide(
-                                  width: widget.borderSize ?? 1,
-                                  color: (widget.allowEdit == false) ? ColorResources.LIGHT_GREY : ColorResources.LIGHT_GREY,
-                                )
-                            : BorderSide.none,
-                        borderRadius: BorderRadius.circular(
-                          widget.borderRadius ?? IZIDimensions.BLUR_RADIUS_1X,
-                        ),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderSide: widget.isBorder! || widget.isLegend!
-                            ? widget.borderSide ??
-                                BorderSide(
-                                  width: widget.borderSize ?? 1,
-                                  color: (widget.allowEdit == false) ? ColorResources.LIGHT_GREY : ColorResources.LIGHT_GREY,
-                                )
-                            : BorderSide.none,
-                        borderRadius: BorderRadius.circular(
-                          widget.borderRadius ?? IZIDimensions.BLUR_RADIUS_1X,
-                        ),
-                      ),
-                      filled: true,
-                      hintText: widget.placeHolder,
-                      hintStyle: widget.hintStyle ??
-                          TextStyle(
-                            color: ColorResources.BLACK.withOpacity(0.5),
-                            fontSize: IZIDimensions.FONT_SIZE_SPAN,
+                        prefixIcon: widget.prefixIcon,
+                        border: OutlineInputBorder(
+                          borderSide: widget.isBorder! || widget.isLegend!
+                              ? widget.borderSide ??
+                                  BorderSide(
+                                    width: widget.borderSize ?? 1,
+                                    color: (widget.allowEdit == false) ? ColorResources.LIGHT_GREY : ColorResources.LIGHT_GREY,
+                                  )
+                              : BorderSide.none,
+                          borderRadius: BorderRadius.circular(
+                            widget.borderRadius ?? IZIDimensions.BLUR_RADIUS_1X,
                           ),
-                      fillColor: (widget.allowEdit == false) ? widget.fillColor ?? ColorResources.LIGHT_GREY.withOpacity(0.4) : widget.fillColor ?? ColorResources.WHITE,
-                      suffixIcon: getSuffixIcon(),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: widget.isBorder! || widget.isLegend!
+                              ? widget.borderSide ??
+                                  BorderSide(
+                                    width: widget.borderSize ?? 1,
+                                    color: (widget.allowEdit == false) ? ColorResources.LIGHT_GREY : ColorResources.LIGHT_GREY,
+                                  )
+                              : BorderSide.none,
+                          borderRadius: BorderRadius.circular(
+                            widget.borderRadius ?? IZIDimensions.BLUR_RADIUS_1X,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: widget.isBorder! || widget.isLegend!
+                              ? widget.borderSide ??
+                                  BorderSide(
+                                    width: widget.borderSize ?? 1,
+                                    color: (widget.allowEdit == false) ? ColorResources.LIGHT_GREY : ColorResources.LIGHT_GREY,
+                                  )
+                              : BorderSide.none,
+                          borderRadius: BorderRadius.circular(
+                            widget.borderRadius ?? IZIDimensions.BLUR_RADIUS_1X,
+                          ),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderSide: widget.isBorder! || widget.isLegend!
+                              ? widget.borderSide ??
+                                  BorderSide(
+                                    width: widget.borderSize ?? 1,
+                                    color: (widget.allowEdit == false) ? ColorResources.LIGHT_GREY : ColorResources.LIGHT_GREY,
+                                  )
+                              : BorderSide.none,
+                          borderRadius: BorderRadius.circular(
+                            widget.borderRadius ?? IZIDimensions.BLUR_RADIUS_1X,
+                          ),
+                        ),
+                        filled: true,
+                        hintText: widget.placeHolder,
+                        hintStyle: widget.hintStyle ??
+                            TextStyle(
+                              color: ColorResources.BLACK.withOpacity(0.5),
+                              fontSize: IZIDimensions.FONT_SIZE_SPAN,
+                            ),
+                        fillColor: (widget.allowEdit == false) ? widget.fillColor ?? ColorResources.LIGHT_GREY.withOpacity(0.4) : widget.fillColor ?? ColorResources.WHITE,
+                        suffixIcon: getSuffixIcon(),
+                      ),
                     ),
                   ),
                 ),

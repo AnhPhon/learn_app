@@ -17,7 +17,7 @@ class SignUpPage extends GetView<SignUpController> {
   @override
   Widget build(BuildContext context) {
     return IZIScreen(
-      isSingleChildScrollView: true,
+      isSingleChildScrollView: false,
       background: const BackgroundAuth(),
       body: GetBuilder(
         init: SignUpController(),

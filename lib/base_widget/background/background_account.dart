@@ -18,7 +18,7 @@ class BackgroundAccount extends StatelessWidget {
         body: Stack(
           children: [
             Container(
-              height: IZIDimensions.iziSize.width * 0.4,
+              height: IZIDimensions.iziSize.height * 0.2,
               width: double.infinity,
               decoration:  const BoxDecoration(
                  color: ColorResources.CIRCLE_COLOR_BG3,

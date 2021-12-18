@@ -1,46 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/base_widget/background/background_home.dart';
+import 'package:template/base_widget/app_bar.dart';
+import 'package:template/base_widget/background/background_app_bar.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_drop_down_button.dart';
-import 'package:template/base_widget/izi_image.dart';
 import 'package:template/base_widget/izi_input.dart';
 import 'package:template/base_widget/izi_screen.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
-import 'package:template/utils/images_path.dart';
-import 'package:template/view/screen/account/account_information.dart/account_information_controller.dart';
+import 'package:template/view/screen/account/capital_contribution/authorized_person/authorized_person_controller.dart';
 
-class AccountInfomationPage extends GetView<AccountInfomationController> {
+class AuthorizedPersonPage extends GetView<AuthorizedPersonController> {
   @override
   Widget build(BuildContext context) {
     return IZIScreen(
-      background: const BackgroundHome(),
+      background: const BackgroundAppBar(),
+      appBar: IZIAppBar(
+        title: "Góp vốn",
+        iconBack: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: ColorResources.WHITE,
+          ),
+        ),
+      ),
       body: GetBuilder(
-        builder: (AccountInfomationController controller) {
+        builder: (AuthorizedPersonController controller) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding: EdgeInsets.all(
-                  IZIDimensions.SPACE_SIZE_3X,
-                ),
-                alignment: Alignment.topLeft,
-                height: MediaQuery.of(context).padding.top + kToolbarHeight,
-                child: GestureDetector(
-                  onTap: () {
-                    controller.onBack();
-                  },
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: IZIDimensions.iziSize.width,
-                child: avatar(),
-              ),
+              title(),
               input(),
             ],
           );
@@ -49,60 +42,27 @@ class AccountInfomationPage extends GetView<AccountInfomationController> {
     );
   }
 
-  Widget avatar() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Stack(
-          alignment: Alignment.bottomRight,
-          children: [
-            CircleAvatar(
-              radius: IZIDimensions.ONE_UNIT_SIZE * 90,
-              child: IZIImage(
-                ImagesPath.nature,
-              ),
-            ),
-            GestureDetector(
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: ColorResources.WHITE,
-                  shape: BoxShape.circle,
-                ),
-                padding: EdgeInsets.all(
-                  IZIDimensions.ONE_UNIT_SIZE * 5,
-                ),
-                child: const Icon(
-                  Icons.camera_alt,
-                ),
-              ),
-            )
-          ],
-        ),
-        userInfo(),
-      ],
-    );
-  }
-
-  Widget userInfo() {
+  Widget title() {
     return Container(
-      margin: EdgeInsets.only(
-        bottom: IZIDimensions.SPACE_SIZE_5X,
+      margin: EdgeInsets.all(
+        IZIDimensions.SPACE_SIZE_4X,
       ),
+      width: IZIDimensions.iziSize.width,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           IZIText(
-            text: "Đỗ Thanh Nhàn",
+            text: "Người được uỷ quyền",
             style: TextStyle(
-              fontSize: IZIDimensions.FONT_SIZE_H4,
-              fontWeight: FontWeight.w500,
+              fontSize: IZIDimensions.FONT_SIZE_H5,
+              fontWeight: FontWeight.bold,
             ),
           ),
           IZIText(
-            text: "01029999999",
+            text: "Điền các thông tin bên dưới cho người được ủy quyền",
             style: TextStyle(
-              fontSize: IZIDimensions.FONT_SIZE_H6,
-              fontWeight: FontWeight.w400,
+              fontSize: IZIDimensions.FONT_SIZE_SPAN,
+              color: ColorResources.RED,
             ),
           ),
         ],
@@ -119,16 +79,11 @@ class AccountInfomationPage extends GetView<AccountInfomationController> {
         children: [
           name(),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              identityCardNumber(),
-              SizedBox(
-                width: IZIDimensions.SPACE_SIZE_2X,
-              ),
-              dateOfIssuanceOfIdentityCard(),
-            ],
-          ),
+          relationship(),
+
+          identityCardNumber(),
+
+          dateOfIssuanceOfIdentityCard(),
 
           issuedBy(),
 
@@ -146,36 +101,61 @@ class AccountInfomationPage extends GetView<AccountInfomationController> {
           // email(),
           permanentAddress(),
           accommodationToday(),
-          bank(),
-          bankAccount(),
+          // bank(),
+          // bankAccount(),
           button(controller),
         ],
       ),
     );
   }
 
-  Widget name() {
+  // Tên
+  // Widget name() {
+  //   return IZIInput(
+  //     type: IZIInputType.TEXT,
+  //     placeHolder: "nhập họ và tên",
+  //     isRequired: true,
+  //     label: "Họ và tên",
+  //     borderRadius: IZIDimensions.BLUR_RADIUS_3X,
+  //   );
+  // }
+
+   Widget name() {
+    return DropDownButton<String>(
+      isRequired: true,
+      hint: "Chọn người uỷ quyền",
+      label: "Họ và tên",
+      data: controller.authorizedPersons,
+      value: controller.authorizedPerson,
+      onChanged: (val) {
+        controller.onChangedAuthorizedPerson(val!);
+      },
+    );
+  }
+
+  // quan hệ
+  Widget relationship() {
     return IZIInput(
       type: IZIInputType.TEXT,
-      placeHolder: "Nhập họ và tên",
+      placeHolder: "Quan hệ",
       isRequired: true,
-      label: "Họ và tên",
+      label: "Quan hệ",
       borderRadius: IZIDimensions.BLUR_RADIUS_3X,
     );
   }
 
+  // CMND
   Widget identityCardNumber() {
     return IZIInput(
       type: IZIInputType.TEXT,
       isRequired: true,
       placeHolder: "12-12-2012",
       label: "CMND/CCCD",
-      width: IZIDimensions.iziSize.width * 0.43,
       borderRadius: IZIDimensions.BLUR_RADIUS_3X,
-      allowEdit: false,
     );
   }
 
+  // NGày cấp CMND
   Widget dateOfIssuanceOfIdentityCard() {
     return IZIInput(
       type: IZIInputType.TEXT,
@@ -183,18 +163,16 @@ class AccountInfomationPage extends GetView<AccountInfomationController> {
       placeHolder: "12-12-2012",
       label: "Ngày cấp CMND/CCCD",
       isDatePicker: true,
-      width: IZIDimensions.iziSize.width * 0.45,
       borderRadius: IZIDimensions.BLUR_RADIUS_3X,
-      allowEdit: false,
     );
   }
 
+  // Nơi câps
   Widget issuedBy() {
     return IZIInput(
       type: IZIInputType.TEXT,
       isRequired: true,
       placeHolder: "Nhập nơi cấp",
-      allowEdit: false,
       label: "Nơi cấp",
       borderRadius: IZIDimensions.BLUR_RADIUS_3X,
     );
@@ -251,8 +229,8 @@ class AccountInfomationPage extends GetView<AccountInfomationController> {
     return IZIInput(
       type: IZIInputType.TEXT,
       isRequired: true,
-      placeHolder: "Địa điểm thường trú",
-      label: "Địa điểm thường trú",
+      placeHolder: "Địa chỉ",
+      label: "Địa chỉ",
       borderRadius: IZIDimensions.BLUR_RADIUS_3X,
     );
   }
@@ -290,13 +268,15 @@ class AccountInfomationPage extends GetView<AccountInfomationController> {
     );
   }
 
-  Widget button(AccountInfomationController controller) {
+  Widget button(AuthorizedPersonController controller) {
     return IZIButton(
       padding: EdgeInsets.all(
         IZIDimensions.SPACE_SIZE_3X,
       ),
-      onTap: () {},
-      label: 'Cập nhập',
+      onTap: () {
+        controller.onToContactInfomation();
+      },
+      label: 'Tiếp tục',
     );
   }
 }

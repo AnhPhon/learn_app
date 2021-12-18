@@ -8,6 +8,7 @@ import 'package:template/base_widget/izi_image.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/helper/izi_other.dart';
+import 'package:template/helper/izi_size.dart';
 import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:image/image.dart';
@@ -126,12 +127,13 @@ class _IZIFileState extends State<IZIFile> {
     } else {
       PermissionStatus? status;
       if (widget.imageSource == ImageSource.gallery) {
-        status = await Permission.photos.request();
+        // status = await Permission.photos.request();
+        pickImages();
       } else {
         status = await Permission.camera.request();
-      }
-      if (status.isGranted) {
-        pickImages();
+        if (status.isGranted) {
+          pickImages();
+        }
       }
     }
     if (!IZIValidate.nullOrEmpty(widget.onPikerFile) && !IZIValidate.nullOrEmpty(file)) {
@@ -266,7 +268,7 @@ class _IZIFileState extends State<IZIFile> {
                 child: Icon(
                   Icons.add,
                   color: ColorResources.CIRCLE_COLOR_BG3,
-                  size: IZIValidate.nullOrEmpty(widget.height) ? widget.height! / 6 : IZIDimensions.ONE_UNIT_SIZE * 40,
+                  size: !IZIValidate.nullOrEmpty(widget.height) ? widget.height! / 6 : IZIDimensions.ONE_UNIT_SIZE * 40,
                 ),
               ),
             ),
@@ -288,10 +290,11 @@ class _IZIFileState extends State<IZIFile> {
           boxShadow: IZIOther().boxShadow,
         ),
         padding: EdgeInsets.all(
-          IZIDimensions.ONE_UNIT_SIZE * 5,
+          IZISize.device == IZIDevice.TABLE ? IZIDimensions.ONE_UNIT_SIZE * 18 : IZIDimensions.ONE_UNIT_SIZE * 5,
         ),
-        child: const Icon(
+        child: Icon(
           Icons.camera_alt,
+          size: IZISize.device == IZIDevice.TABLE ? IZIDimensions.ONE_UNIT_SIZE * 40 : IZIDimensions.ONE_UNIT_SIZE * 28,
         ),
       ),
     );
