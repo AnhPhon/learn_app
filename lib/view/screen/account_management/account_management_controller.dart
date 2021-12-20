@@ -91,6 +91,9 @@ class AccountManagementController extends GetxController {
     update();
   }
 
+  ///
+  ///On Refresher
+  ///
   Future<void> onRefresh() async {
     //resetNoData
     refreshController.resetNoData();
@@ -99,7 +102,9 @@ class AccountManagementController extends GetxController {
     });
   }
 
-  //onLoading
+  ///
+  ///onLoading
+  ///
   Future<void> onLoading() async {
     //get order isLoading
   }

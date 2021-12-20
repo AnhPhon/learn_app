@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:template/view/screen/refer_friends/refer_friend_binding.dart';
 import 'package:template/view/screen/refer_friends/refer_friends_page.dart';
 
 class ReferFriendsRouters {
@@ -7,6 +8,7 @@ class ReferFriendsRouters {
     GetPage(
       name: REFER_FRIENDS,
       page: () => ReferFriendsPage(),
+      binding: ReferFriendBinding(),
     ),
   ];
 }

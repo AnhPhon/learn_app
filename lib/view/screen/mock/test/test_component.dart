@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:template/base_widget/app_bar.dart';
+import 'package:template/base_widget/izi_app_bar.dart';
 import 'package:template/base_widget/background/background_app_bar.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_card.dart';
@@ -33,9 +33,9 @@ class TestComponentPage extends GetView<TestComponentController> {
       {"image": "https://i.pinimg.com/564x/f1/43/64/f1436415a2a208043bdef80c73d66b4a.jpg", "lable": "Siêu nhân tím"}
     ];
     final List<Map<String, String>> heoTest = [
-      {"image": ImagesPath.capital_contribution_month, "lable": "Lãi suất 42%/tháng",'title':"1 tháng"},
-      {"image": ImagesPath.capital_contribution_year, "lable": "Lãi suất 42%/năm",'title':"1 năm"},
-      {"image": ImagesPath.capital_contribution_week, "lable": "Lãi suất 42%/tuần",'title':"1 tuần"},
+      {"image": ImagesPath.capital_contribution_month, "lable": "Lãi suất 42%/tháng", 'title': "1 tháng"},
+      {"image": ImagesPath.capital_contribution_year, "lable": "Lãi suất 42%/năm", 'title': "1 năm"},
+      {"image": ImagesPath.capital_contribution_week, "lable": "Lãi suất 42%/tuần", 'title': "1 tuần"},
     ];
 
     return IZIScreen(
@@ -53,7 +53,6 @@ class TestComponentPage extends GetView<TestComponentController> {
                 text: "Input",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: IZIDimensions.FONT_SIZE_H1),
               ),
-
               Container(
                 color: ColorResources.GREY.withOpacity(0.2),
                 child: Column(
@@ -143,12 +142,10 @@ class TestComponentPage extends GetView<TestComponentController> {
                   ],
                 ),
               ),
-
               IZIText(
                 text: "Button",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: IZIDimensions.FONT_SIZE_H1),
               ),
-
               Container(
                 // color:ColorResources.GREY.withOpacity(0.2),
                 child: Column(
@@ -220,12 +217,10 @@ class TestComponentPage extends GetView<TestComponentController> {
                   ],
                 ),
               ),
-
               IZIText(
                 text: "Hình ảnh và tập tin",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: IZIDimensions.FONT_SIZE_H1),
               ),
-
               Container(
                 // color:ColorResources.GREY.withOpacity(0.2),
                 child: Column(
@@ -249,7 +244,6 @@ class TestComponentPage extends GetView<TestComponentController> {
                   ],
                 ),
               ),
-
               IZIText(
                 text: "List view",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: IZIDimensions.FONT_SIZE_H1),
@@ -284,7 +278,6 @@ class TestComponentPage extends GetView<TestComponentController> {
                   );
                 },
               ),
-
               IZIText(text: "List View hàng dọc"),
               IZIListView(
                 itemCount: dataTest.length,
@@ -297,7 +290,7 @@ class TestComponentPage extends GetView<TestComponentController> {
                 ),
                 label: "Danh mục",
                 scrollDirection: Axis.vertical,
-                 margin: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 10),
+                margin: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 10),
                 builder: (index) {
                   return Container(
                     padding: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 10),
@@ -314,7 +307,6 @@ class TestComponentPage extends GetView<TestComponentController> {
                   );
                 },
               ),
-
               IZIText(text: "List View con heo đất"),
               IZIListView(
                 itemCount: heoTest.length,
@@ -327,7 +319,7 @@ class TestComponentPage extends GetView<TestComponentController> {
                 ),
                 label: "Danh mục",
                 scrollDirection: Axis.vertical,
-                 margin: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 10),
+                margin: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 10),
                 builder: (index) {
                   return Container(
                     padding: EdgeInsets.all(IZIDimensions.ONE_UNIT_SIZE * 10),
@@ -345,7 +337,6 @@ class TestComponentPage extends GetView<TestComponentController> {
                   );
                 },
               ),
-
               IZIText(text: "Card liên hệ có icon"),
               IZICard(
                 urlImage: "",
@@ -383,7 +374,6 @@ class TestComponentPage extends GetView<TestComponentController> {
                   ),
                 ],
               ),
-
               IZIText(text: "Card liên hệ không có icon"),
               IZICard(
                 urlImage: "",
@@ -395,7 +385,6 @@ class TestComponentPage extends GetView<TestComponentController> {
                 colorBG: ColorResources.GREY,
                 title: "A",
               ),
-              
               IZICard(
                 urlImage: "",
                 row1Left: "434323423FĐGJ3434F",
@@ -406,7 +395,6 @@ class TestComponentPage extends GetView<TestComponentController> {
                 cardType: IZICardType.CARD_PAYMENT,
                 statusMoney: IZIStatusMoney.DRAW,
               ),
-
               IZICard(
                 urlImage: "",
                 row1Left: "434323423FĐGJ3434F",
@@ -418,7 +406,6 @@ class TestComponentPage extends GetView<TestComponentController> {
                 statusMoney: IZIStatusMoney.RECHARGE,
                 marginCard: EdgeInsets.symmetric(vertical: 10),
               ),
-
               IZICard(
                 urlImage: "",
                 row1Left: "434323423FĐGJ3434F",
@@ -429,13 +416,11 @@ class TestComponentPage extends GetView<TestComponentController> {
                 cardType: IZICardType.CARD_PAYMENT,
                 statusMoney: IZIStatusMoney.DRAW,
               ),
-
               Container(
                 height: IZIDimensions.ONE_UNIT_SIZE * 400,
                 width: IZIDimensions.ONE_UNIT_SIZE * 400,
                 child: IZIImage.file(controller.fileImage),
               ),
-
               IZIText(text: "Image url rỗng"),
               Container(
                 height: IZIDimensions.ONE_UNIT_SIZE * 400,
@@ -447,7 +432,6 @@ class TestComponentPage extends GetView<TestComponentController> {
                   width: IZIDimensions.ONE_UNIT_SIZE * 100,
                 ),
               ),
-
               IZIText(text: "Image url rỗng"),
               IZIImage(
                 "",
@@ -455,13 +439,9 @@ class TestComponentPage extends GetView<TestComponentController> {
                 height: IZIDimensions.ONE_UNIT_SIZE * 300,
                 width: IZIDimensions.ONE_UNIT_SIZE * 300,
               ),
-
               IZIText(text: "URL .svg"),
-
               IZIImage("https://raw.githubusercontent.com/dnfield/flutter_svg/7d374d7107561cbd906d7c0ca26fef02cc01e7c8/example/assets/flutter_logo.svg"),
-
               IZIText(text: "local .svg"),
-
               Container(
                 height: IZIDimensions.ONE_UNIT_SIZE * 500,
                 width: IZIDimensions.ONE_UNIT_SIZE * 500,

@@ -63,7 +63,7 @@ end
         # 'PERMISSION_REMINDERS=1',
 
         ## dart: PermissionGroup.contacts
-        # 'PERMISSION_CONTACTS=1',
+        'PERMISSION_CONTACTS=1',
 
         ## dart: PermissionGroup.camera
         # 'PERMISSION_CAMERA=1',

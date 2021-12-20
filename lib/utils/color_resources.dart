@@ -62,7 +62,7 @@ class ColorResources {
   static const Color CIRCLE_COLOR_BG4 = Color(0xff297936);
   static const Color LIGHT_BLACK = Color(0xffA2A2A2);
   static const Color BLACK = Color(0xff000000);
-  static const Color LIGHT_GREY = Color(0xffB0BAC1);
+  static const Color LIGHT_GREY = Color(0xffBFBDBD);
   static const Color WHITE = Color(0xffFFFFFF);
   static const Color RED = Color(0xffF90B0B);
   static const Color YELLOW = Color(0xFFFFAA47);

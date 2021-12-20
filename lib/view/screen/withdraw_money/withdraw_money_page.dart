@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:template/base_widget/app_bar.dart';
+import 'package:template/base_widget/izi_app_bar.dart';
 import 'package:template/base_widget/background/background_home.dart';
 import 'package:template/base_widget/izi_screen.dart';
 import 'package:template/utils/color_resources.dart';

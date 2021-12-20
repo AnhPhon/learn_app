@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:template/view/screen/account/account_information.dart/account_infomation_binding.dart';
 import 'package:template/view/screen/account/account_information.dart/account_information_page.dart';
@@ -23,9 +22,8 @@ class AccountRoutes {
     static const String CAPITAL_CONTRIBUTION_CONTRACT_TERM = '/capital_contribution_contract_term';
     static const String CAPITAL_CONTRIBUTION_CONFIRMATION = '/capital_contribution_confirmation';
     static const String CONTRACT_DETAIL = '/contract_detail';
-
-  static List<GetPage> list = [
     
+  static List<GetPage> list = [
     GetPage(
       name: ACCOUNT_INFOMATION,
       page: () => AccountInfomationPage(),

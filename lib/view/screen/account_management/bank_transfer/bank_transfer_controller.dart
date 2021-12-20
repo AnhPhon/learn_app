@@ -4,7 +4,7 @@ import 'package:template/helper/izi_alert.dart';
 import 'package:template/helper/izi_validate.dart';
 import 'package:template/routes/route_path/account_management_routers.dart';
 
-class BankStansferController extends GetxController {
+class BankTransferController extends GetxController {
   //Khai báo isLoading
   bool isLoading = false;
 

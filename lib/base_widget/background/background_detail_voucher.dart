@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:template/helper/izi_device.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
 
