@@ -253,19 +253,20 @@ class RechargePage extends GetView<RechargeController> {
             padding: EdgeInsets.symmetric(
               vertical: IZIDimensions.SPACE_SIZE_4X,
             ),
-            child: IZIInput(
-              disbleError: true,
-              borderSize: 2,
-              isLegend: true,
-              label: "Số tiền cần rút",
-              isBorder: true,
-              min: 0,
-              type: IZIInputType.PRICE,
-              onChanged: (val) {
-                controller.withdrawalAmount = val;
-                print(controller.withdrawalAmount);
-              },
-            ),
+            child: controller.moneyDraw
+            // IZIInput(
+            //   disbleError: true,
+            //   borderSize: 2,
+            //   isLegend: true,
+            //   label: "Số tiền cần rút",
+            //   isBorder: true,
+            //   min: 0,
+            //   type: IZIInputType.PRICE,
+            //   onChanged: (val) {
+            //     controller.withdrawalAmount = val;
+            //     print(controller.withdrawalAmount);
+            //   },
+            // ),
           ),
           Container(
             child: Row(

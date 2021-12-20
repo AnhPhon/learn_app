@@ -156,6 +156,7 @@ class AccountManagementPage extends GetView<AccountManagementController> {
         controller.goToWithdrawal();
       },
       label: "Rút tiền",
+      width: IZIDimensions.iziSize.width * 0.35,
       colorBG: ColorResources.RED,
       color: ColorResources.RED,
       type: IZIButtonType.OUTLINE,
@@ -173,6 +174,7 @@ class AccountManagementPage extends GetView<AccountManagementController> {
   Widget _btnRecharge(AccountManagementController controller) {
     return IZIButton(
       withBorder: IZIDimensions.ONE_UNIT_SIZE * 3,
+      width: IZIDimensions.iziSize.width * 0.35,
       margin: const EdgeInsets.all(0),
       borderRadius: IZIDimensions.BORDER_RADIUS_3X,
       isEnabled: controller.isEnableButton,

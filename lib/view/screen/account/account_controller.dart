@@ -50,7 +50,7 @@ class AccountController extends GetxController {
   }
 
   void onToCapitalWithdDrawal(){
-    Get.toNamed(AccountRoutes.CONTRACT_DETAIL);
+    Get.toNamed(ContractListRouters.CONTRACT_LIST);
   }
 
   

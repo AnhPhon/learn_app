@@ -21,8 +21,8 @@ class AccountRoutes {
     static const String CAPITAL_CONTRIBUTION_CONTRACT_INFORMATION = '/capital_contribution_contract_information';
     static const String CAPITAL_CONTRIBUTION_CONTRACT_TERM = '/capital_contribution_contract_term';
     static const String CAPITAL_CONTRIBUTION_CONFIRMATION = '/capital_contribution_confirmation';
-    static const String CONTRACT_DETAIL = '/contract_detail';
     
+
   static List<GetPage> list = [
     GetPage(
       name: ACCOUNT_INFOMATION,
@@ -54,11 +54,7 @@ class AccountRoutes {
       page: () => CapitalContributionConfirmationPage(),
       binding: CapitalContributionConfirmationBinding(),
     ),
-    GetPage(
-      name: CONTRACT_DETAIL,
-      page: () => ContractDetailPage(),
-      binding: ContractDetailBinding(),
-    ),
+    
     
   ];
 }

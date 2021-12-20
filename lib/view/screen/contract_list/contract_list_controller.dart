@@ -49,6 +49,12 @@ class ContactListController extends GetxController {
   }
 
   ///
+  /// go to contract detail
+  ///
+  void onToContractDetail(){
+    Get.toNamed(ContractListRouters.CONTRACT_DETAIL);
+  }
+  ///
   ///Go to Reciprocal List
   ///
   void goToReciprocalList() {

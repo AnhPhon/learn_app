@@ -43,6 +43,10 @@ class SignUpPage extends GetView<SignUpController> {
                           accountInput(),
                           email(),
                           password(),
+                          address(),
+                          identityCardNumber(),
+                          dateOfIssuanceOfIdentityCard(),
+                          issuedBy(),
                           avatar(),
                           citizenID(),
                           other(
@@ -118,6 +122,71 @@ class SignUpPage extends GetView<SignUpController> {
       textInputAction: TextInputAction.next,
       prefixIcon: Icon(
         CupertinoIcons.mail,
+        size: IZIDimensions.ONE_UNIT_SIZE * 40,
+        color: ColorResources.GREEN,
+      ),
+    );
+  }
+
+  Widget address() {
+    return IZIInput(
+      type: IZIInputType.TEXT,
+      borderRadius: IZIDimensions.BLUR_RADIUS_4X,
+      textInputAction: TextInputAction.next,
+      placeHolder: "Nhập địa chỉ",
+      prefixIcon: Icon(
+        Icons.location_city,
+        size: IZIDimensions.ONE_UNIT_SIZE * 40,
+        color: ColorResources.GREEN,
+      ),
+    );
+  }
+
+  // CMND
+  Widget identityCardNumber() {
+    return IZIInput(
+      type: IZIInputType.TEXT,
+      isRequired: true,
+      placeHolder: "CCCD/CMND",
+      textInputAction: TextInputAction.next,
+      borderRadius: IZIDimensions.BLUR_RADIUS_4X,
+      prefixIcon: Icon(
+        CupertinoIcons.person_crop_rectangle,
+        size: IZIDimensions.ONE_UNIT_SIZE * 40,
+        color: ColorResources.GREEN,
+      ),
+    );
+  }
+
+  // NGày cấp CMND
+  Widget dateOfIssuanceOfIdentityCard() {
+    return IZIInput(
+      type: IZIInputType.TEXT,
+      isRequired: true,
+      placeHolder: "Ngày cấp CMND/CCCD",
+      textInputAction: TextInputAction.next,
+      isDatePicker: true,
+      iziPickerDate: IZIPickerDate.CUPERTINO,
+      borderRadius: IZIDimensions.BLUR_RADIUS_4X,
+      prefixIcon: Icon(
+        CupertinoIcons.calendar,
+        size: IZIDimensions.ONE_UNIT_SIZE * 40,
+        color: ColorResources.GREEN,
+      ),
+      suffixIcon: const SizedBox(),
+    );
+  }
+
+  // Nơi câps
+  Widget issuedBy() {
+    return IZIInput(
+      type: IZIInputType.TEXT,
+      isRequired: true,
+      placeHolder: "Nhập nơi cấp",
+      textInputAction: TextInputAction.next,
+      borderRadius: IZIDimensions.BLUR_RADIUS_4X,
+      prefixIcon: Icon(
+        Icons.place,
         size: IZIDimensions.ONE_UNIT_SIZE * 40,
         color: ColorResources.GREEN,
       ),

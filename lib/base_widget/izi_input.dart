@@ -76,7 +76,8 @@ class IZIInput extends StatefulWidget {
     this.min = 1,
     this.max = 10,
     this.widthIncrement,
-    this.onController,
+    this.onSetValue,
+    this.newValue,
     this.isDatePicker = false,
     this.iziPickerDate = IZIPickerDate.MATERIAL,
   }) : super(key: key);
@@ -95,7 +96,8 @@ class IZIInput extends StatefulWidget {
   final TextInputAction? textInputAction;
   final Function(String value)? onChanged;
   final Function(bool value)? isValidate;
-  final Function(TextEditingController value)? onController;
+  Function()? onSetValue;
+  double? newValue;
   bool? boldHinText;
   final FocusNode? focusNode;
   final EdgeInsetsGeometry? padding;
@@ -150,17 +152,18 @@ class _IZIInputState extends State<IZIInput> {
     doubleEditingController = MoneyMaskedTextController(
       precision: 1,
     );
-    
+
     focusNode = widget.focusNode ?? FocusNode();
     if (widget.type == IZIInputType.INCREMENT) {
       checkDisibleIncrement(IZINumber.parseInt(numberEditingController!.text));
-    } else if (widget.type == IZIInputType.NUMBER || widget.type == IZIInputType.PRICE) {
-      numberEditingController!.clear();
-      doubleEditingController!.clear();
-    }
-    if (!IZIValidate.nullOrEmpty(widget.onController)) {
-      widget.onController!(getController(widget.type));
-    }
+    } 
+    // else if (widget.type == IZIInputType.NUMBER || widget.type == IZIInputType.PRICE) {
+    //   numberEditingController!.clear();
+    //   doubleEditingController!.clear();
+    // }
+
+    onSetValue();
+    
   }
 
   @override
@@ -170,6 +173,26 @@ class _IZIInputState extends State<IZIInput> {
     numberEditingController?.dispose();
     doubleEditingController?.dispose();
     super.dispose();
+  }
+
+
+  void onSetValue(){
+    widget.onSetValue = () {
+      if ( !IZIValidate.nullOrEmpty(widget.newValue) && widget.type == IZIInputType.NUMBER ||
+      !IZIValidate.nullOrEmpty(widget.newValue) && widget.type == IZIInputType.PRICE || 
+      !IZIValidate.nullOrEmpty(widget.newValue) && widget.type == IZIInputType.DOUBLE) {
+        numberEditingController = MoneyMaskedTextController(
+          initialValue: widget.newValue!,
+          precision: 0,
+          decimalSeparator: '',
+        );
+        doubleEditingController = MoneyMaskedTextController(
+          initialValue: widget.newValue!,
+          precision: 1,
+        );
+        setState(() {});
+      }
+    };
   }
 
   TextInputType getType(IZIInputType type) {
@@ -379,7 +402,7 @@ class _IZIInputState extends State<IZIInput> {
   }
 
   Widget? getSuffixIcon() {
-    if (widget.isDatePicker!) {
+    if (widget.isDatePicker! && IZIValidate.nullOrEmpty(widget.suffixIcon)) {
       return const Icon(
         Icons.calendar_today,
         color: ColorResources.BLACK,

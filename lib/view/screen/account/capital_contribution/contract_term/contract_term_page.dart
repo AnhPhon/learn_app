@@ -103,8 +103,8 @@ class ContractTermPage extends GetView<ContractTermController> {
   Widget contractType() {
     return DropDownButton<String>(
       isRequired: true,
-      hint: "Chọn loại hợp đồng",
-      label: "Loại hợp đồng",
+      hint: "Chọn đối ứng",
+      label: "Loại đối ứng",
       data: controller.contractTypes,
       value: controller.contractType,
       onChanged: (val) {
