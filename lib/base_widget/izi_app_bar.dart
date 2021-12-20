@@ -83,8 +83,6 @@ class IZIAppBar extends StatelessWidget {
     return IZIInput(
       width: IZIDimensions.iziSize.width - (IZIDimensions.iziSize.width * 0.125 * (actions!.length + 1) * 2),
       type: IZIInputType.TEXT,
-      isRequired: false,
-      allowEdit: true,
       disbleError: true,
       miniSize: true,
       prefixIcon: const Icon(Icons.search),

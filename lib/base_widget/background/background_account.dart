@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:template/helper/izi_device.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/color_resources.dart';
 
@@ -7,7 +6,7 @@ class BackgroundAccount extends StatelessWidget {
   const BackgroundAccount({
     Key? key,
   }) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,18 +19,15 @@ class BackgroundAccount extends StatelessWidget {
             Container(
               height: IZIDimensions.iziSize.width * 0.4,
               width: double.infinity,
-              decoration:  const BoxDecoration(
-                 color: ColorResources.CIRCLE_COLOR_BG3,
-                 gradient: LinearGradient(
-                   begin: Alignment.topCenter,
-                   end: Alignment.bottomCenter,
-                   colors: [
-                     ColorResources.CIRCLE_COLOR_BG3,
-                     ColorResources.CIRCLE_COLOR_BG2,
-                   ],
-                   stops: [0.7,1]
-                 )
-              ),
+              decoration: const BoxDecoration(
+                  color: ColorResources.CIRCLE_COLOR_BG3,
+                  gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [
+                    ColorResources.CIRCLE_COLOR_BG3,
+                    ColorResources.CIRCLE_COLOR_BG2,
+                  ], stops: [
+                    0.7,
+                    1
+                  ])),
             ),
             Positioned(
               top: -90,

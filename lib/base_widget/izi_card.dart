@@ -1,14 +1,10 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:glass_kit/glass_kit.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_image.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/helper/izi_other.dart';
-import 'package:template/helper/izi_size.dart';
 import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/images_path.dart';
@@ -35,6 +31,12 @@ enum IZIStatusOrder {
   LABEL_GREEN,
   LABEL_RED,
   LABEL_BLUE,
+  LABEL_ORANGE,
+}
+
+enum IZIStatusvoucher {
+  LABEL_GREEN,
+  LABEL_RED,
   LABEL_ORANGE,
 }
 
@@ -80,6 +82,8 @@ class IZICard extends StatelessWidget {
     this.imageUrlType = IZIImageUrlType.ICON,
     this.valRadio,
     this.statusOrder,
+    this.statusVoucher,
+    this.widgetVoucher,
     this.groupValue,
     this.onChanged,
     this.onChanged1CardTransfer,
@@ -89,7 +93,7 @@ class IZICard extends StatelessWidget {
     this.child,
     this.widgetLine,
     this.colorIcon,
-    this.widgetCardVoucher,
+    this.labelStatusvoucher,
   }) : super(key: key);
 
   final String? row1Left;
@@ -109,6 +113,7 @@ class IZICard extends StatelessWidget {
   IZIStatusMoney? statusMoney;
   IZIStatusPayment? statusPayment;
   IZIStatusOrder? statusOrder;
+  IZIStatusvoucher? statusVoucher;
   final IZICardType? cardType;
   final IZIImageUrlType? imageUrlType;
   final dynamic valRadio;
@@ -117,8 +122,9 @@ class IZICard extends StatelessWidget {
   final List<Widget>? actions;
   final Widget? child;
   final Widget? widgetLine;
-  final Widget? widgetCardVoucher;
+  final Widget? widgetVoucher;
   final Color? colorIcon;
+  final String? labelStatusvoucher;
   final Function(dynamic val)? onChanged;
   final Function(String val)? onChanged1CardTransfer;
   final Function(String val)? onChanged2CardTransfer;
@@ -153,6 +159,111 @@ class IZICard extends StatelessWidget {
     );
   }
 
+  Widget getButtonStatusVoucher(IZIStatusvoucher statusvoucher) {
+    if (statusvoucher == IZIStatusvoucher.LABEL_GREEN) {
+      return Container(
+        decoration: BoxDecoration(
+          boxShadow: IZIOther().boxShadow,
+          borderRadius: BorderRadius.circular(
+            IZIDimensions.BORDER_RADIUS_2X,
+          ),
+          color: ColorResources.ORDER_XAC_NHAN,
+        ),
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(
+          horizontal: IZIDimensions.SPACE_SIZE_1X,
+          vertical: IZIDimensions.SPACE_SIZE_1X,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+              child: Text(
+                labelStatusvoucher.toString(),
+                style: TextStyle(
+                  color: ColorResources.LABEL_ORDER_XAC_NHAN,
+                  fontSize: IZIDimensions.FONT_SIZE_SPAN * .9,
+                  fontWeight: FontWeight.w500,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      );
+    } else if (statusvoucher == IZIStatusvoucher.LABEL_ORANGE) {
+      return Container(
+        decoration: BoxDecoration(
+          boxShadow: IZIOther().boxShadow,
+          borderRadius: BorderRadius.circular(
+            IZIDimensions.BORDER_RADIUS_2X,
+          ),
+          color: ColorResources.ORDER_DA_GIAO,
+        ),
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(
+          horizontal: IZIDimensions.SPACE_SIZE_1X,
+          vertical: IZIDimensions.SPACE_SIZE_1X,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+              child: Text(
+                labelStatusvoucher.toString(),
+                style: TextStyle(
+                  color: ColorResources.LABEL_ORDER_DA_GIAO,
+                  fontSize: IZIDimensions.FONT_SIZE_SPAN * .9,
+                  fontWeight: FontWeight.w500,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      );
+    } else if (statusvoucher == IZIStatusvoucher.LABEL_RED) {
+      return Container(
+        decoration: BoxDecoration(
+          boxShadow: IZIOther().boxShadow,
+          borderRadius: BorderRadius.circular(
+            IZIDimensions.BORDER_RADIUS_2X,
+          ),
+          color: ColorResources.ORDER_HUY_DON.withOpacity(.4),
+        ),
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(
+          horizontal: IZIDimensions.SPACE_SIZE_1X,
+          vertical: IZIDimensions.SPACE_SIZE_1X,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+              child: Text(
+                labelStatusvoucher.toString(),
+                style: TextStyle(
+                  color: ColorResources.LABEL_ORDER_HUY_DON.withOpacity(.4),
+                  fontSize: IZIDimensions.FONT_SIZE_SPAN * .9,
+                  fontWeight: FontWeight.w500,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Container();
+  }
+
   Widget getButtonOrder(IZIStatusOrder statusOrder) {
     if (statusOrder == IZIStatusOrder.LABEL_GREEN) {
       return IZIButton(
@@ -167,8 +278,7 @@ class IZICard extends StatelessWidget {
         borderRadius: IZIDimensions.ONE_UNIT_SIZE * 5,
         padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_1X),
       );
-    }
-    if (statusOrder == IZIStatusOrder.LABEL_ORANGE) {
+    } else if (statusOrder == IZIStatusOrder.LABEL_ORANGE) {
       return IZIButton(
         colorBG: ColorResources.ORDER_DA_GIAO,
         isEnabled: isEnabled,
@@ -181,8 +291,7 @@ class IZICard extends StatelessWidget {
         borderRadius: IZIDimensions.ONE_UNIT_SIZE * 5,
         padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_1X),
       );
-    }
-    if (statusOrder == IZIStatusOrder.LABEL_RED) {
+    } else if (statusOrder == IZIStatusOrder.LABEL_RED) {
       return IZIButton(
         colorBG: ColorResources.ORDER_HUY_DON,
         isEnabled: isEnabled,
@@ -195,8 +304,7 @@ class IZICard extends StatelessWidget {
         borderRadius: IZIDimensions.ONE_UNIT_SIZE * 5,
         padding: EdgeInsets.all(IZIDimensions.SPACE_SIZE_1X),
       );
-    }
-    if (statusOrder == IZIStatusOrder.LABEL_BLUE) {
+    } else if (statusOrder == IZIStatusOrder.LABEL_BLUE) {
       return IZIButton(
         colorBG: ColorResources.ORDER_DANG_GIAO,
         isEnabled: isEnabled,
@@ -461,7 +569,7 @@ class IZICard extends StatelessWidget {
                                   child: IZIText(
                                     text: row2Right.toString(),
                                     maxLine: 1,
-                                    textAlign: TextAlign.start,
+                                    textAlign: TextAlign.end,
                                     style: TextStyle(
                                       fontSize: IZIDimensions.FONT_SIZE_H6 * .9,
                                       color: ColorResources.BLACK.withOpacity(.8),
@@ -882,7 +990,28 @@ class IZICard extends StatelessWidget {
     } else if (type == IZICardType.CARD_VOUCHER) {
       return Container(
         decoration: BoxDecoration(
-          boxShadow: IZIOther().boxShadow,
+          boxShadow: [
+            BoxShadow(
+              offset: const Offset(0, 1),
+              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
+              color: ColorResources.BLACK.withAlpha(5),
+            ),
+            BoxShadow(
+              offset: const Offset(0, -1),
+              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
+              color: ColorResources.BLACK.withAlpha(5),
+            ),
+            BoxShadow(
+              offset: const Offset(1, 0),
+              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
+              color: ColorResources.BLACK.withAlpha(5),
+            ),
+            BoxShadow(
+              offset: const Offset(-1, 0),
+              blurRadius: IZIDimensions.BLUR_RADIUS_2X,
+              color: ColorResources.BLACK.withAlpha(5),
+            ),
+          ],
         ),
         margin: marginCard ??
             EdgeInsets.only(
@@ -890,13 +1019,16 @@ class IZICard extends StatelessWidget {
             ),
         width: double.infinity,
         child: TicketMaterial(
+          colorShadow: ColorResources.LIGHT_GREY.withOpacity(.4),
+          useAnimationScaleOnTap: false,
+          flexRightSize: 30,
           shadowSize: 0,
           radiusCircle: IZIDimensions.BLUR_RADIUS_1X,
           radiusBorder: IZIDimensions.BLUR_RADIUS_2X,
           height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 180,
           leftChild: _buildLeft(),
           rightChild: _buildRight(),
-          colorBackground: ColorResources.WHITE,
+          colorBackground: statusVoucher == IZIStatusvoucher.LABEL_RED ? ColorResources.LIGHT_GREY : ColorResources.WHITE,
         ),
       );
     } else if (type == IZICardType.CARD_CONTACT) {
@@ -923,8 +1055,8 @@ class IZICard extends StatelessWidget {
                 children: [
                   Container(
                     alignment: Alignment.center,
-                    height: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
-                    width: heightCard ?? IZIDimensions.ONE_UNIT_SIZE * 100,
+                    height: IZIDimensions.ONE_UNIT_SIZE * 70,
+                    width: IZIDimensions.ONE_UNIT_SIZE * 70,
                     decoration: BoxDecoration(
                       color: colorBG,
                       shape: BoxShape.circle,
@@ -1031,7 +1163,7 @@ class IZICard extends StatelessWidget {
                   left: IZIDimensions.ONE_UNIT_SIZE * 40,
                 ),
                 child: Divider(
-                  thickness: IZIDimensions.ONE_UNIT_SIZE * 1.7,
+                  thickness: IZIDimensions.ONE_UNIT_SIZE * .5,
                   color: ColorResources.BLACK.withOpacity(0.7),
                 ),
               )
@@ -1354,7 +1486,7 @@ class IZICard extends StatelessWidget {
             IZIDimensions.SPACE_SIZE_3X,
           ),
           decoration: BoxDecoration(
-            color: valRadio == groupValue ? colorBG ?? ColorResources.WHITE : ColorResources.GREY.withOpacity(.7),
+            color: valRadio == groupValue ? colorBG ?? ColorResources.WHITE : ColorResources.LIGHT_GREY.withOpacity(.7),
             borderRadius: !IZIValidate.nullOrEmpty(radiusCard)
                 ? BorderRadius.circular(
                     radiusCard!,
@@ -1589,6 +1721,12 @@ class IZICard extends StatelessWidget {
 
   Widget _buildLeft() {
     return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(
+          IZIDimensions.BLUR_RADIUS_2X,
+        ),
+        color: statusVoucher == IZIStatusvoucher.LABEL_RED ? ColorResources.LIGHT_GREY : ColorResources.WHITE,
+      ),
       padding: EdgeInsets.all(
         IZIDimensions.ONE_UNIT_SIZE * 20,
       ),
@@ -1687,26 +1825,43 @@ class IZICard extends StatelessWidget {
   }
 
   Widget _buildRight() {
-    if (!IZIValidate.nullOrEmpty(groupValue) && !IZIValidate.nullOrEmpty(valRadio)) {
+    if (!IZIValidate.nullOrEmpty(labelStatusvoucher) || !IZIValidate.nullOrEmpty(widgetVoucher)) {
       return Container(
-        child: Center(
-          child: Radio(
-            value: valRadio,
-            groupValue: groupValue,
-            onChanged: onChanged,
-            activeColor: ColorResources.CIRCLE_COLOR_BG3,
-            focusColor: ColorResources.CIRCLE_COLOR_BG3,
-            fillColor: MaterialStateProperty.all(
-              ColorResources.CIRCLE_COLOR_BG4,
-            ),
+        width: IZIDimensions.iziSize.width,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(
+            IZIDimensions.BLUR_RADIUS_2X,
           ),
+          color: statusVoucher == IZIStatusvoucher.LABEL_RED ? ColorResources.LIGHT_GREY.withOpacity(.7) : ColorResources.WHITE,
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: IZIDimensions.SPACE_SIZE_1X,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: statusVoucher == IZIStatusvoucher.LABEL_RED ? ColorResources.LIGHT_GREY : ColorResources.WHITE,
+                boxShadow: IZIOther().boxShadow,
+                borderRadius: BorderRadius.circular(
+                  IZIDimensions.BORDER_RADIUS_3X,
+                ),
+              ),
+              padding: EdgeInsets.all(
+                IZIDimensions.SPACE_SIZE_1X,
+              ),
+              margin: EdgeInsets.only(
+                bottom: IZIDimensions.SPACE_SIZE_2X,
+              ),
+              child: widgetVoucher,
+            ),
+            getButtonStatusVoucher(statusVoucher!),
+          ],
         ),
       );
-    } else {
-      return Container(
-        child: widgetCardVoucher ?? const SizedBox(),
-      );
     }
+    return Container();
   }
 
   @override
