@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:template/routes/route_path/home_routes.dart';
 
 class TransactionConfirmationController extends GetxController {
   //Khai báo isLoading
@@ -14,5 +15,12 @@ class TransactionConfirmationController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     super.onClose();
+  }
+
+  ///
+  ///Go to Home
+  ///
+  void goToHome() {
+    Get.toNamed(HomeRoutes.DASH_BOARD);
   }
 }

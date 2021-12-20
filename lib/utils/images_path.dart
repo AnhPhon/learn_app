@@ -15,4 +15,10 @@ class ImagesPath {
   static const String capital_contribution_week = 'assets/svg/week.svg';
   static const String capital_contribution_month = 'assets/svg/month.svg';
   static const String capital_contribution_year = 'assets/svg/year.svg';
+  static const String qr_code = 'assets/images/qrCode.png';
+  static const String logo_faecbook = 'assets/images/LogoFacebook.png';
+  static const String logo_share = 'assets/images/LogoShare.png';
+  static const String logo_tiki = 'assets/images/logoTiki.png';
+  static const String icon_keyboard_double_arrow_down_outlined = 'assets/icon/keyboard_double_arrow_down_black_24dp.svg';
+  static const String icon_keyboard_double_arrow_up_outlined = 'assets/icon/keyboard_double_arrow_up_black_24dp.svg';
 }

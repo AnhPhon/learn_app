@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/routes/route_path/my_order_routes.dart';
 
 class MyOrderController extends GetxController {
   List<RefreshController>? refreshControllerList;
@@ -62,6 +63,9 @@ class MyOrderController extends GetxController {
   Future<void> onRefresh() async {
     //resetNoData
     refreshControllerList![currentIndex].resetNoData();
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      refreshControllerList![currentIndex].refreshCompleted();
+    });
     getData(currentIndex: currentIndex, isRefresh: true);
   }
 
@@ -119,5 +123,12 @@ class MyOrderController extends GetxController {
     //resetNoData
     refreshControllerList![index].resetNoData();
     update();
+  }
+
+  ///
+  ///Go to Detail My Order
+  ///
+  void goToDetailMyOrder() {
+    Get.toNamed(MyOrderRouter.DETAIL_MY_ORDER);
   }
 }

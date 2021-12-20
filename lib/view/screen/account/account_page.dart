@@ -89,9 +89,16 @@ class AccountPage extends GetView<AccountController> {
                     },
                   ),
                   itemMenu(
-                    icon: Icons.monetization_on_sharp,
+                    icon: Icons.savings_rounded,
                     label: "Góp vốn",
                     onTap: () {},
+                  ),
+                  itemMenu(
+                    icon: Icons.paid_rounded,
+                    label: "Danh sách hợp đồng",
+                    onTap: () {
+                      controller.goToContractList();
+                    },
                   ),
                   itemMenu(
                     icon: Icons.money_sharp,
@@ -101,17 +108,23 @@ class AccountPage extends GetView<AccountController> {
                   itemMenu(
                     icon: CupertinoIcons.person_2_fill,
                     label: "Giới thiệu bạn bè",
-                    onTap: () {},
+                    onTap: () {
+                      controller.goToRefeFriend();
+                    },
                   ),
                   itemMenu(
                     icon: Icons.shopping_cart_rounded,
                     label: "Đơn hàng của tôi",
-                    onTap: () {},
+                    onTap: () {
+                      controller.goToMyOrder();
+                    },
                   ),
                   itemMenu(
                     icon: Icons.new_releases,
                     label: "Voucher",
-                    onTap: () {},
+                    onTap: () {
+                      controller.goToVoucher();
+                    },
                   ),
                   itemMenu(
                     icon: Icons.logout,

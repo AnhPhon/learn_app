@@ -31,6 +31,7 @@ class IZIButton extends StatelessWidget {
     this.colorText,
     this.imageUrlIcon,
     this.withBorder,
+    this.fontSizedLabel,
   }) : super(key: key);
 
   // OnTap
@@ -55,6 +56,7 @@ class IZIButton extends StatelessWidget {
   final IconData? icon;
   final String? imageUrlIcon;
   final double? withBorder;
+  final double? fontSizedLabel;
 
   Color getColorBG(IZIButtonType type) {
     if (type == IZIButtonType.DEFAULT) {
@@ -135,7 +137,7 @@ class IZIButton extends StatelessWidget {
               Text(
                 " $label",
                 style: TextStyle(
-                  fontSize: IZIDimensions.FONT_SIZE_H6,
+                  fontSize: fontSizedLabel ?? IZIDimensions.FONT_SIZE_H6,
                   color: colorText ?? getColor(type!),
                   fontWeight: FontWeight.w500,
                 ),

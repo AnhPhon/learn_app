@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:template/base_widget/app_bar.dart';
+import 'package:template/base_widget/izi_app_bar.dart';
 import 'package:template/base_widget/background/background_account.dart';
 import 'package:template/base_widget/izi_button.dart';
 import 'package:template/base_widget/izi_screen.dart';
@@ -60,7 +60,9 @@ class TransactionConfirmationPage extends GetView<TransactionConfirmationControl
           horizontal: IZIDimensions.SPACE_SIZE_4X,
         ),
         child: IZIButton(
-          onTap: () {},
+          onTap: () {
+            controller.goToHome();
+          },
           label: 'Xác nhận',
         ),
       ),

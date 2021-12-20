@@ -1,10 +1,13 @@
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:template/helper/izi_validate.dart';
-import 'package:template/routes/route_path/voucher_routers.dart';
+import 'package:template/helper/izi_alert.dart';
 
 class VoucherController extends GetxController {
   //Khai báo isLoading
   bool isLoading = true;
+
+  //Khai báo discount code
+  String discountCode = "ABCDDDD";
 
   @override
   void onInit() {
@@ -19,15 +22,10 @@ class VoucherController extends GetxController {
   }
 
   ///
-  ///Go to Detail Voucher
+  ///Copy discount code
   ///
-  void goToDetailVoucher() {
-    Get.toNamed(VoucherRouters.DETAIL_VOUCHER)!.then((value) {
-      if (!IZIValidate.nullOrEmpty(value) && value == true) {
-        onInit();
-        update();
-      }
-    });
-    update();
+  void copyDiscountCode({required String content}) {
+    Clipboard.setData(ClipboardData(text: content));
+    IZIAlert.success(message: 'Copy mã giảm giá $content thành công');
   }
 }
