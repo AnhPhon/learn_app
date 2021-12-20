@@ -76,8 +76,8 @@ class CapitalContributionConfirmationPage extends GetView<CapitalContributionCon
           title(
             lable: "Khách hàng",
             margin: EdgeInsets.only(
-              top: IZIDimensions.SPACE_SIZE_4X,
-              bottom: IZIDimensions.SPACE_SIZE_4X,
+              top: IZIDimensions.SPACE_SIZE_5X,
+              bottom: IZIDimensions.SPACE_SIZE_1X,
             ),
           ),
           content(
@@ -141,7 +141,7 @@ class CapitalContributionConfirmationPage extends GetView<CapitalContributionCon
           title(
             lable: "Người được ủy quyền",
             margin: EdgeInsets.only(
-              bottom: IZIDimensions.SPACE_SIZE_5X,
+              bottom: IZIDimensions.SPACE_SIZE_1X,
             ),
           ),
           content(
@@ -201,7 +201,7 @@ class CapitalContributionConfirmationPage extends GetView<CapitalContributionCon
           title(
             lable: "Thông tin hợp đồng",
             margin: EdgeInsets.only(
-              bottom: IZIDimensions.SPACE_SIZE_5X,
+              bottom: IZIDimensions.SPACE_SIZE_1X,
             ),
           ),
           content(
@@ -249,7 +249,7 @@ class CapitalContributionConfirmationPage extends GetView<CapitalContributionCon
           title(
             lable: "Thời gian hợp đồng",
             margin: EdgeInsets.only(
-             bottom: IZIDimensions.SPACE_SIZE_5X,
+             bottom: IZIDimensions.SPACE_SIZE_1X,
             ),
           ),
           content(
@@ -273,7 +273,7 @@ class CapitalContributionConfirmationPage extends GetView<CapitalContributionCon
           title(
             lable: "Đối ứng",
             margin: EdgeInsets.only(
-              bottom: IZIDimensions.SPACE_SIZE_5X,
+              bottom: IZIDimensions.SPACE_SIZE_1X,
             ),
           ),
           content(
@@ -301,7 +301,7 @@ class CapitalContributionConfirmationPage extends GetView<CapitalContributionCon
           title(
             lable: "Khách hàng ký tên ",
             margin: EdgeInsets.only(
-              bottom: IZIDimensions.SPACE_SIZE_5X,
+              bottom: IZIDimensions.SPACE_SIZE_1X,
             ),
           ),
           sign(

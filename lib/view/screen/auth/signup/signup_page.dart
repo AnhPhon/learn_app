@@ -26,10 +26,11 @@ class SignUpPage extends GetView<SignUpController> {
             height: IZIDimensions.iziSize.height,
             width: IZIDimensions.iziSize.width,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IZIGlass(
                   width: IZIDimensions.iziSize.width * 0.9,
-                  height: IZIDimensions.iziSize.height * 0.9,
+                  height: IZIDimensions.iziSize.height * 0.8,
                   child: Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: IZIDimensions.SPACE_SIZE_3X,

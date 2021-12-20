@@ -94,7 +94,7 @@ class ContractTermPage extends GetView<ContractTermController> {
       isRequired: true,
       isDatePicker: true,
       label: "Ngày bắt đầu",
-      allowEdit: true,
+      iziPickerDate: IZIPickerDate.CUPERTINO,
       borderRadius: IZIDimensions.BLUR_RADIUS_3X,
     );
   }

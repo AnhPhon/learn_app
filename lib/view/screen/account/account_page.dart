@@ -42,7 +42,7 @@ class AccountPage extends GetView<AccountController> {
           ),
           Container(
             alignment: Alignment.bottomCenter,
-            height: IZISize.device == IZIDevice.TABLE ?  IZIDimensions.iziSize.height * 0.3 : IZIDimensions.iziSize.height * 0.22,
+            height: IZIDimensions.ONE_UNIT_SIZE * 270, //IZISize.device == IZIDevice.TABLE ?  IZIDimensions.iziSize.height * 0.3 : IZIDimensions.iziSize.height * 0.22,
             child: avatar(),
           ),
         ],

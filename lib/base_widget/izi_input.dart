@@ -140,6 +140,7 @@ class _IZIInputState extends State<IZIInput> {
 
     textEditingController = TextEditingController();
     //TODO: fork lại fackage của họ, Thêm try catch
+    // Khởi tạo lại NumberController set IniitValue
     numberEditingController = MoneyMaskedTextController(
       initialValue: IZINumber.parseDouble(widget.min.toString()),
       precision: 0,
@@ -149,6 +150,7 @@ class _IZIInputState extends State<IZIInput> {
     doubleEditingController = MoneyMaskedTextController(
       precision: 1,
     );
+    
     focusNode = widget.focusNode ?? FocusNode();
     if (widget.type == IZIInputType.INCREMENT) {
       checkDisibleIncrement(IZINumber.parseInt(numberEditingController!.text));

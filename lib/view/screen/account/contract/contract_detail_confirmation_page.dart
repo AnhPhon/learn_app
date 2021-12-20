@@ -17,7 +17,7 @@ class ContractDetailPage extends GetView<ContractDetailController> {
     return IZIScreen(
       background: const BackgroundAppBar(),
       appBar: IZIAppBar(
-        title: "Xác nhận góp vốn",
+        title: "Chi tiết hợp đồng",
         iconBack: GestureDetector(
           onTap: () {
             Get.back();
@@ -74,7 +74,7 @@ class ContractDetailPage extends GetView<ContractDetailController> {
           title(
             lable: "Khách hàng",
             margin: EdgeInsets.only(
-              bottom: IZIDimensions.SPACE_SIZE_5X,
+              bottom: IZIDimensions.SPACE_SIZE_1X,
               top: IZIDimensions.SPACE_SIZE_4X,
             ),
           ),
@@ -139,7 +139,7 @@ class ContractDetailPage extends GetView<ContractDetailController> {
           title(
             lable: "Người được ủy quyền",
             margin: EdgeInsets.only(
-              bottom: IZIDimensions.SPACE_SIZE_5X,
+              bottom: IZIDimensions.SPACE_SIZE_1X,
             ),
           ),
           content(
@@ -199,7 +199,7 @@ class ContractDetailPage extends GetView<ContractDetailController> {
           title(
             lable: "Thông tin hợp đồng",
             margin: EdgeInsets.only(
-              bottom: IZIDimensions.SPACE_SIZE_5X,
+              bottom: IZIDimensions.SPACE_SIZE_1X,
             ),
           ),
           content(
@@ -247,7 +247,7 @@ class ContractDetailPage extends GetView<ContractDetailController> {
           title(
             lable: "Thời gian hợp đồng",
             margin: EdgeInsets.only(
-              bottom: IZIDimensions.SPACE_SIZE_5X,
+              bottom: IZIDimensions.SPACE_SIZE_1X,
             ),
           ),
           content(
@@ -271,7 +271,7 @@ class ContractDetailPage extends GetView<ContractDetailController> {
           title(
             lable: "Đối ứng",
             margin: EdgeInsets.only(
-              bottom: IZIDimensions.SPACE_SIZE_5X,
+              bottom: IZIDimensions.SPACE_SIZE_1X,
             ),
           ),
           content(
@@ -299,7 +299,7 @@ class ContractDetailPage extends GetView<ContractDetailController> {
           title(
             lable: "Khách hàng ký tên ",
             margin: EdgeInsets.only(
-              bottom: IZIDimensions.SPACE_SIZE_5X,
+              bottom: IZIDimensions.SPACE_SIZE_1X,
             ),
           ),
           sign(
@@ -377,7 +377,7 @@ class ContractDetailPage extends GetView<ContractDetailController> {
           onTap: () {
             controller.onBack();
           },
-          label: 'Từ chối',
+          label: 'Quay lại',
         ),
         IZIButton(
           margin: EdgeInsets.symmetric(

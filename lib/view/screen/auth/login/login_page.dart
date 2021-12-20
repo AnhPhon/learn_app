@@ -77,6 +77,9 @@ class LoginPage extends GetView<LoginController> {
       placeHolder: "Số điện thoại",
       borderRadius: IZIDimensions.BLUR_RADIUS_4X,
       textInputAction: TextInputAction.next,
+      onController: (controller){
+        
+      },
       prefixIcon: Icon(
         Icons.account_circle_outlined,
         size: IZIDimensions.ONE_UNIT_SIZE * 40,

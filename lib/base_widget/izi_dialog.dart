@@ -37,7 +37,7 @@ class IZIDialog {
                   borderRadius: IZIDimensions.BLUR_RADIUS_2X,
                   width: IZIDimensions.iziSize.width * 0.33,
                   padding: EdgeInsets.symmetric(
-                    horizontal: IZIDimensions.ONE_UNIT_SIZE * 50,
+                    horizontal: IZIDimensions.ONE_UNIT_SIZE * 15,
                     vertical: IZIDimensions.ONE_UNIT_SIZE * 15,
                   ),
                   onTap: () {
@@ -51,7 +51,7 @@ class IZIDialog {
                   borderRadius: IZIDimensions.BLUR_RADIUS_2X,
                   width: IZIDimensions.iziSize.width * 0.33,
                   padding: EdgeInsets.symmetric(
-                    horizontal: IZIDimensions.ONE_UNIT_SIZE * 50,
+                    horizontal: IZIDimensions.ONE_UNIT_SIZE * 15,
                     vertical: IZIDimensions.ONE_UNIT_SIZE * 20,
                   ),
                   label: confirmLabel ?? "Đồng ý",

@@ -163,6 +163,7 @@ class AuthorizedPersonPage extends GetView<AuthorizedPersonController> {
       placeHolder: "12-12-2012",
       label: "Ngày cấp CMND/CCCD",
       isDatePicker: true,
+      iziPickerDate: IZIPickerDate.CUPERTINO,
       borderRadius: IZIDimensions.BLUR_RADIUS_3X,
     );
   }

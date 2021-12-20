@@ -113,7 +113,7 @@ class CapitalContributionPage extends GetView<CapitalContributionController> {
       type: IZIInputType.TEXT,
       isRequired: true,
       placeHolder: "12-12-2012",
-      label: "CMND/CCCD",
+      label: "\nCMND/CCCD",
       width: IZIDimensions.iziSize.width * 0.43,
       borderRadius: IZIDimensions.BLUR_RADIUS_3X,
     );
@@ -126,6 +126,7 @@ class CapitalContributionPage extends GetView<CapitalContributionController> {
       placeHolder: "12-12-2012",
       label: "Ngày cấp CMND/CCCD",
       isDatePicker: true,
+      iziPickerDate: IZIPickerDate.CUPERTINO,
       width: IZIDimensions.iziSize.width * 0.45,
       borderRadius: IZIDimensions.BLUR_RADIUS_3X,
     );
