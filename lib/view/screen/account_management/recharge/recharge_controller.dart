@@ -1,5 +1,7 @@
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
+import 'package:template/base_widget/izi_input.dart';
+import 'package:template/helper/izi_number.dart';
 import 'package:template/helper/izi_validate.dart';
 import 'package:template/routes/route_path/account_management_routers.dart';
 
@@ -20,6 +22,16 @@ class RechargeController extends GetxController {
   MoneyMaskedTextController walletBalanceController = MoneyMaskedTextController(
     precision: 0,
     decimalSeparator: '',
+  );
+
+  final moneyDraw = IZIInput(
+    disbleError: true,
+    borderSize: 2,
+    isLegend: true,
+    label: "Số tiền cần rút",
+    isBorder: true,
+    min: 0,
+    type: IZIInputType.PRICE,
   );
 
   //Khai báo valRadio
@@ -76,6 +88,8 @@ class RechargeController extends GetxController {
     } else if (index == 2) {
       print("500000");
     }
+    moneyDraw.newValue = IZINumber.parseDouble(defaultAmountList[index].replaceAll('.','').replaceAll('đ', ''));
+    moneyDraw.onSetValue!();
     update();
   }
 

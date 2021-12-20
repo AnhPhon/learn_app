@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:template/view/screen/account/contract/contract_detail_confirmation_binding.dart';
+import 'package:template/view/screen/account/contract/contract_detail_confirmation_page.dart';
 import 'package:template/view/screen/contract_list/contract_list_binding.dart';
 import 'package:template/view/screen/contract_list/contract_list_page.dart';
 import 'package:template/view/screen/contract_list/list_of_interest_payments/list_of_interest_payments_binding.dart';
@@ -17,6 +19,7 @@ class ContractListRouters {
   static const String RECIPROCAL_LIST = "/reciprocal_list";
   static const String RECIPROCAL_DETAILS = "/reciprocal_details";
   static const String ADD_RECIPROCAL = "/add_reciprocal";
+  static const String CONTRACT_DETAIL = '/contract_detail';
 
   static List<GetPage> contractList = [
     GetPage(
@@ -43,6 +46,11 @@ class ContractListRouters {
       name: ADD_RECIPROCAL,
       page: () => AddReciprocalPage(),
       binding: AddReciprocalBinding(),
+    ),
+    GetPage(
+      name: CONTRACT_DETAIL,
+      page: () => ContractDetailPage(),
+      binding: ContractDetailBinding(),
     ),
   ];
 }

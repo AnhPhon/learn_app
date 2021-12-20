@@ -119,7 +119,9 @@ class ContractListPage extends GetView<ContactListController> {
                                       borderRadius: IZIDimensions.BLUR_RADIUS_2X,
                                       withBorder: IZIDimensions.ONE_UNIT_SIZE * 2,
                                       type: IZIButtonType.OUTLINE,
-                                      onTap: () {},
+                                      onTap: () {
+                                        controller.onToContractDetail();
+                                      },
                                       label: "Xem chi tiết",
                                       maxLine: 1,
                                       margin: EdgeInsets.symmetric(

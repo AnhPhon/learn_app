@@ -1,22 +1,44 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/auth_strings.dart';
+import 'package:template/base_widget/izi_input.dart';
+import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/routes/route_path/auth_routes.dart';
 import 'package:template/routes/route_path/home_routes.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:template/utils/color_resources.dart';
 
 class LoginController extends GetxController {
   final LocalAuthentication auth = LocalAuthentication();
+  TextEditingController phoneController = TextEditingController();
+
+  final money = IZIInput(
+      type: IZIInputType.PRICE,
+      placeHolder: "Số điện thoại",
+      borderRadius: IZIDimensions.BLUR_RADIUS_4X,
+      textInputAction: TextInputAction.next,
+      prefixIcon: Icon(
+        Icons.account_circle_outlined,
+        size: IZIDimensions.ONE_UNIT_SIZE * 40,
+        color: ColorResources.GREEN,
+      ),
+    );
 
   @override
   void onInit() {
     super.onInit();
+    // money.onChanged
   }
+
+  
 
   ///
   /// Login
   ///
   void onLogin() {
     // TODO: do something
+    // phoneController.text = '100.000';
     onToHomePage();
   }
 

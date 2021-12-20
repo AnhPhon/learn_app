@@ -31,6 +31,7 @@ class IZIButton extends StatelessWidget {
     this.colorText,
     this.imageUrlIcon,
     this.withBorder,
+    this.width,
     this.fontSizedLabel,
   }) : super(key: key);
 
@@ -56,6 +57,7 @@ class IZIButton extends StatelessWidget {
   final IconData? icon;
   final String? imageUrlIcon;
   final double? withBorder;
+  final double? width;
   final double? fontSizedLabel;
 
   Color getColorBG(IZIButtonType type) {
@@ -97,6 +99,7 @@ class IZIButton extends StatelessWidget {
             }
           : null,
       child: Container(
+        width: width ?? IZIDimensions.iziSize.width,
         padding: padding ??
             EdgeInsets.symmetric(
               vertical: IZIDimensions.SPACE_SIZE_4X,
@@ -114,7 +117,9 @@ class IZIButton extends StatelessWidget {
                   color: isEnabled! ? colorBG! : ColorResources.GREY,
                   width: withBorder ?? IZIDimensions.ONE_UNIT_SIZE * 5,
                 ),
-          borderRadius: BorderRadius.circular(borderRadius ?? IZIDimensions.ONE_UNIT_SIZE * 20),
+          borderRadius: BorderRadius.circular(
+            borderRadius ?? IZIDimensions.ONE_UNIT_SIZE * 20,
+          ),
         ),
         // height: height ?? IZIDevice.getScaledSize(context, 0.14),
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -134,16 +139,18 @@ class IZIButton extends StatelessWidget {
             else
               const SizedBox(),
             if (label != null)
-              Text(
-                " $label",
-                style: TextStyle(
-                  fontSize: fontSizedLabel ?? IZIDimensions.FONT_SIZE_H6,
-                  color: colorText ?? getColor(type!),
-                  fontWeight: FontWeight.w500,
+              Flexible(
+                child: Text(
+                  " $label",
+                  style: TextStyle(
+                    fontSize: IZIDimensions.FONT_SIZE_H6,
+                    color: colorText ?? getColor(type!),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  maxLines: maxLine ?? 1,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                maxLines: maxLine ?? 1,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
               ),
           ],
         ),

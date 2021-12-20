@@ -56,6 +56,7 @@ class ForgetPasswordPage extends GetView<ForgetPasswordController> {
     return Row(
       children: [
         IZIButton(
+          width: IZIDimensions.ONE_UNIT_SIZE * 75,
           padding: EdgeInsets.all(
             IZIDimensions.SPACE_SIZE_3X,
           ),

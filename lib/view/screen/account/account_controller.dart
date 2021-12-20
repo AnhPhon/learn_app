@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/routes/route_path/account_routes.dart';
 import 'package:template/helper/izi_alert.dart';
 import 'package:template/routes/route_path/account_management_routers.dart';
 import 'package:template/routes/route_path/account_routes.dart';
@@ -46,6 +45,15 @@ class AccountController extends GetxController {
     Get.toNamed(VoucherRouters.VOUCHER);
   }
 
+  void onToCapitalContribution(){
+    Get.toNamed(AccountRoutes.CAPITAL_CONTRIBUTION);
+  }
+
+  void onToCapitalWithdDrawal(){
+    Get.toNamed(ContractListRouters.CONTRACT_LIST);
+  }
+
+  
   ///
   ///Go to Refer Friend page
   ///

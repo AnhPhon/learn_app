@@ -7,6 +7,7 @@ import 'package:template/base_widget/izi_image.dart';
 import 'package:template/base_widget/izi_screen.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_dimensions.dart';
+import 'package:template/helper/izi_size.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/utils/images_path.dart';
 import 'package:template/view/screen/account/account_controller.dart';
@@ -18,31 +19,44 @@ class AccountPage extends GetView<AccountController> {
       isSingleChildScrollView: false,
       background: const BackgroundAccount(),
       body: Stack(
-        alignment: Alignment.center,
+        // alignment: Alignment.center,
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              SizedBox(
-                height: IZIDimensions.iziSize.height * 0.6,
+              Container(
+                height: IZIDimensions.iziSize.height * 0.7,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(
+                      IZIDimensions.BLUR_RADIUS_5X,
+                    ),
+                    topRight: Radius.circular(
+                      IZIDimensions.BLUR_RADIUS_5X,
+                    ),
+                  ),
+                ),
                 child: menu(controller),
               ),
             ],
           ),
-          avatar(),
+          Container(
+            alignment: Alignment.bottomCenter,
+            height: IZIDimensions.ONE_UNIT_SIZE * 270, //IZISize.device == IZIDevice.TABLE ?  IZIDimensions.iziSize.height * 0.3 : IZIDimensions.iziSize.height * 0.22,
+            child: avatar(),
+          ),
         ],
       ),
     );
   }
 
   Widget avatar() {
-    return Positioned(
-      top: IZIDimensions.iziSize.height * 0.12,
+    return Container( 
       child: Stack(
         alignment: Alignment.bottomRight,
         children: [
           CircleAvatar(
-            radius: IZIDimensions.ONE_UNIT_SIZE * 80,
+            radius: IZISize.device == IZIDevice.TABLE ? IZIDimensions.ONE_UNIT_SIZE * 140 : IZIDimensions.ONE_UNIT_SIZE * 80,
             child: IZIImage(
               ImagesPath.nature,
             ),
@@ -55,17 +69,8 @@ class AccountPage extends GetView<AccountController> {
 
   Widget menu(AccountController controller) {
     return Container(
-      height: IZIDimensions.iziSize.height * 0.72,
-      decoration: BoxDecoration(
-        color: ColorResources.BACKGROUND,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(
-            IZIDimensions.BLUR_RADIUS_5X,
-          ),
-          topRight: Radius.circular(
-            IZIDimensions.BLUR_RADIUS_5X,
-          ),
-        ),
+      margin: EdgeInsets.only(
+        top: IZIDimensions.iziSize.height * 0.1,
       ),
       child: Column(
         children: [
@@ -91,7 +96,9 @@ class AccountPage extends GetView<AccountController> {
                   itemMenu(
                     icon: Icons.savings_rounded,
                     label: "Góp vốn",
-                    onTap: () {},
+                    onTap: () {
+                      controller.onToCapitalContribution();
+                    },
                   ),
                   itemMenu(
                     icon: Icons.paid_rounded,
@@ -103,7 +110,9 @@ class AccountPage extends GetView<AccountController> {
                   itemMenu(
                     icon: Icons.money_sharp,
                     label: "Rút vốn",
-                    onTap: () {},
+                    onTap: () {
+                      controller.onToCapitalWithdDrawal();
+                    },
                   ),
                   itemMenu(
                     icon: CupertinoIcons.person_2_fill,

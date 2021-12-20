@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/helper/izi_dimensions.dart';
+import 'package:template/helper/izi_other.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:tiengviet/tiengviet.dart';
 
@@ -9,24 +10,21 @@ class DropDownButton<T> extends StatelessWidget {
     this.hint = "",
     this.onChanged,
     required this.data,
-    required this.width,
+    this.width,
+    this.height,
     required this.value,
     this.label,
     required this.isRequired,
-    this.paddingTop,
-    this.isColorFieldWhite = false,
     this.isEnable = true,
     this.isSort = true,
     this.padding,
   }) : super(key: key);
   final String? hint;
-  final double width;
+  final double? width, height;
   final Function(T? value)? onChanged;
   final String? label;
   final bool? isRequired;
   final List<T> data;
-  final double? paddingTop;
-  final bool? isColorFieldWhite;
   final T? value;
   final bool? isEnable;
   final EdgeInsetsGeometry? padding;
@@ -38,7 +36,7 @@ class DropDownButton<T> extends StatelessWidget {
       data.sort((a, b) => TiengViet.parse(a.toString()).toLowerCase().compareTo(TiengViet.parse(b.toString()).toLowerCase()));
     }
     return Container(
-      width: width,
+      width: width ?? IZIDimensions.iziSize.width,
       padding: padding ?? EdgeInsets.zero,
       child: Column(
         children: [
@@ -73,7 +71,10 @@ class DropDownButton<T> extends StatelessWidget {
               ),
             ),
           Container(
-            height: 49,
+            height: height ?? 49,
+            decoration: BoxDecoration(
+              boxShadow: IZIOther().boxShadow,
+            ),
             margin: EdgeInsets.only(
               bottom: IZIDimensions.FONT_SIZE_H5,
             ),
@@ -88,19 +89,25 @@ class DropDownButton<T> extends StatelessWidget {
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: ColorResources.WHITE),
+                      borderSide: const BorderSide(
+                        color: ColorResources.WHITE,
+                      ),
                       borderRadius: BorderRadius.circular(
                         IZIDimensions.BLUR_RADIUS_3X,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: ColorResources.WHITE),
+                      borderSide: const BorderSide(
+                        color: ColorResources.WHITE,
+                      ),
                       borderRadius: BorderRadius.circular(
                         IZIDimensions.BLUR_RADIUS_3X,
                       ),
                     ),
                     disabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: ColorResources.WHITE),
+                      borderSide: const BorderSide(
+                        color: ColorResources.WHITE,
+                      ),
                       borderRadius: BorderRadius.circular(
                         IZIDimensions.BLUR_RADIUS_3X,
                       ),
