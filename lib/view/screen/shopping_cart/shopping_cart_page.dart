@@ -359,8 +359,8 @@ class ShoppingCartPage extends GetView<ShoppingCartController> {
                                   type: IZIInputType.INCREMENT,
                                   disbleError: true,
                                   isBorder: true,
-                                  height: IZIDimensions.ONE_UNIT_SIZE * 50,
-                                  widthIncrement: IZIDimensions.ONE_UNIT_SIZE * 50,
+                                  height: IZIDimensions.ONE_UNIT_SIZE * 60,
+                                  widthIncrement: IZIDimensions.ONE_UNIT_SIZE * 60,
                                   contentPaddingIncrement: EdgeInsets.all(
                                     IZIDimensions.ONE_UNIT_SIZE * 17,
                                   ),

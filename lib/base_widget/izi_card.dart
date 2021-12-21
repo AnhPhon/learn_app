@@ -686,13 +686,6 @@ class IZICard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(
                   radiusCard ?? IZIDimensions.BLUR_RADIUS_3X,
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    offset: const Offset(0, 2),
-                    blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-                    color: ColorResources.BLACK.withAlpha(40),
-                  )
-                ],
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(
@@ -857,13 +850,6 @@ class IZICard extends StatelessWidget {
                   width: IZIDimensions.ONE_UNIT_SIZE * 10,
                   color: ColorResources.CIRCLE_COLOR_BG,
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    offset: const Offset(0, 2),
-                    blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-                    color: ColorResources.BLACK.withAlpha(40),
-                  )
-                ],
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(

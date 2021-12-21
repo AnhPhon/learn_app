@@ -56,35 +56,116 @@ class ProductPortfolioPage extends GetView<ProductPortfolioController> {
             ),
             child: Column(
               children: [
-                IZITabBar(
-                  colorUnderLine: ColorResources.CIRCLE_COLOR_BG,
-                  colorTabBar: ColorResources.WHITE,
-                  colorText: ColorResources.CIRCLE_COLOR_BG,
-                  items: controller.tieuDe,
-                  onTapChangedTabbar: (index) => controller.onChangeTab(index: index),
-                  currentIndex: controller.currentIndex,
+                Container(
+                  width: double.infinity,
+                  height: IZIDimensions.ONE_UNIT_SIZE * 60,
+                  decoration: const BoxDecoration(
+                    color: ColorResources.WHITE,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ...List.generate(
+                        4,
+                        (index) => GestureDetector(
+                          onTap: () {
+                            controller.onChangeTab(index: index);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: IZIDimensions.ONE_UNIT_SIZE * 10,
+                              vertical: IZIDimensions.ONE_UNIT_SIZE * 5,
+                            ),
+                            height: double.infinity,
+                            width: IZIDimensions.ONE_UNIT_SIZE * 580.roundToDouble() / 4.5,
+                            decoration: BoxDecoration(
+                              color: ColorResources.WHITE,
+                              border: Border(
+                                bottom: controller.currentIndex == index
+                                    ? BorderSide(
+                                        width: IZIDimensions.ONE_UNIT_SIZE * 3,
+                                        color: ColorResources.CIRCLE_COLOR_BG,
+                                      )
+                                    : BorderSide.none,
+                              ),
+                            ),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    controller.tieuDe[index].toString(),
+                                    style: TextStyle(
+                                      color: controller.currentIndex == index ? ColorResources.CIRCLE_COLOR_BG : ColorResources.GREY,
+                                      fontWeight: controller.currentIndex == index ? FontWeight.w600 : FontWeight.normal,
+                                      fontSize: IZIDimensions.FONT_SIZE_H6 * .8,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  if (index == 3)
+                                    GestureDetector(
+                                      onTap: controller.currentIndex == 3
+                                          ? () {
+                                              controller.isDecrease == true ? controller.filterIncrease() : controller.filterDecrease();
+                                            }
+                                          : null,
+                                      child: Icon(
+                                        controller.iconFilter,
+                                        color: controller.currentIndex == index ? ColorResources.CIRCLE_COLOR_BG : ColorResources.GREY,
+                                      ),
+                                    )
+                                  else
+                                    const SizedBox(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Container(
                   color: ColorResources.BACKGROUND,
-                  child: IZIListView(
-                    itemCount: controller.dataMenu.length,
-                    scrollDirection: Axis.horizontal,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    margin: EdgeInsets.only(
-                      bottom: IZIDimensions.SPACE_SIZE_3X,
-                    ),
-                    builder: (index) {
-                      return IZICard(
-                        imageUrlType: IZIImageUrlType.IMAGE_CIRCLE,
-                        urlImage: controller.dataMenu[index]['image'].toString(),
-                        marginCard: EdgeInsets.only(
-                          top: IZIDimensions.SPACE_SIZE_4X,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.fromLTRB(
+                          IZIDimensions.SPACE_SIZE_1X,
+                          IZIDimensions.SPACE_SIZE_2X,
+                          0,
+                          IZIDimensions.SPACE_SIZE_1X,
                         ),
-                        colorBG: ColorResources.CIRCLE_COLOR_BG3,
-                        cardType: IZICardType.CARD_CIRCLE,
-                        row1Left: controller.dataMenu[index]['lable'].toString(),
-                      );
-                    },
+                        child: Text(
+                          "Khám phá danh mục Sâm",
+                          style: TextStyle(
+                            fontSize: IZIDimensions.FONT_SIZE_H6,
+                            color: ColorResources.BLACK,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      IZIListView(
+                        itemCount: controller.dataMenu.length,
+                        scrollDirection: Axis.horizontal,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        margin: const EdgeInsets.all(0),
+                        builder: (index) {
+                          return IZICard(
+                            imageUrlType: IZIImageUrlType.IMAGE_CIRCLE,
+                            urlImage: controller.dataMenu[index]['image'].toString(),
+                            marginCard: EdgeInsets.only(
+                              top: IZIDimensions.SPACE_SIZE_4X,
+                            ),
+                            colorBG: ColorResources.CIRCLE_COLOR_BG3,
+                            cardType: IZICardType.CARD_CIRCLE,
+                            row1Left: controller.dataMenu[index]['lable'].toString(),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(
@@ -114,7 +195,14 @@ class ProductPortfolioPage extends GetView<ProductPortfolioController> {
                               controller.gotoDetailedProductInformation();
                             },
                             child: IZICard(
-                              marginCard: EdgeInsets.all(
+                              marginCard: EdgeInsets.fromLTRB(
+                                IZIDimensions.SPACE_SIZE_1X,
+                                index == 0
+                                    ? IZIDimensions.SPACE_SIZE_4X
+                                    : index == 1
+                                        ? IZIDimensions.SPACE_SIZE_4X
+                                        : IZIDimensions.SPACE_SIZE_1X,
+                                IZIDimensions.SPACE_SIZE_1X,
                                 IZIDimensions.SPACE_SIZE_1X,
                               ),
                               urlImage: controller.dataMenu[index]['image'].toString(),

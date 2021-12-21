@@ -366,45 +366,76 @@ class DetailedProductInformationPage extends GetView<DetailedProductInformationC
                                     width: IZIDimensions.iziSize.width,
                                     height: IZIDimensions.iziSize.height * .25,
                                     decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        colors: [
-                                          ColorResources.WHITE.withOpacity(0),
-                                          ColorResources.WHITE,
-                                        ],
-                                        stops: const [0.2, 1],
-                                      ),
+                                      gradient: controller.isReadMore == false
+                                          ? LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                ColorResources.WHITE.withOpacity(0),
+                                                ColorResources.WHITE,
+                                              ],
+                                              stops: const [0.2, 1],
+                                            )
+                                          : null,
                                     ),
                                   ),
-                                  Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        controller.isReadMore == true ? controller.rutGon() : controller.xemThem();
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            controller.isReadMore == true ? "Rút gọn" : "Xem tất cả",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              color: ColorResources.CIRCLE_COLOR_BG,
-                                              fontSize: IZIDimensions.FONT_SIZE_H6 * .8,
+                                  if (controller.isReadMore == false)
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          controller.xemThem();
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Xem tất cả",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                color: ColorResources.CIRCLE_COLOR_BG,
+                                                fontSize: IZIDimensions.FONT_SIZE_H6 * .8,
+                                              ),
                                             ),
-                                          ),
-                                          SvgPicture.asset(
-                                            controller.isReadMore == true ? ImagesPath.icon_keyboard_double_arrow_up_outlined : ImagesPath.icon_keyboard_double_arrow_down_outlined,
-                                            color: ColorResources.CIRCLE_COLOR_BG,
-                                          ),
-                                        ],
+                                            SvgPicture.asset(
+                                              ImagesPath.icon_keyboard_double_arrow_down_outlined,
+                                              color: ColorResources.CIRCLE_COLOR_BG,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )
+                                    )
                                 ],
                               ),
                             ),
+                            if (controller.isReadMore == true)
+                              Container(
+                                margin: EdgeInsets.only(
+                                  top: IZIDimensions.SPACE_SIZE_2X,
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    controller.rutGon();
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Rút gọn",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: ColorResources.CIRCLE_COLOR_BG,
+                                          fontSize: IZIDimensions.FONT_SIZE_H6 * .8,
+                                        ),
+                                      ),
+                                      SvgPicture.asset(
+                                        ImagesPath.icon_keyboard_double_arrow_up_outlined,
+                                        color: ColorResources.CIRCLE_COLOR_BG,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
                           ],
                         ),
                       ),
@@ -494,92 +525,117 @@ class DetailedProductInformationPage extends GetView<DetailedProductInformationC
                                   builder: (context) {
                                     return Container(
                                       width: IZIDimensions.iziSize.width,
-                                      height: IZIDimensions.iziSize.height * .33,
+                                      height: IZIDimensions.iziSize.height * .35,
                                       padding: EdgeInsets.all(
                                         IZIDimensions.SPACE_SIZE_4X,
                                       ),
-                                      child: Column(
+                                      child: Stack(
                                         children: [
-                                          Row(
+                                          Column(
                                             children: [
-                                              ClipRRect(
-                                                borderRadius: BorderRadius.circular(
-                                                  IZIDimensions.BORDER_RADIUS_3X,
-                                                ),
-                                                child: IZIImage(
-                                                  "https://nhansamlinhchi.net.vn/wp-content/uploads/2015/11/thumb-15.jpg",
-                                                  height: IZIDimensions.ONE_UNIT_SIZE * 190,
-                                                  width: IZIDimensions.ONE_UNIT_SIZE * 190,
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Container(
-                                                  padding: EdgeInsets.only(
-                                                    left: IZIDimensions.SPACE_SIZE_2X,
+                                              Row(
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius: BorderRadius.circular(
+                                                      IZIDimensions.BORDER_RADIUS_3X,
+                                                    ),
+                                                    child: IZIImage(
+                                                      "https://nhansamlinhchi.net.vn/wp-content/uploads/2015/11/thumb-15.jpg",
+                                                      height: IZIDimensions.ONE_UNIT_SIZE * 190,
+                                                      width: IZIDimensions.ONE_UNIT_SIZE * 190,
+                                                    ),
                                                   ),
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                          bottom: IZIDimensions.SPACE_SIZE_2X,
-                                                        ),
-                                                        child: Text(
-                                                          "Các Loại Rượu Sâm Thượng Hạng",
-                                                          style: TextStyle(
-                                                            color: ColorResources.BLACK,
-                                                            fontSize: IZIDimensions.FONT_SIZE_H6,
-                                                            fontWeight: FontWeight.w600,
+                                                  Expanded(
+                                                    child: Container(
+                                                      padding: EdgeInsets.only(
+                                                        left: IZIDimensions.SPACE_SIZE_2X,
+                                                      ),
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          Container(
+                                                            margin: EdgeInsets.only(
+                                                              bottom: IZIDimensions.SPACE_SIZE_2X,
+                                                            ),
+                                                            child: Text(
+                                                              "Các Loại Rượu Sâm Thượng Hạng",
+                                                              style: TextStyle(
+                                                                color: ColorResources.BLACK,
+                                                                fontSize: IZIDimensions.FONT_SIZE_H6,
+                                                                fontWeight: FontWeight.w600,
+                                                              ),
+                                                              maxLines: 3,
+                                                              overflow: TextOverflow.ellipsis,
+                                                              textAlign: TextAlign.start,
+                                                            ),
                                                           ),
-                                                          maxLines: 3,
-                                                          overflow: TextOverflow.ellipsis,
-                                                          textAlign: TextAlign.start,
-                                                        ),
+                                                          Text(
+                                                            "đ 50.000",
+                                                            style: TextStyle(
+                                                              color: ColorResources.RED,
+                                                              fontSize: IZIDimensions.FONT_SIZE_H6,
+                                                            ),
+                                                            maxLines: 1,
+                                                            overflow: TextOverflow.ellipsis,
+                                                            textAlign: TextAlign.start,
+                                                          ),
+                                                        ],
                                                       ),
-                                                      Text(
-                                                        "đ 50.000",
-                                                        style: TextStyle(
-                                                          color: ColorResources.RED,
-                                                          fontSize: IZIDimensions.FONT_SIZE_H6,
-                                                        ),
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        textAlign: TextAlign.start,
-                                                      ),
-                                                    ],
+                                                    ),
                                                   ),
-                                                ),
+                                                ],
                                               ),
+                                              Divider(
+                                                thickness: IZIDimensions.ONE_UNIT_SIZE,
+                                                color: ColorResources.BLACK.withOpacity(.8),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    "Số lượng",
+                                                    style: TextStyle(
+                                                      fontSize: IZIDimensions.FONT_SIZE_H6,
+                                                      color: ColorResources.BLACK,
+                                                    ),
+                                                  ),
+                                                  IZIInput(
+                                                    width: IZIDimensions.iziSize.width * .45,
+                                                    type: IZIInputType.INCREMENT,
+                                                    disbleError: true,
+                                                    isBorder: true,
+                                                    height: IZIDimensions.ONE_UNIT_SIZE * 60,
+                                                    widthIncrement: IZIDimensions.ONE_UNIT_SIZE * 60,
+                                                    contentPaddingIncrement: EdgeInsets.all(
+                                                      IZIDimensions.ONE_UNIT_SIZE * 17,
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
                                             ],
                                           ),
-                                          Divider(
-                                            thickness: IZIDimensions.ONE_UNIT_SIZE,
-                                            color: ColorResources.BLACK.withOpacity(.8),
+                                          Container(
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Get.back();
+                                                  },
+                                                  child: CircleAvatar(
+                                                    radius: IZIDimensions.ONE_UNIT_SIZE * 18,
+                                                    backgroundColor: ColorResources.GREY.withOpacity(.5),
+                                                    child: Icon(
+                                                      Icons.close_outlined,
+                                                      color: ColorResources.BLACK.withOpacity(.6),
+                                                      size: IZIDimensions.ONE_UNIT_SIZE * 32,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "Số lượng",
-                                                style: TextStyle(
-                                                  fontSize: IZIDimensions.FONT_SIZE_H6,
-                                                  color: ColorResources.BLACK,
-                                                ),
-                                              ),
-                                              IZIInput(
-                                                width: IZIDimensions.iziSize.width * .4,
-                                                type: IZIInputType.INCREMENT,
-                                                disbleError: true,
-                                                isBorder: true,
-                                                height: IZIDimensions.ONE_UNIT_SIZE * 50,
-                                                widthIncrement: IZIDimensions.ONE_UNIT_SIZE * 50,
-                                                contentPaddingIncrement: EdgeInsets.all(
-                                                  IZIDimensions.ONE_UNIT_SIZE * 17,
-                                                ),
-                                              ),
-                                            ],
-                                          )
                                         ],
                                       ),
                                     );

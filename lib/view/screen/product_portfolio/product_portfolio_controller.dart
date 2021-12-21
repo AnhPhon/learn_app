@@ -10,6 +10,12 @@ class ProductPortfolioController extends GetxController {
   //Current Index
   int currentIndex = 0;
 
+  //Khai báo decrease
+  bool isDecrease = true;
+
+  //Khai báo Icon filter
+  IconData iconFilter = Icons.expand_more_outlined;
+
   List<String> tieuDe = [
     "Phổ biến",
     "Mới nhất",
@@ -63,6 +69,26 @@ class ProductPortfolioController extends GetxController {
     isLoading = true;
     currentIndex = index;
 
+    update();
+  }
+
+  ///
+  /// Giảm dần
+  ///
+  void filterDecrease() {
+    isDecrease = true;
+    iconFilter = Icons.expand_more_outlined;
+    print(isDecrease);
+    update();
+  }
+
+  ///
+  /// Tăng dần
+  ///
+  void filterIncrease() {
+    isDecrease = false;
+    iconFilter = Icons.expand_less_outlined;
+    print(isDecrease);
     update();
   }
 
