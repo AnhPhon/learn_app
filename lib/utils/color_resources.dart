@@ -54,8 +54,6 @@ class ColorResources {
   // static const Color ERROR_NOTICE_SNACKBAR = Color(0xffFFEBEE);
   // static const Color NOT_ALLOW_EDIT = Color(0xffced4da);
 
-  // static const Color REVENUE_COLOR = Color(0xff12DD94);
-
   static const Color CIRCLE_COLOR_BG = Color(0xff10A127);
   static const Color CIRCLE_COLOR_BG2 = Color(0xffC8F9D0);
   static const Color CIRCLE_COLOR_BG3 = Color(0xff5DC458);
@@ -66,4 +64,5 @@ class ColorResources {
   static const Color WHITE = Color(0xffFFFFFF);
   static const Color RED = Color(0xffF90B0B);
   static const Color YELLOW = Color(0xFFFFAA47);
+  static const Color LIGHT_YELLOW = Color(0xFFFBF093);
 }

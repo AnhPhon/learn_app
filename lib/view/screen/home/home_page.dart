@@ -94,9 +94,14 @@ class HomePage extends GetView<HomeController> {
           Stack(
             alignment: Alignment.topRight,
             children: [
-              Icon(
-                Icons.notifications,
-                size: IZIDimensions.ONE_UNIT_SIZE * 50,
+              GestureDetector(
+                onTap: () {
+                  controller.gotToNotification();
+                },
+                child: Icon(
+                  Icons.notifications,
+                  size: IZIDimensions.ONE_UNIT_SIZE * 50,
+                ),
               ),
               Container(
                 decoration: BoxDecoration(
@@ -226,7 +231,9 @@ class HomePage extends GetView<HomeController> {
         bottom: IZIDimensions.SPACE_SIZE_2X,
       ),
       action: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          controller.goToProductPortfolio();
+        },
         child: Row(
           children: [
             IZIText(
@@ -272,7 +279,9 @@ class HomePage extends GetView<HomeController> {
           bottom: IZIDimensions.SPACE_SIZE_2X,
         ),
         action: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            controller.goToProductPortfolio();
+          },
           child: Row(
             children: [
               IZIText(

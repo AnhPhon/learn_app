@@ -17,6 +17,7 @@ class DetailMyOrderPage extends GetView<DetailMyOrderController> {
     return IZIScreen(
       background: const BackgroundHome(),
       appBar: IZIAppBar(
+        colorBG: ColorResources.WHITE,
         colorTitle: ColorResources.BLACK,
         iconBack: GestureDetector(
           onTap: () {

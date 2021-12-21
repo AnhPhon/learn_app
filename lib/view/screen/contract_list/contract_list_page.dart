@@ -38,9 +38,6 @@ class ContractListPage extends GetView<ContactListController> {
                 minHeight: IZIDimensions.iziSize.height,
               ),
               color: ColorResources.BACKGROUND,
-              padding: EdgeInsets.symmetric(
-                vertical: IZIDimensions.SPACE_SIZE_4X,
-              ),
               child: IZISmartRefresher(
                 onRefresh: controller.onRefresh,
                 onLoading: controller.onLoading,
@@ -55,7 +52,8 @@ class ContractListPage extends GetView<ContactListController> {
                       onTap: () {},
                       child: Container(
                         margin: EdgeInsets.only(
-                          bottom: IZIDimensions.SPACE_SIZE_2X,
+                          top: index == 0 ? IZIDimensions.SPACE_SIZE_4X : 0,
+                          bottom: IZIDimensions.SPACE_SIZE_4X,
                           left: IZIDimensions.SPACE_SIZE_4X,
                           right: IZIDimensions.SPACE_SIZE_4X,
                         ),

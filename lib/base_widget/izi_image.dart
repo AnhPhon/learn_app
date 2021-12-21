@@ -26,6 +26,7 @@ enum IZIImageUrlType {
   ASSET,
   FILE,
   ICON,
+  IMAGE_CIRCLE,
 }
 
 class IZIImage extends StatelessWidget {
@@ -82,7 +83,7 @@ class IZIImage extends StatelessWidget {
       return IZIImageUrlType.NETWORK;
     } else if (url.startsWith('assets/')) {
       return IZIImageUrlType.ASSET;
-    }else if (icon != null) {
+    } else if (icon != null) {
       if (icon!.fontFamily.toString().toLowerCase().contains('CupertinoIcons'.toLowerCase()) || icon!.fontFamily.toString().toLowerCase().contains('MaterialIcons'.toLowerCase())) {
         return IZIImageUrlType.ICON;
       }

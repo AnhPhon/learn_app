@@ -7,8 +7,11 @@ import 'package:template/helper/izi_validate.dart';
 import 'package:template/utils/color_resources.dart';
 
 class IZIDialog {
-  static Future<void> showDialog({required String lable,String? confirmLabel, String? cancelLabel  ,String? description, Function? onConfirm, Function? onCancel}) {
+  static Future<void> showDialog({required String lable, String? confirmLabel, String? cancelLabel, String? description, Function? onConfirm, Function? onCancel}) {
     return Get.defaultDialog(
+      titlePadding: EdgeInsets.only(
+        top: IZIDimensions.SPACE_SIZE_5X,
+      ),
       barrierDismissible: false,
       title: lable,
       content: Column(
@@ -29,8 +32,13 @@ class IZIDialog {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              const Flexible(
+                fit: FlexFit.tight,
+                child: SizedBox(),
+              ),
               if (!IZIValidate.nullOrEmpty(onCancel))
                 IZIButton(
+                  margin: EdgeInsets.all(0),
                   type: IZIButtonType.OUTLINE,
                   color: ColorResources.CIRCLE_COLOR_BG3,
                   label: cancelLabel ?? "Không",
@@ -44,8 +52,13 @@ class IZIDialog {
                     onCancel!();
                   },
                 ),
+              const Flexible(
+                fit: FlexFit.tight,
+                child: SizedBox(),
+              ),
               if (!IZIValidate.nullOrEmpty(onConfirm))
                 IZIButton(
+                  margin: EdgeInsets.all(0),
                   colorBG: ColorResources.CIRCLE_COLOR_BG3,
                   color: ColorResources.WHITE,
                   borderRadius: IZIDimensions.BLUR_RADIUS_2X,
@@ -59,6 +72,10 @@ class IZIDialog {
                     onConfirm!();
                   },
                 ),
+              const Flexible(
+                fit: FlexFit.tight,
+                child: SizedBox(),
+              ),
             ],
           )
         ],
