@@ -80,6 +80,7 @@ class IZICard extends StatelessWidget {
     this.statusOrder,
     this.statusVoucher,
     this.widgetVoucher,
+    this.widgetVouche2,
     this.groupValue,
     this.onChanged,
     this.onChanged1CardTransfer,
@@ -120,6 +121,8 @@ class IZICard extends StatelessWidget {
   final Widget? child;
   final Widget? widgetLine;
   final Widget? widgetVoucher;
+  final Widget? widgetVouche2;
+
   final Color? colorIcon;
   final String? labelStatusvoucher;
   final Function(dynamic val)? onChanged;
@@ -351,9 +354,16 @@ class IZICard extends StatelessWidget {
         fit: fit,
       );
     } else if (type == IZIImageUrlType.FILE && !IZIValidate.nullOrEmpty(file)) {
-      IZIImage.file(
+      return IZIImage.file(
         file,
         fit: fit,
+      );
+    } else if (type == IZIImageUrlType.IMAGE_CIRCLE && !IZIValidate.nullOrEmpty(urlImage)) {
+      return ClipOval(
+        child: IZIImage(
+          urlImage ?? '',
+          fit: urlImage.toString().endsWith('.svg') ? fit : BoxFit.cover,
+        ),
       );
     }
     return ClipRRect(
@@ -691,13 +701,6 @@ class IZICard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(
                   radiusCard ?? IZIDimensions.BLUR_RADIUS_3X,
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    offset: const Offset(0, 2),
-                    blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-                    color: ColorResources.BLACK.withAlpha(40),
-                  )
-                ],
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(
@@ -862,13 +865,6 @@ class IZICard extends StatelessWidget {
                   width: IZIDimensions.ONE_UNIT_SIZE * 10,
                   color: ColorResources.CIRCLE_COLOR_BG,
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    offset: const Offset(0, 2),
-                    blurRadius: IZIDimensions.BLUR_RADIUS_2X,
-                    color: ColorResources.BLACK.withAlpha(40),
-                  )
-                ],
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(
@@ -1262,6 +1258,7 @@ class IZICard extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: IZIDimensions.FONT_SIZE_SPAN,
                                       ),
+                                      textAlign: TextAlign.end,
                                     ),
                                   ),
                                   if (!IZIValidate.nullOrEmpty(icon))
@@ -1284,8 +1281,8 @@ class IZICard extends StatelessWidget {
                     ),
                     Container(
                       width: double.infinity,
-                      height: IZIDimensions.ONE_UNIT_SIZE * 2,
-                      color: ColorResources.BLACK.withOpacity(.6),
+                      height: IZIDimensions.ONE_UNIT_SIZE * .8,
+                      color: ColorResources.BLACK.withOpacity(.5),
                     ),
                     Container(
                       padding: EdgeInsets.only(
@@ -1876,11 +1873,18 @@ class IZICard extends StatelessWidget {
                 IZIDimensions.SPACE_SIZE_1X,
               ),
               margin: EdgeInsets.only(
+                top: !IZIValidate.nullOrEmpty(widgetVouche2) ? IZIDimensions.SPACE_SIZE_2X : 0,
                 bottom: IZIDimensions.SPACE_SIZE_2X,
               ),
               child: widgetVoucher,
             ),
             getButtonStatusVoucher(statusVoucher!),
+            if (!IZIValidate.nullOrEmpty(widgetVouche2))
+              SizedBox(
+                width: IZIDimensions.ONE_UNIT_SIZE * 45,
+                height: IZIDimensions.ONE_UNIT_SIZE * 45,
+                child: widgetVouche2,
+              ),
           ],
         ),
       );

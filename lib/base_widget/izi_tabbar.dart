@@ -18,6 +18,7 @@ class IZITabBar<T> extends StatelessWidget {
     this.radiusTabBar,
     this.isUnderLine = true,
     this.colorText,
+    this.colorUnderLine,
   }) : super(key: key);
 
   final List<T> items;
@@ -31,6 +32,7 @@ class IZITabBar<T> extends StatelessWidget {
   final bool? isUnderLine;
   final double? heightTabBar;
   final Color? colorText;
+  final Color? colorUnderLine;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,7 @@ class IZITabBar<T> extends StatelessWidget {
                           bottom: currentIndex == index
                               ? BorderSide(
                                   width: IZIDimensions.ONE_UNIT_SIZE * 3,
-                                  color: ColorResources.MY_ORDER_LABEL,
+                                  color: colorUnderLine ?? ColorResources.MY_ORDER_LABEL,
                                 )
                               : BorderSide.none,
                         )

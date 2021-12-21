@@ -23,4 +23,6 @@ class ImagesPath {
   static const String icon_keyboard_double_arrow_up_outlined = 'assets/icon/keyboard_double_arrow_up_black_24dp.svg';
   static const String success = 'assets/images/success.png';
   static const String fail = 'assets/images/fail.png';
+  static const String icon_coupon = 'assets/icon/Coupon.svg';
+  static const String voucher = 'assets/images/Voucher.png';
 }

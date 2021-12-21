@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:get/get.dart';
 import 'package:template/routes/route_path/home_routes.dart';
+import 'package:template/routes/route_path/notification_routers.dart';
+import 'package:template/routes/route_path/product_portfolio_routers.dart';
 
 class HomeController extends GetxController {
   bool isVisibleWallet = false;
@@ -22,37 +24,32 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     dataMenu = [
-    {
-      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
-      'lable': 'Nạp tiền',
-      'icon': Icons.exit_to_app,
-      'function': onToTransfersPage,
-    },
-    {
-      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
-      'lable': 'Rút tiền',
-      'icon': Icons.monetization_on,
-      'function': onToTransfersPage,
-    },
-    {
-      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
-      'lable': 'Voucher',
-      'icon': Icons.card_giftcard_outlined,
-      'function': onToTransfersPage,
-    },
-    {
-      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
-      'lable': 'Giới thiệu bạn bè',
-      'icon': Icons.supervised_user_circle_rounded,
-      'function': onToTransfersPage,
-    },
-    {
-      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
-      'lable': 'Chuyển tiền qua SĐT',
-      'icon': Icons.mobile_screen_share,
-      'function': onToTransfersPage
-    },
-  ];
+      {
+        'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
+        'lable': 'Nạp tiền',
+        'icon': Icons.exit_to_app,
+        'function': onToTransfersPage,
+      },
+      {
+        'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
+        'lable': 'Rút tiền',
+        'icon': Icons.monetization_on,
+        'function': onToTransfersPage,
+      },
+      {
+        'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
+        'lable': 'Voucher',
+        'icon': Icons.card_giftcard_outlined,
+        'function': onToTransfersPage,
+      },
+      {
+        'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
+        'lable': 'Giới thiệu bạn bè',
+        'icon': Icons.supervised_user_circle_rounded,
+        'function': onToTransfersPage,
+      },
+      {'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg", 'lable': 'Chuyển tiền qua SĐT', 'icon': Icons.mobile_screen_share, 'function': onToTransfersPage},
+    ];
   }
 
   ///
@@ -72,10 +69,24 @@ class HomeController extends GetxController {
     update();
   }
 
-  void onToProduct(){
-    Get.toNamed(
-      HomeRoutes.PRODUCT,
-    );
+  // void onToProduct() {
+  //   Get.toNamed(
+  //     HomeRoutes.PRODUCT,
+  //   );
+  // }
+  
+  ///
+  ///Go to notificaions
+  ///
+  void gotToNotification() {
+    Get.toNamed(NotificationRouters.NOTIFICATION);
+  }
+
+  ///
+  ///Go to Product Portfolio
+  ///
+  void goToProductPortfolio() {
+    Get.toNamed(ProductPortfolioRouters.PRODUCT_PORTFOLIO);
   }
 
   @override

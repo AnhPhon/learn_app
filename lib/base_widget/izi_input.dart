@@ -80,7 +80,8 @@ class IZIInput extends StatefulWidget {
     this.newValue,
     this.isDatePicker = false,
     this.iziPickerDate = IZIPickerDate.MATERIAL,
-    this.obscureText
+    this.obscureText,
+    this.contentPaddingIncrement,
   }) : super(key: key);
   final String? label;
   final String? placeHolder;
@@ -122,6 +123,7 @@ class IZIInput extends StatefulWidget {
   final bool? isDatePicker;
   final IZIPickerDate? iziPickerDate;
   final bool? obscureText;
+  final EdgeInsets? contentPaddingIncrement;
   @override
   _IZIInputState createState() => _IZIInputState();
 }
@@ -508,6 +510,7 @@ class _IZIInputState extends State<IZIInput> {
                     ),
                     width: widget.widthIncrement ?? IZIDimensions.ONE_UNIT_SIZE * 80,
                     decoration: BoxDecoration(
+                      color: ColorResources.WHITE,
                       boxShadow: IZIOther().boxShadow,
                       border: widget.isBorder!
                           ? isDisibleReduction
@@ -586,7 +589,7 @@ class _IZIInputState extends State<IZIInput> {
                       obscureText: widget.obscureText ?? widget.type == IZIInputType.PASSWORD && isVisible,
                       focusNode: focusNode,
                       decoration: InputDecoration(
-                        contentPadding: widget.miniSize ? const EdgeInsets.all(12) : null,
+                        contentPadding: widget.miniSize ? const EdgeInsets.all(12) : widget.contentPaddingIncrement,
                         isDense: true,
                         labelText: widget.isLegend == true ? widget.label : null,
                         labelStyle: TextStyle(
@@ -672,6 +675,7 @@ class _IZIInputState extends State<IZIInput> {
                     height: widget.height ?? IZIDimensions.ONE_UNIT_SIZE * 80,
                     width: widget.widthIncrement ?? IZIDimensions.ONE_UNIT_SIZE * 80,
                     decoration: BoxDecoration(
+                      color: ColorResources.WHITE,
                       boxShadow: IZIOther().boxShadow,
                       border: widget.isBorder!
                           ? isDisibleIncrement
