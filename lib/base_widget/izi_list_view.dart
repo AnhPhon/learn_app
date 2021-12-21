@@ -45,7 +45,7 @@ class IZIListView extends StatelessWidget {
     if (type == IZIListViewType.GRIDVIEW) {
       return GridView.builder(
         scrollDirection: scrollDirection!,
-        physics: const NeverScrollableScrollPhysics(),
+        physics: physics, //const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount!,

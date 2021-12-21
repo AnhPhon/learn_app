@@ -76,7 +76,7 @@ class OnBoardingPage extends GetView<OnBoardingController> {
     if (currentIndex == 0) {
       return const BackgroundSplash1();
     } else if (currentIndex == 1) {
-      return const backgroundSplash2();
+      return const BackgroundSplash2();
     } else {
       return const BackgroundSplash3();
     }

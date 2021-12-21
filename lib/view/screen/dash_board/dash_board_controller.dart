@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:template/helper/izi_alert.dart';
 import 'package:template/view/screen/account/account_page.dart';
 import 'package:template/view/screen/home/home_page.dart';
+import 'package:template/view/screen/news/news_page.dart';
 
 class DashBoardController extends GetxController {
 
@@ -27,7 +28,7 @@ class DashBoardController extends GetxController {
     {
       'label':"Tin tức",
       'icon':CupertinoIcons.news_solid,
-      'page': HomePage(),
+      'page': NewsPage(),
     },
     {
       'label':"Tài khoản",

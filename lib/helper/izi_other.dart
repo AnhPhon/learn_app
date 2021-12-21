@@ -17,6 +17,11 @@ class IZIOther {
     }
   }
 
+  static String htmlUnescape(String htmlString) {
+    final unescape = HtmlUnescape();
+    return unescape.convert(htmlString);
+  }
+
   List<BoxShadow> boxShadow = [
     BoxShadow(
       offset: const Offset(0, 2),

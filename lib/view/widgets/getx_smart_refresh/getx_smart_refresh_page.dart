@@ -12,12 +12,14 @@ class GetXSmartRefreshPage extends StatefulWidget {
   final bool? enablePullUp;
   final bool? enablePullDown;
   final bool? primary;
+  final RefreshController refreshController;
   final Widget child;
 
   const GetXSmartRefreshPage({
     Key? key,
     required this.onLoading,
     required this.onRefresh,
+    required this.refreshController,
     this.enablePullUp,
     this.enablePullDown,
     this.primary,
@@ -28,7 +30,7 @@ class GetXSmartRefreshPage extends StatefulWidget {
   _GetXSmartRefreshPageState createState() => _GetXSmartRefreshPageState();
 }
 
-class _GetXSmartRefreshPageState extends State<GetXSmartRefreshPage> with AutomaticKeepAliveClientMixin {
+class _GetXSmartRefreshPageState extends State<GetXSmartRefreshPage>  {
   GetXSmartRefreshController? controller;
   ScrollController scrollController = ScrollController();
   final valueGlobalNotifier = sl.get<ValueGlobalNotifier>();
@@ -54,14 +56,14 @@ class _GetXSmartRefreshPageState extends State<GetXSmartRefreshPage> with Automa
   Widget build(BuildContext context) {
     // print('GetXSmartRefreshPage build ${widget.key.toString()}');
 
-    super.build(context);
+    // super.build(context);
     if (!mounted) return const SizedBox();
     return SmartRefresher(
       primary: widget.primary ?? false,
       scrollController: scrollController,
       physics: const AlwaysScrollableScrollPhysics(),
       key: Key('SmartRefresher_${widget.key}'),
-      controller: controller!.refreshController,
+      controller: widget.refreshController,
       enablePullUp: widget.enablePullUp ?? false,
       enablePullDown: widget.enablePullDown ?? false,
       // enableTwoLevel: false,

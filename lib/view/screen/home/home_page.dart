@@ -44,6 +44,7 @@ class HomePage extends GetView<HomeController> {
                     onRefresh: () async {
                       IZIAlert.info(message: 'refresh');
                     },
+                    refreshController: controller.refreshController,
                     enablePullDown: true,
                     enablePullUp: true,
                     child: SingleChildScrollView(
@@ -214,6 +215,9 @@ class HomePage extends GetView<HomeController> {
           colorBG: ColorResources.CIRCLE_COLOR_BG3,
           cardType: IZICardType.CARD_CIRCLE,
           row1Left: controller.dataMenu[index]['lable'].toString(),
+          onTap: () {
+            controller.dataMenu[index]['function']();
+          }
         );
       },
     );
@@ -226,7 +230,9 @@ class HomePage extends GetView<HomeController> {
         bottom: IZIDimensions.SPACE_SIZE_2X,
       ),
       action: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          controller.onToProduct();
+        },
         child: Row(
           children: [
             IZIText(
