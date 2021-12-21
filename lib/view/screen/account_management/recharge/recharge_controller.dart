@@ -81,14 +81,7 @@ class RechargeController extends GetxController {
   /// OnTap set Default Amount
   ///
   void setDefaultAmount({required int index}) {
-    if (index == 0) {
-      print("100000");
-    } else if (index == 1) {
-      print("200000");
-    } else if (index == 2) {
-      print("500000");
-    }
-    moneyDraw.newValue = IZINumber.parseDouble(defaultAmountList[index].replaceAll('.','').replaceAll('đ', ''));
+    moneyDraw.newValue = IZINumber.parseDouble(defaultAmountList[index].replaceAll('.', '').replaceAll('đ', ''));
     moneyDraw.onSetValue!();
     update();
   }

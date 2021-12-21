@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:template/helper/izi_dimensions.dart';
 import 'package:template/utils/images_path.dart';
 
-class backgroundSplash2 extends StatelessWidget {
-  const backgroundSplash2({
+class BackgroundSplash2 extends StatelessWidget {
+  const BackgroundSplash2({
     Key? key,
   }) : super(key: key);
 

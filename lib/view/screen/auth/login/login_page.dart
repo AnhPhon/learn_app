@@ -92,7 +92,7 @@ class LoginPage extends GetView<LoginController> {
 
   Widget password() {
     return IZIInput(
-      type: IZIInputType.PHONE,
+      type: IZIInputType.TEXT,
       placeHolder: "Nhập mật khẩu",
       borderRadius: IZIDimensions.BLUR_RADIUS_4X,
       textInputAction: TextInputAction.done,

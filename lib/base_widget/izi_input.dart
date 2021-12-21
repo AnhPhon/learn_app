@@ -80,6 +80,8 @@ class IZIInput extends StatefulWidget {
     this.newValue,
     this.isDatePicker = false,
     this.iziPickerDate = IZIPickerDate.MATERIAL,
+    this.obscureText,
+    this.contentPaddingIncrement,
   }) : super(key: key);
   final String? label;
   final String? placeHolder;
@@ -120,6 +122,8 @@ class IZIInput extends StatefulWidget {
   final double? widthIncrement;
   final bool? isDatePicker;
   final IZIPickerDate? iziPickerDate;
+  final bool? obscureText;
+  final EdgeInsets? contentPaddingIncrement;
   @override
   _IZIInputState createState() => _IZIInputState();
 }
@@ -143,11 +147,19 @@ class _IZIInputState extends State<IZIInput> {
     textEditingController = TextEditingController();
     //TODO: fork lại fackage của họ, Thêm try catch
     // Khởi tạo lại NumberController set IniitValue
-    numberEditingController = MoneyMaskedTextController(
-      initialValue: IZINumber.parseDouble(widget.min.toString()),
-      precision: 0,
-      decimalSeparator: '',
-    );
+    if (widget.type == IZIInputType.INCREMENT) {
+      numberEditingController = MoneyMaskedTextController(
+        initialValue: IZINumber.parseDouble(widget.min.toString()),
+        precision: 0,
+        decimalSeparator: '',
+      );
+    } else {
+      numberEditingController = MoneyMaskedTextController(
+        initialValue: 0,
+        precision: 0,
+        decimalSeparator: '',
+      );
+    }
 
     doubleEditingController = MoneyMaskedTextController(
       precision: 1,
@@ -156,14 +168,13 @@ class _IZIInputState extends State<IZIInput> {
     focusNode = widget.focusNode ?? FocusNode();
     if (widget.type == IZIInputType.INCREMENT) {
       checkDisibleIncrement(IZINumber.parseInt(numberEditingController!.text));
-    } 
+    }
     // else if (widget.type == IZIInputType.NUMBER || widget.type == IZIInputType.PRICE) {
     //   numberEditingController!.clear();
     //   doubleEditingController!.clear();
     // }
 
     onSetValue();
-    
   }
 
   @override
@@ -175,12 +186,9 @@ class _IZIInputState extends State<IZIInput> {
     super.dispose();
   }
 
-
-  void onSetValue(){
+  void onSetValue() {
     widget.onSetValue = () {
-      if ( !IZIValidate.nullOrEmpty(widget.newValue) && widget.type == IZIInputType.NUMBER ||
-      !IZIValidate.nullOrEmpty(widget.newValue) && widget.type == IZIInputType.PRICE || 
-      !IZIValidate.nullOrEmpty(widget.newValue) && widget.type == IZIInputType.DOUBLE) {
+      if (!IZIValidate.nullOrEmpty(widget.newValue) && widget.type == IZIInputType.NUMBER || !IZIValidate.nullOrEmpty(widget.newValue) && widget.type == IZIInputType.PRICE || !IZIValidate.nullOrEmpty(widget.newValue) && widget.type == IZIInputType.DOUBLE) {
         numberEditingController = MoneyMaskedTextController(
           initialValue: widget.newValue!,
           precision: 0,
@@ -502,6 +510,7 @@ class _IZIInputState extends State<IZIInput> {
                     ),
                     width: widget.widthIncrement ?? IZIDimensions.ONE_UNIT_SIZE * 80,
                     decoration: BoxDecoration(
+                      color: ColorResources.WHITE,
                       boxShadow: IZIOther().boxShadow,
                       border: widget.isBorder!
                           ? isDisibleReduction
@@ -577,10 +586,10 @@ class _IZIInputState extends State<IZIInput> {
                       textAlignVertical: TextAlignVertical.top,
                       enabled: widget.isDatePicker! ? false : widget.allowEdit,
                       controller: getController(widget.type),
-                      obscureText: widget.type == IZIInputType.PASSWORD && isVisible,
+                      obscureText: widget.obscureText ?? widget.type == IZIInputType.PASSWORD && isVisible,
                       focusNode: focusNode,
                       decoration: InputDecoration(
-                        contentPadding: widget.miniSize ? const EdgeInsets.all(12) : null,
+                        contentPadding: widget.miniSize ? const EdgeInsets.all(12) : widget.contentPaddingIncrement,
                         isDense: true,
                         labelText: widget.isLegend == true ? widget.label : null,
                         labelStyle: TextStyle(
@@ -666,6 +675,7 @@ class _IZIInputState extends State<IZIInput> {
                     height: widget.height ?? IZIDimensions.ONE_UNIT_SIZE * 80,
                     width: widget.widthIncrement ?? IZIDimensions.ONE_UNIT_SIZE * 80,
                     decoration: BoxDecoration(
+                      color: ColorResources.WHITE,
                       boxShadow: IZIOther().boxShadow,
                       border: widget.isBorder!
                           ? isDisibleIncrement

@@ -1,62 +1,117 @@
-
-
-import 'package:flutter/material.dart';
-import 'package:template/routes/route_path/Home_routes.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:template/routes/route_path/news_routers.dart';
 
-
-class HomeController extends GetxController{
-  bool isVisibleWallet = false;
-
-  final data = [
-    'https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg',
-    'https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg',
-    'https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg',
-    'https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg',
-    'https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg',
-    'https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg',
-    'https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg',
-    'https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg',
+class NewsController extends GetxController {
+  final RefreshController refreshController = RefreshController();
+  final tabBarName = [
+    'Phố biển',
+    'Hot nhất',
+    'Khuyến mãi',
   ];
-  final dataMenu = [
+  final List<Map<String, String>> data = [
     {
-      'image':"https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
-      'lable':'Nạp tiền',
-      'icon': Icons.exit_to_app
+      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
+      'row1Left': 'Ưu đãi từ Hà Nội Safe Food',
+      'row1Right': 'Thứ ba, 20/11',
+      'row2Left': 'Khuyến mãi Combo Hỗ Trợ Điều Trị Suy Nhược Cơ Thể',
     },
     {
-      'image':"https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
-      'lable':'Rút tiền',
-      'icon': Icons.monetization_on
+      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
+      'row1Left': 'Ưu đãi từ Hà Nội Safe Food',
+      'row1Right': 'Thứ ba, 20/11',
+      'row2Left': 'Khuyến mãi Combo Hỗ Trợ Điều Trị Suy Nhược Cơ Thể',
     },
     {
-      'image':"https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
-      'lable':'Voucher',
-      'icon': Icons.card_giftcard_outlined
+      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
+      'row1Left': 'Ưu đãi từ Hà Nội Safe Food',
+      'row1Right': 'Thứ ba, 20/11',
+      'row2Left': 'Khuyến mãi Combo Hỗ Trợ Điều Trị Suy Nhược Cơ Thể',
     },
     {
-      'image':"https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
-      'lable':'Giới thiệu bạn bè',
-      'icon': Icons.supervised_user_circle_rounded
+      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
+      'row1Left': 'Ưu đãi từ Hà Nội Safe Food',
+      'row1Right': 'Thứ ba, 20/11',
+      'row2Left': 'Khuyến mãi Combo Hỗ Trợ Điều Trị Suy Nhược Cơ Thể',
     },
     {
-      'image':"https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
-      'lable':'Chuyển tiền qua SĐT',
-      'icon': Icons.mobile_screen_share
+      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
+      'row1Left': 'Ưu đãi từ Hà Nội Safe Food',
+      'row1Right': 'Thứ ba, 20/11',
+      'row2Left': 'Khuyến mãi Combo Hỗ Trợ Điều Trị Suy Nhược Cơ Thể',
     },
   ];
+  final List<Map<String, String>> hot = [
+    {
+      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
+      'row1Left': 'Ưu đãi từ Hà Nội Safe Food',
+      'row1Right': 'Thứ ba, 20/11',
+      'row2Left': 'Việt nam sắp có vắc xin điều trị Covid',
+    },
+    {
+      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
+      'row1Left': 'Ưu đãi từ Hà Nội Safe Food',
+      'row1Right': 'Thứ ba, 20/11',
+      'row2Left': 'Việt nam sắp có vắc xin điều trị Covid',
+    },
+    {
+      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
+      'row1Left': 'Ưu đãi từ Hà Nội Safe Food',
+      'row1Right': 'Thứ ba, 20/11',
+      'row2Left': 'Việt nam sắp có vắc xin điều trị Covid',
+    },
+    {
+      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
+      'row1Left': 'Ưu đãi từ Hà Nội Safe Food',
+      'row1Right': 'Thứ ba, 20/11',
+      'row2Left': 'Việt nam sắp có vắc xin điều trị Covid',
+    },
+    {
+      'image': "https://i.pinimg.com/474x/90/57/0a/90570addee2645866a597530721f37fd.jpg",
+      'row1Left': 'Ưu đãi từ Hà Nội Safe Food',
+      'row1Right': 'Thứ ba, 20/11',
+      'row2Left': 'Việt nam sắp có vắc xin điều trị Covid',
+    },
+  ];
+  int currentIndexTabBar = 0;
 
   @override
-  void onInit() {
-    
+  void onInit() {}
+
+  ///
+  /// on press news card
+  ///
+  void onTapNewCard() {
+    Get.toNamed(
+      NewsRouters.NEWS_DETAIL,
+    );
+  }
+
+  void onLoadMore() {
+    Future.delayed(Duration(seconds: 2), () {
+      refreshController.loadComplete();
+    });
+  }
+
+  void onRefresh() {
+    Future.delayed(Duration(seconds: 2), () {
+      refreshController.resetNoData();
+      refreshController.refreshCompleted();
+    });
   }
 
   ///
-  /// On show visible wallet
+  /// On change tab bar
   ///
-  void onVisibleWallet(){
-    isVisibleWallet = !isVisibleWallet;
+  void onChangeTabBar({required int index}) {
+    currentIndexTabBar = index;
     update();
   }
 
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    refreshController.dispose();
+    super.onClose();
+  }
 }

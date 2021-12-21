@@ -8,7 +8,6 @@ import 'package:template/base_widget/izi_slider.dart';
 import 'package:template/base_widget/izi_text.dart';
 import 'package:template/helper/izi_alert.dart';
 import 'package:template/helper/izi_dimensions.dart';
-import 'package:template/helper/izi_size.dart';
 import 'package:template/utils/color_resources.dart';
 import 'package:template/view/screen/home/home_controller.dart';
 import 'package:template/view/widgets/getx_smart_refresh/getx_smart_refresh_page.dart';
@@ -44,6 +43,7 @@ class HomePage extends GetView<HomeController> {
                     onRefresh: () async {
                       IZIAlert.info(message: 'refresh');
                     },
+                    refreshController: controller.refreshController,
                     enablePullDown: true,
                     enablePullUp: true,
                     child: SingleChildScrollView(
@@ -51,7 +51,9 @@ class HomePage extends GetView<HomeController> {
                       child: Column(
                         children: [
                           listViewMenu(),
-                          listViewCategory(),
+                          listViewCategory(
+                            controller: controller,
+                          ),
                           listViewProduct(),
                         ],
                       ),
@@ -94,9 +96,14 @@ class HomePage extends GetView<HomeController> {
           Stack(
             alignment: Alignment.topRight,
             children: [
-              Icon(
-                Icons.notifications,
-                size: IZIDimensions.ONE_UNIT_SIZE * 50,
+              GestureDetector(
+                onTap: () {
+                  controller.gotToNotification();
+                },
+                child: Icon(
+                  Icons.notifications,
+                  size: IZIDimensions.ONE_UNIT_SIZE * 50,
+                ),
               ),
               Container(
                 decoration: BoxDecoration(
@@ -207,26 +214,30 @@ class HomePage extends GetView<HomeController> {
       ),
       builder: (index) {
         return IZICard(
-          marginCard: EdgeInsets.only(
-            top: IZIDimensions.SPACE_SIZE_4X,
-          ),
-          icon: controller.dataMenu[index]['icon'] as IconData,
-          colorBG: ColorResources.CIRCLE_COLOR_BG3,
-          cardType: IZICardType.CARD_CIRCLE,
-          row1Left: controller.dataMenu[index]['lable'].toString(),
-        );
+            marginCard: EdgeInsets.only(
+              top: IZIDimensions.SPACE_SIZE_4X,
+            ),
+            icon: controller.dataMenu[index]['icon'] as IconData,
+            colorBG: ColorResources.CIRCLE_COLOR_BG3,
+            cardType: IZICardType.CARD_CIRCLE,
+            row1Left: controller.dataMenu[index]['lable'].toString(),
+            onTap: () {
+              controller.dataMenu[index]['function']();
+            });
       },
     );
   }
 
-  Widget listViewCategory() {
+  Widget listViewCategory({required HomeController controller}) {
     return IZIListView(
       label: "Danh mục",
       margin: EdgeInsets.only(
         bottom: IZIDimensions.SPACE_SIZE_2X,
       ),
       action: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          controller.goToProductPortfolio();
+        },
         child: Row(
           children: [
             IZIText(
@@ -272,7 +283,9 @@ class HomePage extends GetView<HomeController> {
           bottom: IZIDimensions.SPACE_SIZE_2X,
         ),
         action: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            controller.goToProductPortfolio();
+          },
           child: Row(
             children: [
               IZIText(

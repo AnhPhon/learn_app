@@ -93,7 +93,37 @@ class AccountManagementPage extends GetView<AccountManagementController> {
                         ),
 
                         //Card lịch sử giao dịch
-                        _cardTransactionJistory()
+                        Expanded(
+                          child: IZISmartRefresher(
+                            isLoading: false,
+                            onRefresh: controller.onRefresh,
+                            onLoading: controller.onLoading,
+                            refreshController: controller.refreshController,
+                            enablePullDown: true,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: 10,
+                              itemBuilder: (context, index) {
+                                return IZICard(
+                                  marginCard: EdgeInsets.fromLTRB(
+                                    IZIDimensions.SPACE_SIZE_2X,
+                                    index == 0 ? IZIDimensions.SPACE_SIZE_2X : 0,
+                                    IZIDimensions.SPACE_SIZE_2X,
+                                    IZIDimensions.SPACE_SIZE_3X,
+                                  ),
+                                  cardType: IZICardType.CARD_PAYMENT,
+                                  row1Left: "2123123FGS4312",
+                                  row1Right: "500.000",
+                                  row2Left: "Thanh toán đơn hàng ĐH001",
+                                  row3Left: "26/09/2021 15:30",
+                                  //TODO: Rap trạng thái card lịch sử giao dịch ở đây
+                                  statusMoney: IZIStatusMoney.RECHARGE,
+                                  statusPayment: IZIStatusPayment.DONE,
+                                );
+                              },
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -102,43 +132,6 @@ class AccountManagementPage extends GetView<AccountManagementController> {
             ),
           );
         },
-      ),
-    );
-  }
-
-  ///
-  ///Card lịch sử giao dịch
-  ///
-  Expanded _cardTransactionJistory() {
-    return Expanded(
-      child: IZISmartRefresher(
-        isLoading: false,
-        onRefresh: controller.onRefresh,
-        onLoading: controller.onLoading,
-        refreshController: controller.refreshController,
-        enablePullDown: true,
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return IZICard(
-              marginCard: EdgeInsets.fromLTRB(
-                IZIDimensions.SPACE_SIZE_2X,
-                0,
-                IZIDimensions.SPACE_SIZE_2X,
-                IZIDimensions.SPACE_SIZE_3X,
-              ),
-              cardType: IZICardType.CARD_PAYMENT,
-              row1Left: "2123123FGS4312",
-              row1Right: "500.000",
-              row2Left: "Thanh toán đơn hàng ĐH001",
-              row3Left: "26/09/2021 15:30",
-              //TODO: Rap trạng thái card lịch sử giao dịch ở đây
-              statusMoney: IZIStatusMoney.RECHARGE,
-              statusPayment: IZIStatusPayment.DONE,
-            );
-          },
-        ),
       ),
     );
   }

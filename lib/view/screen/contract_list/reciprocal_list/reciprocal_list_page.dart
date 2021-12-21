@@ -41,9 +41,6 @@ class ReciprocalListPage extends GetView<ReciprocalListController> {
               minHeight: IZIDimensions.iziSize.height,
             ),
             color: ColorResources.BACKGROUND,
-            padding: EdgeInsets.symmetric(
-              vertical: IZIDimensions.SPACE_SIZE_4X,
-            ),
             child: IZISmartRefresher(
               onRefresh: controller.onRefresh,
               onLoading: controller.onLoading,
@@ -60,6 +57,7 @@ class ReciprocalListPage extends GetView<ReciprocalListController> {
                     },
                     child: Container(
                       margin: EdgeInsets.only(
+                        top: index == 0 ? IZIDimensions.SPACE_SIZE_4X : 0,
                         bottom: IZIDimensions.SPACE_SIZE_4X,
                         left: IZIDimensions.SPACE_SIZE_4X,
                         right: IZIDimensions.SPACE_SIZE_4X,

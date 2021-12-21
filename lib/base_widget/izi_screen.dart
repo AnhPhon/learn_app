@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:template/base_widget/background/background_splash.dart';
 import 'package:template/helper/izi_size.dart';
-import 'package:template/base_widget/izi_button.dart';
-import 'package:template/helper/izi_size.dart';
-import 'package:template/utils/color_resources.dart';
 
 class IZIScreen extends StatelessWidget {
   const IZIScreen({
@@ -14,6 +11,7 @@ class IZIScreen extends StatelessWidget {
     this.isSingleChildScrollView = true,
     this.tabBar,
     this.widgetBottomSheet,
+    this.drawer,
   }) : super(key: key);
   final Widget body;
   final Widget? background;
@@ -21,6 +19,7 @@ class IZIScreen extends StatelessWidget {
   final Widget? tabBar;
   final Widget? widgetBottomSheet;
   final bool? isSingleChildScrollView;
+  final Widget? drawer;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -56,6 +55,7 @@ class IZIScreen extends StatelessWidget {
                       ),
                   ],
                 ),
+                endDrawer: drawer,
                 bottomSheet: widgetBottomSheet ?? const SizedBox(),
               );
             }),
