@@ -6,9 +6,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 //import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:template/app_binding.dart';
+import 'package:template/data/model/provider/provider.dart';
+import 'package:template/data/model/san_pham/product_response.dart';
+import 'package:template/data/model/user/user_response.dart';
 import 'package:template/localization/app_localization.dart';
 import 'package:template/routes/app_pages.dart';
-import 'package:template/routes/route_path/app_routes.dart';
 import 'package:template/routes/route_path/splash_routes.dart';
 import 'package:template/theme/app_theme.dart';
 import 'package:template/utils/app_constants.dart' as app_constants;
@@ -38,6 +40,20 @@ Future<void> main() async {
     ..userInteractions = true
     ..dismissOnTap = false;
 
+  Provider provider = Provider();
+  provider.all(
+    UserResponse,
+    onSuccess: (data) {},
+    onError: (error) {},
+  );
+  provider.paginate(
+    ProductResponse,
+    filter: '',
+    limit: 1,
+    page: 1,
+    onSuccess: (data) {},
+    onError: (error) {},
+  );
   runApp(const MyApp());
 }
 
@@ -52,11 +68,9 @@ class MyApp extends StatelessWidget {
 
     // add all LanguageModel from app_constants
     for (int i = 0; i < app_constants.languages.length; i++) {
-      _locals.add(Locale(app_constants.languages[i].languageCode.toString(),
-          app_constants.languages[i].countryCode));
+      _locals.add(Locale(app_constants.languages[i].languageCode.toString(), app_constants.languages[i].countryCode));
     }
-    Locale localeResolutionCallback(
-        Locale? locale, Iterable<Locale> supportedLocales) {
+    Locale localeResolutionCallback(Locale? locale, Iterable<Locale> supportedLocales) {
       if (locale == null) {
         return supportedLocales.first;
       }

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:template/di_container.dart';
-import 'package:template/utils/value_global_notifier.dart';
 import 'getx_smart_refresh_controller.dart';
 
 class GetXSmartRefreshPage extends StatefulWidget {
@@ -33,7 +31,6 @@ class GetXSmartRefreshPage extends StatefulWidget {
 class _GetXSmartRefreshPageState extends State<GetXSmartRefreshPage>  {
   GetXSmartRefreshController? controller;
   ScrollController scrollController = ScrollController();
-  final valueGlobalNotifier = sl.get<ValueGlobalNotifier>();
 
   @override
   bool get wantKeepAlive => true;

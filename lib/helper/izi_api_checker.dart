@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template/data/model/response/base/api_response.dart';
+import 'package:template/data/model/base/api_response.dart';
 import 'package:template/helper/izi_alert.dart';
 
 mixin IZIApiChecker {

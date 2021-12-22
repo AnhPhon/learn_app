@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
-
-import 'package:template/data/model/response/base/error_response.dart';
+import 'package:template/data/model/base/error_response.dart';
 
 mixin ApiErrorHandler {
   static dynamic getMessage(dynamic error) {

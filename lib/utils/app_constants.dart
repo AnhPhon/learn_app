@@ -1,4 +1,5 @@
-import 'package:template/data/model/response/language_model.dart';
+
+import 'package:template/data/model/languages/language_model.dart';
 
 const String BASE_URL = 'http://103.146.23.186:4009/v1/';
 
